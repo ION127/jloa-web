@@ -9,11 +9,13 @@
 }
 
 .web-home .page-glow--one {
+  position: fixed;
   top: -24vw;
   left: 43%;
 }
 
 .web-home .page-glow--two {
+  position: fixed;
   top: auto;
   bottom: -20vw;
   left: -16vw;
@@ -94,7 +96,7 @@
   min-height: calc(100vh - 58px);
   place-items: center;
   overflow: hidden;
-  padding: 116px 0 64px;
+  padding: clamp(112px, 15vh, 160px) 0 28px;
 }
 
 .search-stage::before {
