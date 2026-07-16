@@ -1,14 +1,20 @@
-# JLOA 다운로드 페이지
+# JLOA 웹사이트
 
-`website/`는 별도 빌드 과정이 없는 정적 웹사이트입니다. [index.html](index.html)을 브라우저로 열면 로컬에서 바로 디자인을 확인할 수 있습니다.
+별도 빌드 과정이 없는 정적 웹사이트입니다.
 
 ## 파일 구성
 
-- `index.html`: 페이지 구조와 한국어 문구
-- `styles.css`: 반응형 디자인과 애니메이션
-- `app.js`: 버전, 다운로드 주소, 정책 링크 설정
+- `index.html`: 캐릭터 검색 중심의 웹 메인
+- `desktop-app.html`: Windows 데스크톱 앱 소개·다운로드
+- `styles.css`, `responsive.css`: 공통 디자인
+- `web-app.css`: 웹 메인 전용 디자인
+- `app.js`: 공통 내비게이션과 다운로드 설정
+- `web-app.js`: 캐릭터 검색과 결과 표시
 - `jloa-icon.png`: 브라우저 아이콘
 - `downloads/`: 같은 사이트에서 설치 파일을 함께 배포할 때 쓰는 선택 폴더
+
+웹 메인의 캐릭터 검색은 `https://api.jloa.cloud/api/character/{닉네임}`을
+호출합니다. 최신 정보 갱신은 같은 주소에 `?fresh=true`를 붙입니다.
 
 ## 공개 전 바꿀 값
 
@@ -49,4 +55,3 @@ const DOWNLOAD_URL = "./downloads/JLOA-Setup-0.0.0-x64.exe";
 ## 아직 결정이 필요한 것
 
 도메인, 웹 호스팅, 설치 파일 호스팅, 지원 이메일, 개인정보 처리방침 책임 주체, 광고 공급자는 운영자가 결정해야 합니다. 결정 전까지는 이 폴더를 로컬 미리보기와 디자인 검토용으로만 사용합니다.
-

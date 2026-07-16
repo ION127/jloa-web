@@ -7,11 +7,11 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href="https://jloa.cloud/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="지로아" />
-    <meta property="og:title" content="지로아(JLOA) — 로스트아크 플레이 도우미" />
+    <meta property="og:site_name" content="JLOA" />
+    <meta property="og:title" content="JLOA — 로스트아크 캐릭터 검색과 스펙 분석" />
     <meta
       property="og:description"
-      content="반복되는 계산과 확인을 정리해 주는 Windows용 로스트아크 데스크톱 애플리케이션"
+      content="캐릭터를 검색하고 시뮬레이터, 스펙업 가이드, 효율표까지 한곳에서 확인하세요."
     />
     <meta property="og:url" content="https://jloa.cloud/" />
     <meta property="og:image" content="https://jloa.cloud/jloa-icon.png" />
@@ -19,20 +19,21 @@
     <link rel="icon" type="image/png" href="/jloa-icon.png" />
     <meta
       name="description"
-      content="지로아(JLOA)는 로스트아크 플레이를 더 편하게 만드는 Windows 데스크톱 애플리케이션입니다."
+      content="JLOA에서 로스트아크 캐릭터를 검색하고 스펙 정보와 성장 방향을 확인하세요."
     />
-    <title>지로아(JLOA) — 로스트아크 플레이 도우미</title>
+    <title>JLOA — 로스트아크 캐릭터 검색과 스펙 분석</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "지로아",
-      "alternateName": [
-        "JLOA",
-        "JLOA 지로아",
-        "jloa.cloud"
-      ],
-      "url": "https://jloa.cloud/"
+      "name": "JLOA",
+      "alternateName": ["지로아", "JLOA 지로아"],
+      "url": "https://jloa.cloud/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://jloa.cloud/?character={character_name}",
+        "query-input": "required name=character_name"
+      }
     }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,52 +43,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
-    <link rel="stylesheet" href="/responsive.css?v=20260714-0644" />
-    <style>
-      .security-hash {
-        display: block;
-        margin: 1rem 0;
-        padding: 1rem;
-        overflow-wrap: anywhere;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.04);
-        font-family: "DM Mono", monospace;
-        font-size: 0.82rem;
-        line-height: 1.65;
-      }
-
-      .security-actions {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.75rem 1rem;
-        margin-top: 1rem;
-      }
-
-      button.text-link {
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: inherit;
-        font: inherit;
-        cursor: pointer;
-      }
-
-      .security-note,
-      .copy-status {
-        font-size: 0.86rem;
-        line-height: 1.7;
-        opacity: 0.72;
-      }
-
-      .copy-status {
-        min-height: 1.5em;
-        margin-top: 0.5rem;
-      }
-    </style>
+    <link rel="stylesheet" href="/responsive.css?v=20260716-frontend" />
+    <link rel="stylesheet" href="/web-app.css?v=20260716-frontend" />
   </head>
-  <body>
+  <body class="web-home">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 
     <div class="page-glow page-glow--one" aria-hidden="true"></div>
@@ -96,7 +55,7 @@
 
     <header class="site-header" data-header>
       <div class="container header-inner">
-        <a class="brand" href="#top" aria-label="JLOA 첫 화면">
+        <a class="brand" href="/" aria-label="JLOA 메인">
           <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
           <span>JLOA</span>
         </a>
@@ -107,344 +66,260 @@
         </button>
 
         <nav id="site-nav" class="site-nav" aria-label="주요 메뉴" data-nav>
-          <a href="#features">기능</a>
-          <a href="#install">설치 안내</a>
-          <a href="#security">보안 검증</a>
-          <a href="#faq">자주 묻는 질문</a>
-          <a class="nav-download" href="#download" data-download-link>무료 다운로드 <span aria-hidden="true">↗</span></a>
+          <a href="#search">캐릭터 검색</a>
+          <a href="#services">분석 기능</a>
+          <a href="/desktop-app.html">데스크톱 앱</a>
+          <a class="nav-download web-nav-cta" href="#search">검색 시작 <span aria-hidden="true">↘</span></a>
         </nav>
       </div>
     </header>
 
     <main id="main">
-      <section id="character-search" class="section character-search-section">
-        <div class="container">
-          <div class="character-search-panel reveal">
-            <div class="character-search-copy">
-              <p class="eyebrow"><span class="pulse-dot"></span> LOST ARK CHARACTER</p>
-              <h2>캐릭터 정보를<br /><em>빠르게 확인하세요.</em></h2>
-              <p>
-                최근 3분 안에 조회한 캐릭터는 JLOA 서버 DB에서 즉시 불러옵니다.
-                최신 정보가 필요하면 갱신 버튼으로 로스트아크 Open API를 바로 조회합니다.
-              </p>
-            </div>
-            <div class="character-search-workspace">
-              <form class="character-search-form" data-character-form>
-                <label class="sr-only" for="character-name">캐릭터 닉네임</label>
-                <input id="character-name" name="character" type="search"
-                       placeholder="캐릭터 닉네임을 입력하세요" minlength="2"
-                       maxlength="20" autocomplete="off" required data-character-input />
-                <button class="button button--primary" type="submit">검색</button>
-              </form>
-              <div class="character-search-status" role="status" aria-live="polite" data-character-status>
-                닉네임을 입력하면 캐릭터의 기본 정보를 확인할 수 있습니다.
-              </div>
-              <article class="character-result" hidden data-character-result>
-                <div class="character-result-head">
-                  <div>
-                    <span data-character-server>서버</span>
-                    <h3 data-character-name>캐릭터</h3>
-                    <p data-character-class>클래스</p>
-                  </div>
-                  <button class="character-refresh" type="button" data-character-refresh>최신 정보 갱신</button>
-                </div>
-                <dl class="character-stat-grid">
-                  <div><dt>아이템 레벨</dt><dd data-character-item-level>-</dd></div>
-                  <div><dt>전투 레벨</dt><dd data-character-level>-</dd></div>
-                  <div><dt>원정대 레벨</dt><dd data-character-expedition>-</dd></div>
-                  <div><dt>길드</dt><dd data-character-guild>-</dd></div>
-                </dl>
-                <p class="character-cache-meta" data-character-cache-meta></p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="top" class="hero section">
-        <div class="container hero-layout">
-          <div class="hero-copy reveal">
-            <p class="eyebrow"><span class="pulse-dot"></span> 지로아(JLOA) · WINDOWS DESKTOP COMPANION</p>
-            <h1>로스트아크에<br /><em>집중할 시간</em>을 <br>되찾으세요.</h1>
-            <p class="hero-description">
-              지로아(JLOA)는 반복되는 계산과 확인을 정리해 주는 로스트아크용 데스크톱 애플리케이션입니다.
-              필요한 정보는 게임 위 오버레이로, 중요한 변화는 알림으로 받아보세요.
+      <section id="search" class="web-hero">
+        <div class="container web-hero-layout">
+          <div class="web-hero-copy reveal">
+            <p class="eyebrow"><span class="pulse-dot"></span> JLOA CHARACTER LAB</p>
+            <h1>내 캐릭터의<br /><em>다음 성장</em>을<br />더 선명하게.</h1>
+            <p class="web-hero-description">
+              캐릭터 정보를 빠르게 확인하고, 시뮬레이터와 스펙업 가이드,
+              효율 분석까지 하나의 흐름으로 이어갑니다.
             </p>
-            <div id="download" class="hero-actions">
-              <a class="button button--primary" href="#" data-download-link>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
-                JLOA 무료 다운로드
-              </a>
-              <a class="text-link" href="#features">무엇을 할 수 있나요? <span aria-hidden="true">↓</span></a>
-            </div>
-            <p class="download-meta" data-release-meta>Windows 10/11 · 64비트 · 설치 파일 준비 중</p>
-            <aside class="download-warning" role="note">
-              <strong>Chrome에서 다운로드 경고가 표시될 수 있습니다.</strong>
-              JLOA는 새롭게 배포되는 Windows 실행 파일입니다. 설치 전
-              <a href="#security">VirusTotal 검사 결과와 SHA-256 체크섬</a>을 확인할 수 있습니다.
-            </aside>
-          </div>
 
-          <div class="hero-visual reveal reveal--late" aria-label="JLOA 앱 미리보기">
-            <div class="orbit orbit--one" aria-hidden="true"></div>
-            <div class="orbit orbit--two" aria-hidden="true"></div>
-            <div class="interface-window">
-              <div class="window-topbar">
-                <div class="window-brand">
-                  <span class="mini-mark">◆</span>
-                  <strong>JLOA</strong>
-                  <small>로스트아크 도우미</small>
-                </div>
-                <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
-              </div>
-              <div class="window-body">
-                <aside class="preview-sidebar" aria-hidden="true">
-                  <span class="side-label">일반</span>
-                  <b>대시보드</b>
-                  <b>숙제</b>
-                  <b>가격 알림</b>
-                  <span class="side-label second">도우미</span>
-                  <b>쌀산기</b>
-                  <b>젬깎기</b>
-                  <b class="active">일반재련</b>
-                  <div class="game-online"><i></i> 게임 실행 중</div>
-                </aside>
-                <div class="preview-content">
-                  <div class="preview-heading">
-                    <div><span>재련 도우미</span><strong>다음 단계를 더 명확하게</strong></div>
-                    <span class="status-chip"><i></i> 실시간</span>
-                  </div>
-                  <div class="preview-stats">
-                    <div><span>현재 단계</span><strong>+11</strong></div>
-                    <div><span>필요 재료</span><strong>4,820<small>G</small></strong></div>
-                    <div><span>성공 확률</span><strong class="gold">10%</strong></div>
-                  </div>
-                  <div class="preview-card">
-                    <div class="card-title"><span>추천 경로</span><small>시세 반영</small></div>
-                    <div class="progress-row"><span>장인의 기운</span><b>42%</b></div>
-                    <div class="progress"><i></i></div>
-                    <div class="card-footer"><span>최소 비용 기준</span><button type="button">계산 완료</button></div>
-                  </div>
-                  <div class="preview-list">
-                    <div><i class="list-icon purple"></i><span>젬 가공 추천</span><b>준비됨</b></div>
-                    <div><i class="list-icon blue"></i><span>가격 알림</span><b>3개 감시 중</b></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="floating-note note--one"><span>✦</span> 게임 위에서 바로 확인</div>
-            <div class="floating-note note--two"><i></i> 알림 감시 중</div>
-          </div>
-        </div>
-        <div class="container trust-row reveal">
-          <span>HTTPS 공식 배포</span><i></i>
-          <span>VirusTotal 검사 결과 공개</span><i></i>
-          <span>SHA-256 체크섬 제공</span>
-        </div>
-      </section>
-
-      <section id="features" class="section features-section">
-        <div class="container">
-          <div class="section-heading reveal">
-            <p class="eyebrow">LESS SEARCHING, MORE PLAYING</p>
-            <h2>게임에 맞춰 필요한 정보를<br />빠르게 제공합니다.</h2>
-            <p>복잡한 메뉴 대신, 플레이 흐름을 방해하지 않는 도구를 만들고 있습니다.</p>
-          </div>
-
-          <div class="feature-grid">
-            <article class="feature-card feature-card--large reveal">
-              <div class="feature-icon icon-gold"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M5.5 5.5l13 13m0-13-13 13" /></svg></div>
-              <p class="feature-number">01</p>
-              <h3>플레이 중 바로 보는<br />게임 오버레이</h3>
-              <p>필요한 순간에만 나타나는 가벼운 오버레이로 계산 결과와 추천을 확인합니다.</p>
-              <div class="feature-graphic overlay-graphic" aria-hidden="true">
-                <div class="overlay-box"><span>다음 선택</span><strong>추천 경로 확인</strong><i></i></div>
-                <div class="cursor"></div>
-              </div>
-            </article>
-
-            <article class="feature-card reveal reveal--late">
-              <div class="feature-icon icon-violet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17.5 9.5 12 13 15.5 20 7M15 7h5v5" /></svg></div>
-              <p class="feature-number">02</p>
-              <h3>시세 변화는<br />알림으로</h3>
-              <p>관심 항목을 감시하고 조건에 맞는 가격 변화를 놓치지 않도록 알려줍니다.</p>
-              <div class="mini-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </article>
-
-            <article class="feature-card feature-card--scan reveal reveal--later">
-              <div class="feature-icon icon-blue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 15 2.5-3 2.2 2 3.3-4" /></svg></div>
-              <p class="feature-number">03</p>
-              <h3>화면을 읽고<br />도움을 제안</h3>
-              <p>지원되는 화면에서는 현재 상태를 인식해 다음 선택에 필요한 정보를 보여줍니다.</p>
-              <div class="scan-lines" aria-hidden="true"><span></span><span></span><span></span></div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section workflow-section">
-        <div class="container workflow-layout">
-          <div class="workflow-copy reveal">
-            <p class="eyebrow">BUILT AROUND YOUR FLOW</p>
-            <h2>계산은 앱에게,<br />판단은 플레이어에게.</h2>
-            <p>JLOA는 게임을 대신 조작하지 않습니다. 화면을 더 쉽게 읽고 필요한 계산을 덜어내는 보조 도구입니다.</p>
-            <a class="text-link" href="#install">3단계로 시작하기 <span aria-hidden="true">↓</span></a>
-          </div>
-          <ol class="workflow-list reveal reveal--late">
-            <li><span>01</span><div><strong>게임을 실행합니다</strong><p>평소처럼 로스트아크를 시작하세요.</p></div></li>
-            <li><span>02</span><div><strong>필요한 도구를 엽니다</strong><p>핫키 또는 메인 앱에서 원하는 기능을 선택합니다.</p></div></li>
-            <li><span>03</span><div><strong>정보를 보고 플레이합니다</strong><p>게임 흐름을 유지한 채 결과를 빠르게 확인합니다.</p></div></li>
-          </ol>
-        </div>
-      </section>
-
-      <section id="install" class="section install-section">
-        <div class="container install-panel reveal">
-          <div class="install-copy">
-            <p class="eyebrow">READY WHEN YOU ARE</p>
-            <h2>다운로드하고,<br />바로 시작하세요.</h2>
-            <p>한국어 설치 환경과 고정된 설치 흐름으로 복잡한 선택 없이 JLOA를 시작할 수 있습니다.</p>
-            <a class="button button--primary" href="#" data-download-link>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 20h14" /></svg>
-              Windows용 다운로드
-            </a>
-            <p class="install-fineprint">
-              Windows 10/11 · 64비트 · 관리자 권한이 필요할 수 있습니다.
-              <span>
-                Chrome은 신규 실행 파일에 경고를 표시할 수 있습니다.
-                설치 전 <a href="#security">보안 검증 정보</a>를 확인하세요.
+            <form class="web-search-form" data-character-form>
+              <label class="sr-only" for="character-name">캐릭터 닉네임</label>
+              <span class="web-search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
               </span>
+              <input
+                id="character-name"
+                name="character"
+                type="search"
+                placeholder="캐릭터 닉네임을 입력하세요"
+                minlength="2"
+                maxlength="20"
+                autocomplete="off"
+                spellcheck="false"
+                required
+                data-character-input
+              />
+              <button type="submit" data-character-submit>
+                검색
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5" /></svg>
+              </button>
+            </form>
+
+            <div class="web-search-status" role="status" aria-live="polite" data-character-status>
+              캐릭터 닉네임을 입력해 주세요.
+            </div>
+
+            <div class="recent-searches" hidden data-recent-searches>
+              <span>최근 검색</span>
+              <div data-recent-search-list></div>
+            </div>
+
+            <ul class="web-trust-list" aria-label="검색 서비스 특징">
+              <li><i></i> 3분 스마트 캐시</li>
+              <li><i></i> Open API 최신 갱신</li>
+              <li><i></i> 설치 없이 바로 사용</li>
+            </ul>
+          </div>
+
+          <div class="web-hero-visual reveal reveal--late" aria-label="JLOA 분석 화면 미리보기">
+            <div class="web-orbit web-orbit--one" aria-hidden="true"></div>
+            <div class="web-orbit web-orbit--two" aria-hidden="true"></div>
+            <div class="analysis-preview">
+              <div class="analysis-preview-top">
+                <div>
+                  <span class="analysis-status"><i></i> LIVE PROFILE</span>
+                  <strong>캐릭터 분석</strong>
+                </div>
+                <span class="analysis-mark">J</span>
+              </div>
+              <div class="analysis-profile">
+                <div class="analysis-avatar">J</div>
+                <div>
+                  <span>루페온 · 슬레이어</span>
+                  <strong>캐릭터 이름</strong>
+                  <small>아이템 레벨 1,770.00</small>
+                </div>
+              </div>
+              <div class="analysis-score-grid">
+                <div><span>전투력</span><strong>2,648.10</strong><small>현재 세팅</small></div>
+                <div><span>스펙 효율</span><strong class="analysis-gold">A+</strong><small>상위 12%</small></div>
+              </div>
+              <div class="analysis-route">
+                <div class="analysis-route-head">
+                  <span>다음 성장 추천</span><small>효율 기준</small>
+                </div>
+                <div class="analysis-route-item">
+                  <span>01</span><div><strong>보석 레벨 업</strong><small>예상 효율 +2.31%</small></div><b>추천</b>
+                </div>
+                <div class="analysis-route-item">
+                  <span>02</span><div><strong>무기 강화</strong><small>예상 효율 +1.84%</small></div><b>비교</b>
+                </div>
+              </div>
+              <div class="analysis-tabs" aria-hidden="true">
+                <span class="active">정보</span><span>시뮬레이터</span><span>효율표</span>
+              </div>
+            </div>
+            <div class="web-floating-card web-floating-card--one"><span>+</span> 실시간 데이터 갱신</div>
+            <div class="web-floating-card web-floating-card--two"><i></i> 분석 준비 완료</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="character-detail-section" hidden data-character-result>
+        <div class="container">
+          <article class="character-detail-card">
+            <div class="character-detail-cover">
+              <div class="character-image-wrap">
+                <img src="/jloa-icon.png" alt="" data-character-image />
+              </div>
+              <div class="character-identity">
+                <div class="character-badges">
+                  <span data-character-server>서버</span>
+                  <span data-character-class>클래스</span>
+                </div>
+                <h2 data-character-name>캐릭터 이름</h2>
+                <p>
+                  <span data-character-title>칭호 없음</span>
+                  <i></i>
+                  <span data-character-guild>길드 미가입</span>
+                </p>
+              </div>
+              <div class="character-detail-actions">
+                <span class="source-chip" data-character-source>데이터 확인 중</span>
+                <button type="button" data-character-refresh>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18.7 7M17.9 15A7 7 0 0 1 5.3 17"/></svg>
+                  최신 정보 갱신
+                </button>
+              </div>
+            </div>
+
+            <dl class="character-metric-grid">
+              <div><dt>아이템 레벨</dt><dd data-character-item-level>-</dd><small>Item Level</small></div>
+              <div><dt>전투 레벨</dt><dd data-character-level>-</dd><small>Combat Level</small></div>
+              <div><dt>원정대 레벨</dt><dd data-character-expedition>-</dd><small>Expedition</small></div>
+              <div><dt>PVP 등급</dt><dd data-character-pvp>-</dd><small>PVP Grade</small></div>
+            </dl>
+
+            <div class="character-tool-tabs" aria-label="캐릭터 분석 메뉴">
+              <button class="active" type="button">캐릭터 정보</button>
+              <button type="button" data-coming-soon="원정대">원정대 <small>준비 중</small></button>
+              <button type="button" data-coming-soon="시뮬레이터">시뮬레이터 <small>준비 중</small></button>
+              <button type="button" data-coming-soon="스펙업 가이드">스펙업 가이드 <small>준비 중</small></button>
+              <button type="button" data-coming-soon="효율표">효율표 <small>준비 중</small></button>
+            </div>
+
+            <p class="character-cache-meta" data-character-cache-meta></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="services" class="section web-services">
+        <div class="container">
+          <div class="web-section-heading reveal">
+            <div>
+              <p class="eyebrow">ONE PROFILE, FOUR DIRECTIONS</p>
+              <h2>검색에서 끝나지 않는<br />캐릭터 분석 도구.</h2>
+            </div>
+            <p>
+              한 번 불러온 캐릭터 데이터를 기준으로 현재 상태를 파악하고,
+              변경 결과와 비용 대비 효율까지 이어서 비교할 수 있도록 준비하고 있습니다.
             </p>
           </div>
-          <ol class="install-steps">
-            <li><span>1</span><div><strong>설치 파일 다운로드</strong><p>공식 배포 파일을 내려받습니다.</p></div></li>
-            <li><span>2</span><div><strong>Windows 확인 허용</strong><p>모든 사용자용 설치를 위한 UAC 확인이 표시됩니다.</p></div></li>
-            <li><span>3</span><div><strong>자동 설치 후 실행</strong><p>설치가 끝나면 JLOA가 자동으로 시작됩니다.</p></div></li>
-          </ol>
+
+          <div class="service-card-grid">
+            <article class="service-card service-card--active reveal">
+              <div class="service-card-top"><span>01</span><b>사용 가능</b></div>
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+              </div>
+              <h3>캐릭터 검색</h3>
+              <p>로스트아크 Open API 기반의 최신 캐릭터 정보와 원정대 기본 데이터를 확인합니다.</p>
+              <a href="#search">지금 검색하기 <span>↗</span></a>
+            </article>
+
+            <article class="service-card reveal reveal--late">
+              <div class="service-card-top"><span>02</span><b>개발 중</b></div>
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9 6l3 8 3-5 5 9"/><path d="M4 18h16"/></svg>
+              </div>
+              <h3>시뮬레이터</h3>
+              <p>보석, 장비, 품질과 성장 요소를 가상 변경해 전후 결과를 한눈에 비교합니다.</p>
+              <button type="button" data-coming-soon="시뮬레이터">기능 미리보기 <span>↗</span></button>
+            </article>
+
+            <article class="service-card reveal reveal--later">
+              <div class="service-card-top"><span>03</span><b>개발 중</b></div>
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9m7 10V5m7 14v-7"/><path d="M3 19h18"/></svg>
+              </div>
+              <h3>스펙업 가이드</h3>
+              <p>목표와 예산을 기준으로 효율적인 성장 후보와 우선순위를 추천합니다.</p>
+              <button type="button" data-coming-soon="스펙업 가이드">기능 미리보기 <span>↗</span></button>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-card-top"><span>04</span><b>개발 중</b></div>
+              <div class="service-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z"/><path d="M5 10h14M10 5v14"/></svg>
+              </div>
+              <h3>효율표</h3>
+              <p>치명타, 피해량, 각인과 세부 옵션이 현재 세팅에서 만드는 실제 변화를 계산합니다.</p>
+              <button type="button" data-coming-soon="효율표">기능 미리보기 <span>↗</span></button>
+            </article>
+          </div>
         </div>
       </section>
 
-
-      <section id="security" class="section features-section">
+      <section class="section desktop-promo-section">
         <div class="container">
-          <div class="section-heading reveal">
-            <p class="eyebrow">VERIFY BEFORE INSTALLING</p>
-            <h2>다운로드 파일을<br />직접 확인할 수 있습니다.</h2>
-          </div>
-
-          <div class="feature-grid">
-            <article class="feature-card feature-card--large reveal">
-              <p class="feature-number">VIRUSTOTAL</p>
-              <h3>다중 보안 엔진 검사 결과</h3>
+          <div class="desktop-promo reveal">
+            <div class="desktop-promo-copy">
+              <p class="eyebrow">JLOA FOR WINDOWS</p>
+              <h2>게임 안에서는<br />데스크톱 앱으로.</h2>
               <p>
-                <strong data-scan-summary>검사 결과 불러오는 중</strong><br />
-                <span data-scan-date></span>
+                재련 계산, 가격 알림과 게임 오버레이가 필요하다면
+                Windows용 JLOA 데스크톱 앱을 이용해 보세요.
               </p>
-              <p class="security-note">
-                VirusTotal 결과는 검사 시점의 참고 자료이며 파일의 안전성을 절대적으로 보증하지는 않습니다.
-              </p>
-              <div class="security-actions">
-                <a
-                  class="text-link"
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-virustotal-link
-                >
-                  VirusTotal 검사 결과 보기 <span aria-hidden="true">↗</span>
-                </a>
+              <a class="button button--primary" href="/desktop-app.html">
+                데스크톱 앱 보기
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <div class="desktop-promo-window" aria-hidden="true">
+              <div class="desktop-promo-bar"><span></span><i></i><i></i><i></i></div>
+              <div class="desktop-promo-body">
+                <aside><b>대시보드</b><span>숙제</span><span>가격 알림</span><span>재련 도우미</span></aside>
+                <div>
+                  <small>DESKTOP COMPANION</small>
+                  <strong>플레이에 필요한 정보만</strong>
+                  <p>계산과 확인은 JLOA가 정리합니다.</p>
+                  <em>게임 실행 중</em>
+                </div>
               </div>
-            </article>
-
-            <article class="feature-card reveal reveal--late">
-              <p class="feature-number">SHA-256</p>
-              <h3>파일 무결성 확인</h3>
-              <p>다운로드한 설치 파일의 해시가 아래 값과 같은지 확인할 수 있습니다.</p>
-              <code class="security-hash" data-sha256>불러오는 중</code>
-              <div class="security-actions">
-                <button class="text-link" type="button" data-copy-sha256>
-                  SHA-256 복사
-                </button>
-                <a class="text-link" href="#" download data-checksum-link>
-                  체크섬 파일 받기
-                </a>
-              </div>
-              <p class="copy-status" aria-live="polite" data-copy-status></p>
-            </article>
-
-            <article class="feature-card reveal reveal--later">
-              <p class="feature-number">OFFICIAL RELEASE</p>
-              <h3>공식 배포 주소 확인</h3>
-              <p>
-                JLOA 설치 파일은 <strong>jloa.cloud</strong>에서 제공되는 파일만 공식 배포본으로 취급합니다.
-              </p>
-              <p class="security-note">
-                파일명: <strong data-file-name>불러오는 중</strong><br />
-                버전: <strong data-version>불러오는 중</strong>
-              </p>
-            </article>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section id="faq" class="section faq-section">
-        <div class="container faq-layout">
-          <div class="faq-intro reveal">
-            <p class="eyebrow">GOOD TO KNOW</p>
-            <h2>시작하기 전에<br />확인하세요.</h2>
-            <p>다운로드 경고, 개인정보 처리 및 설치 환경에 관한 내용을 확인하세요.</p>
-          </div>
-          <div class="faq-list reveal reveal--late">
-            <details>
-              <summary>Chrome에서 다운로드 경고가 표시되는 이유는 무엇인가요?<span aria-hidden="true">+</span></summary>
-              <p>
-                JLOA는 새롭게 배포되는 Windows 실행 파일이므로 다운로드 평판이 충분히 쌓이기 전에는
-                Chrome에서 “일반적으로 다운로드하지 않는 파일”이라는 경고가 표시될 수 있습니다.
-                설치 전 주소가 jloa.cloud인지 확인하고, 위의 VirusTotal 결과와 SHA-256을 함께 확인해 주세요.
-              </p>
-            </details>
-            <details>
-              <summary>JLOA는 어떤 환경에서 사용할 수 있나요?<span aria-hidden="true">+</span></summary>
-              <p>Windows 10 또는 Windows 11 64비트 환경을 기준으로 제공합니다. 게임 오버레이는 창 모드 또는 테두리 없는 창 모드에서 더 안정적으로 사용할 수 있습니다.</p>
-            </details>
-            <details>
-              <summary>게임을 자동으로 조작하나요?<span aria-hidden="true">+</span></summary>
-              <p>아니요. JLOA는 정보 확인, 계산, 알림을 돕는 보조 도구이며 게임 내 행동을 자동으로 실행하지 않습니다.</p>
-            </details>
-            <details>
-              <summary>광고와 개인정보는 어떻게 안내되나요?<span aria-hidden="true">+</span></summary>
-              <p>현재 배포본에 적용되는 개인정보 처리 및 광고 운영 방식은 개인정보 처리방침과 광고 정책에서 확인할 수 있습니다. 기능이 변경되면 해당 문서도 함께 갱신합니다.</p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      <section class="section final-cta-section">
-        <div class="container final-cta reveal">
-          <div class="final-mark" aria-hidden="true">✦</div>
-          <p class="eyebrow">JLOA FOR LOST ARK</p>
-          <h2>오늘의 플레이를<br />더 가볍게 만드세요.</h2>
-          <a class="button button--primary" href="#" data-download-link>
-            JLOA 무료 다운로드 <span aria-hidden="true">↗</span>
-          </a>
-          <p data-release-meta>Windows 10/11 · 64비트</p>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <div><a class="brand" href="#top"><img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" /><span>JLOA</span></a><p>로스트아크 플레이 도우미</p></div>
+        <div>
+          <a class="brand" href="/">
+            <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
+            <span>JLOA</span>
+          </a>
+          <p>로스트아크 캐릭터 분석과 플레이 도우미</p>
+        </div>
         <div class="footer-links">
+          <a href="/desktop-app.html">데스크톱 앱</a>
           <a href="#" data-release-link>릴리스 노트</a>
           <a href="#" data-privacy-link>개인정보 처리방침</a>
           <a href="#" data-ad-policy-link>광고 정책</a>
-          <a
-            href="https://open.kakao.com/o/sCe2zYDi"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            문의하기
-          </a>
+          <a href="#" data-support-link>문의하기</a>
         </div>
       </div>
       <div class="container footer-bottom">
@@ -453,7 +328,9 @@
       </div>
     </footer>
 
-    <noscript><p class="noscript">다운로드 링크를 사용하려면 JavaScript를 켜 주세요.</p></noscript>
+    <div class="web-toast" role="status" aria-live="polite" hidden data-web-toast></div>
+    <noscript><p class="noscript">캐릭터 검색을 사용하려면 JavaScript를 켜 주세요.</p></noscript>
     <script src="/app.js"></script>
+    <script src="/web-app.js"></script>
   </body>
 </html>

@@ -23,7 +23,6 @@ const CHECKSUM_URL = `${DOWNLOAD_URL}.sha256`;
 const RELEASE_NOTES_URL = "/release-notes";
 const PRIVACY_URL = "/privacy";
 const AD_POLICY_URL = "/ads-policy";
-const API_BASE_URL = "https://api.jloa.cloud";
 
 const releaseMeta =
   `Windows 10/11 · 64비트 · v${RELEASE.version}`;
@@ -294,85 +293,3 @@ window.addEventListener("load", () => {
     scrollToSection(sectionId);
   });
 });
-
-/* 캐릭터 검색: 3분 TTL 캐시 + 명시적 최신 조회 */
-const characterForm = document.querySelector("[data-character-form]");
-const characterInput = document.querySelector("[data-character-input]");
-const characterStatus = document.querySelector("[data-character-status]");
-const characterResult = document.querySelector("[data-character-result]");
-const characterRefresh = document.querySelector("[data-character-refresh]");
-let currentCharacterName = "";
-
-function characterField(selector, value) {
-  const element = document.querySelector(selector);
-  if (element) element.textContent = value || "-";
-}
-
-function formatFetchedAt(value) {
-  if (!value) return "";
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? "" : date.toLocaleString("ko-KR");
-}
-
-function renderCharacter(response) {
-  const profile = response.data?.ArmoryProfile;
-  if (!profile) throw new Error("캐릭터 프로필 정보가 없습니다.");
-
-  currentCharacterName = profile.CharacterName || currentCharacterName;
-  characterField("[data-character-server]", profile.ServerName);
-  characterField("[data-character-name]", profile.CharacterName);
-  characterField("[data-character-class]", profile.CharacterClassName);
-  characterField("[data-character-item-level]", profile.ItemAvgLevel);
-  characterField("[data-character-level]", profile.CharacterLevel);
-  characterField("[data-character-expedition]", profile.ExpeditionLevel);
-  characterField("[data-character-guild]", profile.GuildName || "미가입");
-
-  const source = response.stale
-    ? "Open API 갱신 실패로 저장된 정보를 표시합니다."
-    : response.cached
-      ? "JLOA DB의 최근 정보를 표시합니다."
-      : "로스트아크 Open API에서 새로 조회했습니다.";
-  characterField("[data-character-cache-meta]",
-    `${source} 조회 시각: ${formatFetchedAt(response.fetched_at)}`);
-  characterResult.hidden = false;
-}
-
-async function loadCharacter(name, fresh = false) {
-  const normalized = name.trim();
-  if (normalized.length < 2) {
-    characterStatus.textContent = "닉네임을 2자 이상 입력해 주세요.";
-    return;
-  }
-
-  characterStatus.textContent = fresh
-    ? "로스트아크 Open API에서 최신 정보를 가져오는 중입니다."
-    : "JLOA 서버에서 캐릭터 정보를 확인하는 중입니다.";
-  characterRefresh.disabled = true;
-
-  try {
-    const query = fresh ? "?fresh=true" : "";
-    const response = await fetch(
-      `${API_BASE_URL}/api/character/${encodeURIComponent(normalized)}${query}`,
-      { headers: { Accept: "application/json" } },
-    );
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload.error || "캐릭터 정보를 불러오지 못했습니다.");
-    renderCharacter(payload);
-    characterStatus.textContent = fresh ? "최신 정보로 갱신했습니다." : "캐릭터 정보를 불러왔습니다.";
-  } catch (error) {
-    console.error(error);
-    characterStatus.textContent = error.message || "캐릭터 검색 중 오류가 발생했습니다.";
-  } finally {
-    characterRefresh.disabled = false;
-  }
-}
-
-if (characterForm && characterInput && characterResult && characterRefresh) {
-  characterForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    loadCharacter(characterInput.value);
-  });
-  characterRefresh.addEventListener("click", () => {
-    if (currentCharacterName) loadCharacter(currentCharacterName, true);
-  });
-}
