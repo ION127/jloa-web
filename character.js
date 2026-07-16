@@ -16,7 +16,24 @@ const initialParams = new URLSearchParams(window.location.search);
 const requestedSection = window.location.hash
   ? decodeURIComponent(window.location.hash.slice(1))
   : "";
-const requestedTab = initialParams.get("tab") || requestedSection || "stats";
+const CHARACTER_TAB_ALIASES = Object.freeze({
+  stats: "overview",
+  gems: "build",
+  engravings: "build",
+  "ark-passive": "ark",
+  "ark-grid": "ark",
+  cards: "combat",
+  skills: "combat",
+  appearance: "collection",
+  "panel-overview": "overview",
+  "panel-equipment": "equipment",
+  "panel-build": "build",
+  "panel-ark": "ark",
+  "panel-combat": "combat",
+  "panel-collection": "collection",
+});
+const requestedTabValue = initialParams.get("tab") || requestedSection || "overview";
+const requestedTab = CHARACTER_TAB_ALIASES[requestedTabValue] || requestedTabValue;
 
 const detailRegistry = new Map();
 let detailSequence = 0;
@@ -25,7 +42,7 @@ let activeCharacterTab = characterTabPanels.some(
   (panel) => panel.dataset.characterPanel === requestedTab,
 )
   ? requestedTab
-  : "stats";
+  : "overview";
 
 function valueOr(value, fallback = "-") {
   return value === null || value === undefined || value === "" ? fallback : value;
@@ -85,7 +102,7 @@ function updateCharacterHistory() {
   if (!currentCharacterName) return;
   const params = new URLSearchParams();
   params.set("name", currentCharacterName);
-  if (activeCharacterTab !== "stats") params.set("tab", activeCharacterTab);
+  if (activeCharacterTab !== "overview") params.set("tab", activeCharacterTab);
   history.replaceState(null, "", `/character.html?${params.toString()}`);
 }
 
@@ -97,7 +114,7 @@ function activateCharacterTab(
     (panel) => panel.dataset.characterPanel === tabName,
   )
     ? tabName
-    : "stats";
+    : "overview";
 
   activeCharacterTab = validTab;
 
@@ -1141,6 +1158,38 @@ function renderCollectibles(collectibles) {
   });
 }
 
+function setDashboardCount(name, value) {
+  const target = document.querySelector(`[data-dashboard-count="${name}"]`);
+  if (target) target.textContent = value;
+}
+
+function renderDashboardSummary(data) {
+  const equipment = toArray(data?.ArmoryEquipment);
+  const gemSection = data?.ArmoryGem || data?.ArmoryGems || {};
+  const gems = toArray(gemSection?.Gems);
+  const engravingSection = data?.ArmoryEngraving || {};
+  const engravings =
+    toArray(engravingSection.ArkPassiveEffects).length > 0
+      ? toArray(engravingSection.ArkPassiveEffects)
+      : toArray(engravingSection.Effects).length > 0
+        ? toArray(engravingSection.Effects)
+        : toArray(engravingSection.Engravings);
+  const arkEffects = toArray(data?.ArkPassive?.Effects);
+  const arkGridSlots = toArray(data?.ArkGrid?.Slots);
+  const cards = toArray(data?.ArmoryCard?.Cards);
+  const allSkills = toArray(data?.ArmorySkills);
+  const configuredSkills = allSkills.filter((skill) => Number(skill.Level) > 1);
+  const visibleSkills = configuredSkills.length > 0 ? configuredSkills : allSkills;
+  const avatars = toArray(data?.ArmoryAvatars);
+  const collectibles = toArray(data?.Collectibles);
+
+  setDashboardCount("equipment", `${equipment.length}개 슬롯`);
+  setDashboardCount("build", `${gems.length} 보석 · ${engravings.length} 각인`);
+  setDashboardCount("ark", `${arkEffects.length} 효과 · ${arkGridSlots.length} 코어`);
+  setDashboardCount("combat", `${cards.length} 카드 · ${visibleSkills.length} 스킬`);
+  setDashboardCount("collection", `${avatars.length} 아바타 · ${collectibles.length} 수집`);
+}
+
 function renderCharacter(response) {
   const data = response?.data;
   const profile = data?.ArmoryProfile;
@@ -1163,6 +1212,7 @@ function renderCharacter(response) {
   renderSkills(data.ArmorySkills);
   renderAvatars(data.ArmoryAvatars);
   renderCollectibles(data.Collectibles);
+  renderDashboardSummary(data);
 
   document.title = `${currentCharacterName} 캐릭터 상세 정보 — JLOA`;
   const description = document.querySelector('meta[name="description"]');
