@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0c0f" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="description" content="JLOA Windows 데스크톱 애플리케이션의 버전별 변경 사항과 알려진 문제를 확인할 수 있습니다." />
+    <link rel="canonical" href="https://jloa.cloud/release-notes" />
+    <link rel="icon" type="image/png" href="/jloa-icon.png" />
+    <title>릴리스 노트 — JLOA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/legal.css" />
+    <link rel="stylesheet" href="/responsive.css?v=20260714-0644" />
+  </head>
+  <body>
+
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+    <div class="page-glow page-glow--one" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="JLOA 홈">
+          <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
+          <span>JLOA</span>
+        </a>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+          <span class="sr-only">메뉴 열기</span>
+          <span></span><span></span>
+        </button>
+
+        <nav id="site-nav" class="site-nav" aria-label="주요 메뉴" data-nav>
+          <a href="/#features">기능</a>
+          <a href="/#install">설치 안내</a>
+          <a href="/#security">보안 검증</a>
+          <a class="nav-download" href="/#download" data-download-link>무료 다운로드 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="legal-main">
+      <section class="legal-hero">
+        <div class="container legal-hero__inner">
+          <p class="eyebrow">RELEASE NOTES</p>
+          <h1>릴리스 노트</h1>
+          <p class="legal-hero__lead">
+            JLOA의 새 기능, 수정 사항, 보안 검증 정보와 알려진 문제를 버전별로 기록합니다.
+          </p>
+          <div class="legal-meta">
+            <span>최신 버전 0.0.0</span>
+            <span>Windows 10/11 64비트</span>
+            <span>최종 갱신 2026년 7월 14일</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="legal-content">
+        <div class="container legal-layout">
+          <nav class="legal-toc" aria-label="릴리스 노트 목차">
+            <strong>RELEASES</strong>
+            <a href="#v0-0-0">0.0.0 내부 초기 버전</a>
+            <a href="#verification">파일 검증</a>
+            <a href="#upcoming">다음 공개 준비</a>
+          </nav>
+
+          <article class="legal-document">
+            <div class="policy-callout">
+              <strong>현재 0.0.0은 초기 검증용 빌드입니다</strong>
+              <p>
+                일반 사용자에게 첫 베타를 배포할 때는 버전을 0.1.0으로 올리고,
+                새 설치 파일의 SHA-256과 VirusTotal 결과를 다시 생성하는 것을 권장합니다.
+              </p>
+            </div>
+
+            <div class="release-list">
+              <section id="v0-0-0" class="release-entry">
+                <div class="release-entry__head">
+                  <div class="release-entry__version">
+                    <h2>v0.0.0</h2>
+                    <span class="release-badge">INTERNAL INITIAL</span>
+                  </div>
+                  <time datetime="2026-07-14">2026.07.14</time>
+                </div>
+
+                <div class="release-grid">
+                  <div>
+                    <h3>포함된 초기 기능</h3>
+                    <ul>
+                      <li>Windows 10/11 64비트용 설치 프로그램</li>
+                      <li>로스트아크 플레이 보조용 데스크톱 인터페이스</li>
+                      <li>게임 위 오버레이를 통한 정보 표시 기반</li>
+                      <li>시세 감시와 가격 알림을 위한 화면 구성</li>
+                      <li>쌀산기, 젬 가공, 일반 재련 등 도우미 메뉴 기반</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3>배포 웹사이트</h3>
+                    <ul>
+                      <li>jloa.cloud 공식 다운로드 페이지 공개</li>
+                      <li>Caddy를 이용한 HTTPS 적용</li>
+                      <li>VirusTotal 검사 결과 링크 제공</li>
+                      <li>SHA-256 체크섬 공개</li>
+                      <li>개인정보 처리방침과 광고 정책 페이지 추가</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <h3>알려진 사항</h3>
+                <ul>
+                  <li>설치 파일에 공인 코드 서명이 적용되지 않았습니다.</li>
+                  <li>Chrome에서 다운로드 빈도가 낮은 신규 파일 경고가 표시될 수 있습니다.</li>
+                  <li>Windows에서 확인되지 않은 게시자 또는 SmartScreen 경고가 표시될 수 있습니다.</li>
+                  <li>회원가입, Premium 결제, 광고 제거, 클라우드 동기화는 아직 제공되지 않습니다.</li>
+                  <li>자동 업데이트 기능이 없으므로 새 버전은 공식 웹사이트에서 다시 받아야 할 수 있습니다.</li>
+                </ul>
+              </section>
+
+              <section id="verification" class="release-entry">
+                <div class="release-entry__head">
+                  <div class="release-entry__version">
+                    <h2>파일 검증</h2>
+                    <span class="release-badge">SECURITY</span>
+                  </div>
+                  <time datetime="2026-07-14">검사일 2026.07.14</time>
+                </div>
+
+                <p><strong>설치 파일:</strong> JLOA-Setup-0.0.0-x64.exe</p>
+                <p>
+                  <strong>VirusTotal:</strong>
+                  검사 시점 기준 66개 보안 엔진에서 탐지 없음.
+                  <a
+                    href="https://www.virustotal.com/gui/file/02bb13df1f26e650b11b85c2a11ab90d496712f81ab6271580bafcf9656c33ff/detection"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >검사 결과 보기</a>
+                </p>
+                <p><strong>SHA-256:</strong></p>
+                <code class="hash-block">02bb13df1f26e650b11b85c2a11ab90d496712f81ab6271580bafcf9656c33ff</code>
+                <p>
+                  검사 결과는 검사 시점의 참고 자료이며 파일의 안전성을 절대적으로 보증하지 않습니다.
+                  공식 도메인에서 받은 파일인지와 해시가 같은지를 함께 확인해 주세요.
+                </p>
+              </section>
+
+              <section id="upcoming" class="release-entry">
+                <div class="release-entry__head">
+                  <div class="release-entry__version">
+                    <h2>다음 공개 준비</h2>
+                    <span class="release-badge">ROADMAP</span>
+                  </div>
+                </div>
+                <ul>
+                  <li>첫 공개 베타 버전을 0.1.0으로 정리</li>
+                  <li>앱·설치 프로그램 버전 정보와 파일명 통일</li>
+                  <li>새 빌드 VirusTotal 재검사와 SHA-256 재생성</li>
+                  <li>앱 자동 업데이트 또는 업데이트 알림 기능 검토</li>
+                  <li>오류 제보와 지원 문의 흐름 정리</li>
+                  <li>광고 및 Premium 기능 도입 전 정책 갱신</li>
+                  <li>사용자 규모와 운영 비용을 고려한 공인 코드 서명 검토</li>
+                </ul>
+              </section>
+            </div>
+
+            <a class="legal-back" href="/"><span>←</span> JLOA 홈으로 돌아가기</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand" href="/">
+            <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
+            <span>JLOA</span>
+          </a>
+          <p>로스트아크 플레이 도우미</p>
+        </div>
+        <div class="footer-links">
+          <a href="/release-notes" data-release-link>릴리스 노트</a>
+          <a href="/privacy" data-privacy-link>개인정보 처리방침</a>
+          <a href="/ads-policy" data-ad-policy-link>광고 정책</a>
+          <a
+            href="https://open.kakao.com/o/sCe2zYDi"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-support-link
+            >
+            JLOA 오픈카카오톡 문의
+            </a>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© <span data-year></span> JLOA. All rights reserved.</span>
+        <span>JLOA는 비공식 팬 제작 도구이며 게임사와 제휴 또는 승인 관계가 없습니다.</span>
+      </div>
+    </footer>
+    <script src="/app.js"></script>
+  </body>
+</html>

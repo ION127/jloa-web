@@ -1,0 +1,18 @@
+app.js syntax: OK
+index.html viewport: OK
+index.html responsive.css: OK
+index.html logo: OK
+privacy.html viewport: OK
+privacy.html responsive.css: OK
+privacy.html logo: OK
+ads-policy.html viewport: OK
+ads-policy.html responsive.css: OK
+ads-policy.html logo: OK
+release-notes.html viewport: OK
+release-notes.html responsive.css: OK
+release-notes.html logo: OK
+styles.css braces: OK
+legal.css braces: OK
+responsive.css braces: OK
+responsive.css tablet overflow guard: OK
+mobile feature graphics normal flow: OK
