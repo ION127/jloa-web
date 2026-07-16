@@ -30,7 +30,7 @@
     />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/responsive.css?v=20260716-character" />
-    <link rel="stylesheet" href="/character.css?v=20260717-compact-summary" />
+    <link rel="stylesheet" href="/character.css?v=20260717-roster" />
   </head>
   <body class="character-page">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -186,6 +186,9 @@
             <button id="tab-character" class="active" type="button" role="tab" aria-selected="true" aria-controls="panel-character" data-character-tab="character">
               캐릭터 정보
             </button>
+            <button id="tab-roster" type="button" role="tab" aria-selected="false" aria-controls="panel-roster" tabindex="-1" data-character-tab="roster">
+              원정대
+            </button>
             <button id="tab-extras" type="button" role="tab" aria-selected="false" aria-controls="panel-extras" tabindex="-1" data-character-tab="extras">
               기타 정보
             </button>
@@ -265,6 +268,40 @@
                     <div class="skill-grid" data-skills></div>
                   </article>
                 </div>
+              </div>
+            </section>
+
+            <section id="panel-roster" class="character-sheet-panel" role="tabpanel" aria-labelledby="tab-roster" hidden data-character-panel="roster">
+              <div class="roster-panel-heading">
+                <div>
+                  <p class="eyebrow">ROSTER</p>
+                  <h2>원정대</h2>
+                  <p><strong data-roster-server>서버 확인 중</strong>에서 활동 중인 캐릭터입니다.</p>
+                </div>
+                <span data-roster-meta>탭을 열면 조회합니다.</span>
+              </div>
+
+              <div class="roster-loading" hidden data-roster-loading>
+                <span aria-hidden="true"></span>
+                <strong>원정대 전투력을 확인하고 있습니다.</strong>
+                <small>캐릭터 수에 따라 첫 조회에 시간이 걸릴 수 있습니다.</small>
+              </div>
+
+              <section class="roster-module" hidden data-roster-view>
+                <div class="roster-list-heading">
+                  <div>
+                    <h3>같은 서버 캐릭터</h3>
+                    <p>캐릭터를 누르면 해당 캐릭터 정보로 이동합니다.</p>
+                  </div>
+                  <strong data-roster-count>0명</strong>
+                </div>
+                <div class="roster-character-list" data-roster-list></div>
+              </section>
+
+              <div class="roster-error" hidden data-roster-error>
+                <strong>원정대 정보를 불러오지 못했습니다.</strong>
+                <p data-roster-error-message>잠시 후 다시 시도해 주세요.</p>
+                <button type="button" data-roster-retry>다시 조회</button>
               </div>
             </section>
 
@@ -358,6 +395,6 @@
 
     <noscript><p class="noscript">캐릭터 상세 정보를 보려면 JavaScript를 켜 주세요.</p></noscript>
     <script src="/app.js"></script>
-    <script src="/character.js?v=20260717-compact-summary"></script>
+    <script src="/character.js?v=20260717-roster"></script>
   </body>
 </html>

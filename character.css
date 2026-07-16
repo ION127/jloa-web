@@ -6186,3 +6186,310 @@
       "skills skills skills skills grid grid";
   }
 }
+
+/* Same-server roster summary */
+.roster-panel-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(96, 165, 250, 0.07), transparent 34%),
+    rgba(17, 19, 25, 0.92);
+}
+
+.roster-panel-heading .eyebrow {
+  margin: 0 0 4px;
+  color: #7c8795;
+  font-size: 10px;
+}
+
+.roster-panel-heading h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.roster-panel-heading p:not(.eyebrow) {
+  margin: 6px 0 0;
+  color: #8a94a2;
+  font-size: 12px;
+}
+
+.roster-panel-heading p strong {
+  color: #dfe5ec;
+}
+
+.roster-panel-heading > span {
+  flex: 0 0 auto;
+  color: #768191;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+}
+
+.roster-module {
+  margin-top: 9px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 9px;
+  background: rgba(17, 19, 25, 0.92);
+}
+
+.roster-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 2px 11px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.roster-list-heading h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.roster-list-heading p {
+  margin: 3px 0 0;
+  color: #77818e;
+  font-size: 10px;
+}
+
+.roster-list-heading > strong {
+  color: var(--gold-bright);
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+}
+
+.roster-character-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.roster-character-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) minmax(105px, auto);
+  align-items: center;
+  min-width: 0;
+  min-height: 68px;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 8px;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.018);
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.roster-character-row:hover {
+  border-color: rgba(232, 177, 63, 0.32);
+  background: rgba(232, 177, 63, 0.045);
+  transform: translateY(-1px);
+}
+
+.roster-character-row.is-current {
+  border-color: rgba(232, 177, 63, 0.42);
+  background:
+    linear-gradient(135deg, rgba(232, 177, 63, 0.085), rgba(232, 177, 63, 0.018));
+}
+
+.roster-class-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 9px;
+  color: #9fc8ff;
+  background: rgba(96, 165, 250, 0.075);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.roster-character-identity,
+.roster-character-name,
+.roster-character-power {
+  display: block;
+  min-width: 0;
+}
+
+.roster-character-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.roster-character-name strong {
+  overflow: hidden;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roster-character-name em {
+  flex: 0 0 auto;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: var(--gold-bright);
+  background: rgba(232, 177, 63, 0.1);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.roster-character-identity > small {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #818b98;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roster-character-power {
+  text-align: right;
+}
+
+.roster-character-power small {
+  display: block;
+  color: #727d8a;
+  font-size: 9px;
+}
+
+.roster-character-power strong {
+  display: block;
+  margin-top: 3px;
+  color: #eef2f7;
+  font-family: "DM Mono", monospace;
+  font-size: 15px;
+}
+
+.roster-character-row.is-current .roster-character-power strong {
+  color: var(--gold-bright);
+}
+
+.roster-loading,
+.roster-error {
+  display: grid;
+  min-height: 190px;
+  margin-top: 9px;
+  padding: 30px;
+  place-items: center;
+  align-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 9px;
+  background: rgba(17, 19, 25, 0.9);
+  text-align: center;
+}
+
+.roster-loading[hidden],
+.roster-error[hidden],
+.roster-module[hidden] {
+  display: none;
+}
+
+.roster-loading > span {
+  width: 27px;
+  height: 27px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(232, 177, 63, 0.18);
+  border-top-color: var(--gold-bright);
+  border-radius: 50%;
+  animation: roster-loading-spin 0.8s linear infinite;
+}
+
+.roster-loading strong,
+.roster-error strong {
+  font-size: 14px;
+}
+
+.roster-loading small,
+.roster-error p {
+  margin: 6px 0 0;
+  color: #7c8794;
+  font-size: 11px;
+}
+
+.roster-error button {
+  min-height: 34px;
+  margin-top: 14px;
+  padding: 7px 13px;
+  border: 1px solid rgba(232, 177, 63, 0.3);
+  border-radius: 7px;
+  color: var(--gold-bright);
+  background: rgba(232, 177, 63, 0.07);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes roster-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 1179px) {
+  .roster-character-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .roster-panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+    padding: 15px;
+  }
+
+  .roster-panel-heading h2 {
+    font-size: 22px;
+  }
+
+  .roster-panel-heading > span {
+    font-size: 9px;
+  }
+
+  .roster-module {
+    padding: 11px;
+  }
+
+  .roster-list-heading p {
+    display: none;
+  }
+
+  .roster-character-row {
+    grid-template-columns: 38px minmax(0, 1fr) minmax(88px, auto);
+    min-height: 64px;
+    gap: 8px;
+    padding: 9px;
+  }
+
+  .roster-class-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .roster-character-name strong {
+    font-size: 12px;
+  }
+
+  .roster-character-name em {
+    display: none;
+  }
+
+  .roster-character-power strong {
+    font-size: 13px;
+  }
+}

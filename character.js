@@ -8,6 +8,11 @@ const characterLoading = document.querySelector("[data-character-loading]");
 const characterMessage = document.querySelector("[data-character-message]");
 const characterView = document.querySelector("[data-character-view]");
 const refreshButton = document.querySelector("[data-character-refresh]");
+const rosterLoading = document.querySelector("[data-roster-loading]");
+const rosterView = document.querySelector("[data-roster-view]");
+const rosterList = document.querySelector("[data-roster-list]");
+const rosterError = document.querySelector("[data-roster-error]");
+const rosterRetryButton = document.querySelector("[data-roster-retry]");
 const itemDialog = document.querySelector("[data-item-dialog]");
 const characterTabButtons = [...document.querySelectorAll("[data-character-tab]")];
 const characterTabPanels = [...document.querySelectorAll("[data-character-panel]")];
@@ -29,6 +34,8 @@ const CHARACTER_TAB_ALIASES = Object.freeze({
   "ark-grid": "character",
   cards: "character",
   skills: "character",
+  siblings: "roster",
+  roster: "roster",
   collection: "extras",
   appearance: "extras",
   "panel-overview": "character",
@@ -38,6 +45,7 @@ const CHARACTER_TAB_ALIASES = Object.freeze({
   "panel-combat": "character",
   "panel-collection": "extras",
   "panel-character": "character",
+  "panel-roster": "roster",
   "panel-extras": "extras",
 });
 const requestedTabValue = initialParams.get("tab") || requestedSection || "character";
@@ -46,6 +54,9 @@ const requestedTab = CHARACTER_TAB_ALIASES[requestedTabValue] || requestedTabVal
 const detailRegistry = new Map();
 let detailSequence = 0;
 let currentCharacterName = "";
+let rosterLoadedName = "";
+let rosterRequestName = "";
+let rosterAbortController = null;
 let activeCharacterTab = characterTabPanels.some(
   (panel) => panel.dataset.characterPanel === requestedTab,
 )
@@ -141,6 +152,9 @@ function activateCharacterTab(
   });
 
   if (updateHistory) updateCharacterHistory();
+  if (validTab === "roster" && currentCharacterName) {
+    loadRosterSummary(currentCharacterName);
+  }
   if (scroll) {
     document.getElementById("character-tabs")?.scrollIntoView({
       block: "start",
@@ -398,6 +412,7 @@ function showView() {
 
 function renderProfile(profile, arkPassive, response) {
   setText("[data-profile-server]", profile.ServerName, "서버 정보 없음");
+  setText("[data-roster-server]", profile.ServerName, "서버 정보 없음");
   setText("[data-profile-class]", profile.CharacterClassName, "클래스 정보 없음");
   setText("[data-profile-name]", profile.CharacterName, currentCharacterName);
   setText("[data-profile-title]", profile.Title, "칭호 없음");
@@ -1174,6 +1189,144 @@ function renderCollectibles(collectibles) {
   });
 }
 
+function formatRosterPower(value) {
+  if (value === null || value === undefined || value === "") return "확인 불가";
+  const numeric = Number(String(value).replace(/,/g, "").trim());
+  if (!Number.isFinite(numeric)) return cleanInline(value) || "확인 불가";
+  return numeric.toLocaleString("ko-KR", {
+    minimumFractionDigits: Number.isInteger(numeric) ? 0 : 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+function setRosterState(state, message = "") {
+  if (rosterLoading) rosterLoading.hidden = state !== "loading";
+  if (rosterView) rosterView.hidden = state !== "ready";
+  if (rosterError) rosterError.hidden = state !== "error";
+  if (state === "error") {
+    setText(
+      "[data-roster-error-message]",
+      message,
+      "잠시 후 다시 시도해 주세요.",
+    );
+  }
+}
+
+function renderRosterSummary(response) {
+  const data = response?.data || {};
+  const characters = toArray(data.Characters);
+  const serverName = cleanInline(data.ServerName) || "서버 정보 없음";
+  const fetchedAt = formatFetchedAt(response?.fetched_at);
+  const source = response?.stale
+    ? "저장 데이터"
+    : response?.cached
+      ? "3분 캐시"
+      : "Open API 갱신";
+
+  setText("[data-roster-server]", serverName);
+  setText("[data-roster-count]", `${characters.length}명`);
+  setText(
+    "[data-roster-meta]",
+    `${characters.length}명 · ${source}${fetchedAt ? ` · ${fetchedAt}` : ""}`,
+  );
+
+  if (!rosterList) return;
+  rosterList.replaceChildren();
+
+  if (characters.length === 0) {
+    renderEmpty(rosterList, "같은 서버의 원정대 캐릭터가 없습니다.");
+    setRosterState("ready");
+    return;
+  }
+
+  characters.forEach((character) => {
+    const name = cleanInline(character.CharacterName) || "이름 정보 없음";
+    const className = cleanInline(character.CharacterClassName) || "직업 정보 없음";
+    const isCurrent =
+      name.toLocaleLowerCase() === currentCharacterName.toLocaleLowerCase();
+    const row = element(
+      "a",
+      `roster-character-row ${isCurrent ? "is-current" : ""}`.trim(),
+    );
+    row.href = `/character.html?name=${encodeURIComponent(name)}&tab=roster`;
+    row.setAttribute(
+      "aria-label",
+      `${name} ${className}, 전투력 ${formatRosterPower(character.CombatPower)}`,
+    );
+
+    const mark = element(
+      "span",
+      "roster-class-mark",
+      className.slice(0, 1) || "J",
+    );
+    const identity = element("span", "roster-character-identity");
+    const nameLine = element("span", "roster-character-name");
+    nameLine.append(element("strong", "", name));
+    if (isCurrent) nameLine.append(element("em", "", "현재 캐릭터"));
+    identity.append(nameLine, element("small", "", className));
+
+    const power = element("span", "roster-character-power");
+    power.append(
+      element("small", "", "전투력"),
+      element("strong", "", formatRosterPower(character.CombatPower)),
+    );
+    row.append(mark, identity, power);
+    rosterList.append(row);
+  });
+
+  setRosterState("ready");
+}
+
+async function loadRosterSummary(name = currentCharacterName, fresh = false) {
+  const normalized = normalizeCharacterName(name);
+  if (!normalized || normalized.length < 2 || normalized.length > 20) return;
+  if (!fresh && rosterLoadedName === normalized) {
+    setRosterState("ready");
+    return;
+  }
+  if (rosterRequestName === normalized) return;
+
+  rosterAbortController?.abort();
+  const controller = new AbortController();
+  rosterAbortController = controller;
+  rosterRequestName = normalized;
+  setText("[data-roster-meta]", "원정대 확인 중");
+  setRosterState("loading");
+
+  const timeout = window.setTimeout(() => controller.abort(), 45000);
+  try {
+    const query = fresh ? "?fresh=true" : "";
+    const response = await fetch(
+      `${CHARACTER_API_BASE_URL}/api/roster/${encodeURIComponent(normalized)}/summary${query}`,
+      {
+        headers: { Accept: "application/json" },
+        signal: controller.signal,
+      },
+    );
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(payload.error || "원정대 정보를 불러오지 못했습니다.");
+    }
+    rosterLoadedName = normalized;
+    renderRosterSummary(payload);
+  } catch (error) {
+    if (error?.name === "AbortError" && rosterRequestName !== normalized) return;
+    console.error(error);
+    const message =
+      error?.name === "AbortError"
+        ? "응답 시간이 초과되었습니다. 잠시 후 다시 시도해 주세요."
+        : error instanceof Error
+          ? error.message
+          : "원정대 조회 중 오류가 발생했습니다.";
+    setText("[data-roster-meta]", "조회 실패");
+    setRosterState("error", message);
+  } finally {
+    window.clearTimeout(timeout);
+    if (rosterRequestName === normalized) rosterRequestName = "";
+    if (rosterAbortController === controller) rosterAbortController = null;
+  }
+}
+
 function renderCharacter(response) {
   const data = response?.data;
   const profile = data?.ArmoryProfile;
@@ -1282,6 +1435,12 @@ if (characterForm && characterInput) {
 if (refreshButton) {
   refreshButton.addEventListener("click", () => {
     if (currentCharacterName) loadCharacter(currentCharacterName, true);
+  });
+}
+
+if (rosterRetryButton) {
+  rosterRetryButton.addEventListener("click", () => {
+    if (currentCharacterName) loadRosterSummary(currentCharacterName);
   });
 }
 
