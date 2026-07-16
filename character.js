@@ -1248,7 +1248,7 @@ function renderRosterSummary(response) {
       "a",
       `roster-character-row ${isCurrent ? "is-current" : ""}`.trim(),
     );
-    row.href = `/character.html?name=${encodeURIComponent(name)}&tab=roster`;
+    row.href = `/character.html?name=${encodeURIComponent(name)}`;
     row.setAttribute(
       "aria-label",
       `${name} ${className}, 전투력 ${formatRosterPower(character.CombatPower)}`,
