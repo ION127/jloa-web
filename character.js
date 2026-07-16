@@ -479,7 +479,7 @@ function renderStats(profile, arkPassive) {
         card.append(element("span", "", valueOr(stat.Type, "특성")));
         card.append(element("strong", "", valueOr(stat.Value)));
         const description = tooltipLines(stat.Tooltip, [], 2).join(" · ");
-        if (description) card.append(element("small", "", description));
+        if (description) card.title = description;
         statsContainer.append(card);
       });
     }
@@ -531,13 +531,13 @@ function renderStats(profile, arkPassive) {
 function equipmentHighlights(item) {
   const itemName = cleanInline(item.Name);
   const noisePattern =
-    /거래 불가|캐릭터 귀속|분해불가|품질 업그레이드 불가|장착 제한|내구도|제작\]/;
+    /거래 불가|거래 제한 아이템 레벨|캐릭터 귀속|분해불가|품질 업그레이드 불가|장착 제한|내구도|제작\]|아이템 레벨|^품질(?:\s|$)|^(기본 효과|추가 효과)$/;
   const interestPattern =
     /아이템 레벨|품질|상급 재련|재련|초월|엘릭서|기본 효과|추가 효과|무기 공격력|공격력|최대 생명력|방어력|깨달음|도약|진화|각인|활성도|치명|특화|신속|피해|재사용/;
   return tooltipLines(item.Tooltip, [], 34)
     .filter((line) => line !== itemName && !noisePattern.test(line))
     .filter((line) => interestPattern.test(line))
-    .slice(0, 4);
+    .slice(0, 2);
 }
 
 function createEquipmentCard(item) {
@@ -604,17 +604,17 @@ function renderEquipment(equipment) {
   const groups = [
     {
       title: "무기 · 방어구",
-      description: "강화, 품질, 상급 재련과 장비 효과",
+      description: "강화 · 재련 · 장비 효과",
       items: items.filter((item) => armorTypes.has(cleanInline(item.Type))),
     },
     {
       title: "악세서리 · 어빌리티 스톤",
-      description: "특성, 깨달음 포인트와 세부 옵션",
+      description: "특성 · 깨달음 · 세부 옵션",
       items: items.filter((item) => accessoryTypes.has(cleanInline(item.Type))),
     },
     {
       title: "특수 장비",
-      description: "팔찌 외 장착 중인 특수 슬롯",
+      description: "팔찌 · 보주 · 특수 슬롯",
       items: items.filter(
         (item) =>
           !armorTypes.has(cleanInline(item.Type)) &&
@@ -634,11 +634,8 @@ function renderEquipment(equipment) {
   });
 }
 
-function renderGemSummary(container, gems, effects) {
+function renderGemSummary(container, effects) {
   container.replaceChildren();
-  const levels = gems
-    .map((gem) => Number(gem.Level))
-    .filter((level) => Number.isFinite(level));
   const skills = toArray(effects?.Skills);
   const damageCount = skills.filter((effect) =>
     toArray(effect.Description).some((description) => cleanInline(description).includes("피해")),
@@ -648,21 +645,13 @@ function renderGemSummary(container, gems, effects) {
       cleanInline(description).includes("재사용 대기시간"),
     ),
   ).length;
-  const average = levels.length
-    ? (levels.reduce((sum, level) => sum + level, 0) / levels.length).toFixed(1)
-    : "-";
   const overall = cleanInline(effects?.Description) || "기본 공격력 효과 정보 없음";
-
-  [
-    ["평균 보석 레벨", average, ""],
-    ["피해 보석", `${damageCount}개`, ""],
-    ["재사용 보석", `${cooldownCount}개`, ""],
-    ["보석 추가 효과", overall, "gem-summary-card--wide"],
-  ].forEach(([label, value, extraClass]) => {
-    const card = element("article", `gem-summary-card ${extraClass}`.trim());
-    card.append(element("span", "", label), element("strong", "", value));
-    container.append(card);
-  });
+  const card = element("article", "gem-summary-card gem-summary-card--wide");
+  card.append(
+    element("span", "", `피해 ${damageCount} · 재사용 ${cooldownCount}`),
+    element("strong", "", overall),
+  );
+  container.append(card);
 }
 
 function renderGems(gemSection) {
@@ -681,7 +670,7 @@ function renderGems(gemSection) {
   });
 
   setSectionCount("gems", gems.length);
-  renderGemSummary(summaryContainer, gems, effects);
+  renderGemSummary(summaryContainer, effects);
   container.replaceChildren();
 
   if (gems.length === 0) {
@@ -788,7 +777,6 @@ function renderEngravings(engravingSection) {
     card.append(mark, copy);
 
     const description = cleanInline(entry.Description);
-    if (description) card.append(element("p", "", description));
 
     const detailId = registerDetail({
       title: entry.Name,
@@ -833,7 +821,7 @@ function renderArkPassive(arkPassive) {
         element("strong", "", valueOr(point.Value)),
       );
       const description = cleanInline(point.Description);
-      if (description) card.append(element("small", "", description));
+      if (description) card.title = description;
       pointsContainer.append(card);
     });
   }
@@ -904,7 +892,7 @@ function renderArkGrid(arkGrid) {
         element("strong", "", `Lv.${valueOr(effect.Level, "-")}`),
       );
       const tooltip = cleanInline(effect.Tooltip);
-      if (tooltip) card.append(element("small", "", tooltip));
+      if (tooltip) card.title = tooltip;
       effectsContainer.append(card);
     });
   }
