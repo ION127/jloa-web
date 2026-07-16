@@ -2686,3 +2686,18 @@
     animation: none;
   }
 }
+
+/* Decorative glows must not create empty scroll space below the footer. */
+.character-page .page-glow {
+  position: fixed;
+}
+
+.character-main {
+  padding-bottom: 28px;
+}
+
+@media (max-width: 760px) {
+  .character-main {
+    padding-bottom: 24px;
+  }
+}
