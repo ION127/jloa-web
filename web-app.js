@@ -40,9 +40,22 @@ function saveRecentSearch(name) {
   try {
     localStorage.setItem(RECENT_SEARCH_KEY, JSON.stringify(next));
   } catch {
-    // 저장소 사용이 차단된 환경에서도 검색 자체는 계속 동작한다.
+    // 저장소가 차단되어도 검색은 계속 동작한다.
   }
   renderRecentSearches();
+}
+
+function openCharacterPage(name) {
+  const normalized = String(name || "").trim();
+  if (normalized.length < 2 || normalized.length > 20) {
+    setSearchStatus("닉네임을 2자 이상 20자 이하로 입력해 주세요.", "error");
+    characterInput?.focus();
+    return;
+  }
+
+  saveRecentSearch(normalized);
+  setSearchStatus("캐릭터 정보를 여는 중입니다.", "success");
+  window.location.assign(`/character.html?name=${encodeURIComponent(normalized)}`);
 }
 
 function renderRecentSearches() {
@@ -55,26 +68,9 @@ function renderRecentSearches() {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = name;
-    button.addEventListener("click", () => {
-      if (characterInput) characterInput.value = name;
-      openCharacterPage(name);
-    });
-    recentSearchList.appendChild(button);
+    button.addEventListener("click", () => openCharacterPage(name));
+    recentSearchList.append(button);
   });
-}
-
-function openCharacterPage(name) {
-  const normalized = name.trim();
-
-  if (normalized.length < 2 || normalized.length > 20) {
-    setSearchStatus("닉네임을 2자 이상 20자 이하로 입력해 주세요.", "error");
-    characterInput?.focus();
-    return;
-  }
-
-  saveRecentSearch(normalized);
-  setSearchStatus("캐릭터 상세 페이지로 이동합니다.", "success");
-  window.location.assign(`/character.html?name=${encodeURIComponent(normalized)}`);
 }
 
 function showToast(message) {
@@ -95,8 +91,8 @@ if (characterForm && characterInput) {
 
   renderRecentSearches();
 
-  const searchParams = new URLSearchParams(window.location.search);
-  const initialName = searchParams.get("character") || searchParams.get("name");
+  const params = new URLSearchParams(window.location.search);
+  const initialName = params.get("character") || params.get("name");
   if (initialName) {
     characterInput.value = initialName;
     openCharacterPage(initialName);

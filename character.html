@@ -30,7 +30,7 @@
     />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/responsive.css?v=20260716-character" />
-    <link rel="stylesheet" href="/character.css?v=20260716-character" />
+    <link rel="stylesheet" href="/character.css?v=20260716-tabs" />
   </head>
   <body class="character-page">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -53,10 +53,10 @@
 
         <nav id="site-nav" class="site-nav" aria-label="주요 메뉴" data-nav>
           <a href="/">메인</a>
-          <a href="#equipment">장비</a>
-          <a href="#gems">보석</a>
-          <a href="#ark-passive">아크 패시브</a>
-          <a href="#ark-grid">아크 그리드</a>
+          <a href="#character-tabs" data-open-character-tab="equipment">장비</a>
+          <a href="#character-tabs" data-open-character-tab="gems">보석</a>
+          <a href="#character-tabs" data-open-character-tab="ark-passive">아크 패시브</a>
+          <a href="#character-tabs" data-open-character-tab="ark-grid">아크 그리드</a>
           <a class="nav-download" href="/desktop-app.html">데스크톱 앱 <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
@@ -186,19 +186,19 @@
             </div>
           </section>
 
-          <nav class="character-section-nav" aria-label="캐릭터 상세 정보 바로가기">
-            <a href="#stats">전투 특성</a>
-            <a href="#equipment">장비</a>
-            <a href="#gems">보석</a>
-            <a href="#engravings">각인</a>
-            <a href="#ark-passive">아크 패시브</a>
-            <a href="#ark-grid">아크 그리드</a>
-            <a href="#cards">카드</a>
-            <a href="#skills">스킬</a>
-            <a href="#appearance">기타</a>
+          <nav id="character-tabs" class="character-section-nav" aria-label="캐릭터 상세 정보" role="tablist">
+            <button id="tab-stats" class="active" type="button" role="tab" aria-selected="true" aria-controls="stats" data-character-tab="stats">요약</button>
+            <button id="tab-equipment" type="button" role="tab" aria-selected="false" aria-controls="equipment" tabindex="-1" data-character-tab="equipment">장비</button>
+            <button id="tab-gems" type="button" role="tab" aria-selected="false" aria-controls="gems" tabindex="-1" data-character-tab="gems">보석</button>
+            <button id="tab-engravings" type="button" role="tab" aria-selected="false" aria-controls="engravings" tabindex="-1" data-character-tab="engravings">각인</button>
+            <button id="tab-ark-passive" type="button" role="tab" aria-selected="false" aria-controls="ark-passive" tabindex="-1" data-character-tab="ark-passive">아크 패시브</button>
+            <button id="tab-ark-grid" type="button" role="tab" aria-selected="false" aria-controls="ark-grid" tabindex="-1" data-character-tab="ark-grid">아크 그리드</button>
+            <button id="tab-cards" type="button" role="tab" aria-selected="false" aria-controls="cards" tabindex="-1" data-character-tab="cards">카드</button>
+            <button id="tab-skills" type="button" role="tab" aria-selected="false" aria-controls="skills" tabindex="-1" data-character-tab="skills">스킬</button>
+            <button id="tab-appearance" type="button" role="tab" aria-selected="false" aria-controls="appearance" tabindex="-1" data-character-tab="appearance">기타</button>
           </nav>
 
-          <section id="stats" class="character-detail-panel">
+          <section id="stats" class="character-detail-panel is-active" role="tabpanel" aria-labelledby="tab-stats" data-character-panel="stats">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">COMBAT PROFILE</p>
@@ -231,7 +231,7 @@
             </article>
           </section>
 
-          <section id="equipment" class="character-detail-panel">
+          <section id="equipment" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-equipment" hidden data-character-panel="equipment">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">EQUIPMENT & ACCESSORIES</p>
@@ -242,7 +242,7 @@
             <div class="equipment-groups" data-equipment></div>
           </section>
 
-          <section id="gems" class="character-detail-panel">
+          <section id="gems" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-gems" hidden data-character-panel="gems">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">GEM EFFECTS</p>
@@ -254,7 +254,7 @@
             <div class="gem-card-grid" data-gems></div>
           </section>
 
-          <section id="engravings" class="character-detail-panel">
+          <section id="engravings" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-engravings" hidden data-character-panel="engravings">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">ENGRAVING EFFECTS</p>
@@ -265,7 +265,7 @@
             <div class="engraving-grid" data-engravings></div>
           </section>
 
-          <section id="ark-passive" class="character-detail-panel">
+          <section id="ark-passive" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-ark-passive" hidden data-character-panel="ark-passive">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">ARK PASSIVE</p>
@@ -277,7 +277,7 @@
             <div class="ark-effect-groups" data-ark-effects></div>
           </section>
 
-          <section id="ark-grid" class="character-detail-panel">
+          <section id="ark-grid" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-ark-grid" hidden data-character-panel="ark-grid">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">ARK GRID</p>
@@ -289,7 +289,7 @@
             <div class="ark-grid-slots" data-grid-slots></div>
           </section>
 
-          <section id="cards" class="character-detail-panel">
+          <section id="cards" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-cards" hidden data-character-panel="cards">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">CARD SET</p>
@@ -301,7 +301,7 @@
             <div class="card-grid" data-cards></div>
           </section>
 
-          <section id="skills" class="character-detail-panel">
+          <section id="skills" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-skills" hidden data-character-panel="skills">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">COMBAT SKILLS</p>
@@ -312,7 +312,7 @@
             <div class="skill-grid" data-skills></div>
           </section>
 
-          <section id="appearance" class="character-detail-panel">
+          <section id="appearance" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-appearance" hidden data-character-panel="appearance">
             <div class="detail-heading">
               <div>
                 <p class="eyebrow">MORE CHARACTER DATA</p>
@@ -382,6 +382,6 @@
 
     <noscript><p class="noscript">캐릭터 상세 정보를 보려면 JavaScript를 켜 주세요.</p></noscript>
     <script src="/app.js"></script>
-    <script src="/character.js?v=20260716-character"></script>
+    <script src="/character.js?v=20260716-tabs"></script>
   </body>
 </html>

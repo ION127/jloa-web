@@ -43,8 +43,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
-    <link rel="stylesheet" href="/responsive.css?v=20260716-frontend" />
-    <link rel="stylesheet" href="/web-app.css?v=20260716-frontend" />
+    <link rel="stylesheet" href="/responsive.css?v=20260716-search" />
+    <link rel="stylesheet" href="/web-app.css?v=20260716-search" />
   </head>
   <body class="web-home">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -53,36 +53,38 @@
     <div class="page-glow page-glow--two" aria-hidden="true"></div>
     <div class="grain" aria-hidden="true"></div>
 
-    <header class="site-header" data-header>
-      <div class="container header-inner">
+    <header class="search-header">
+      <div class="container search-header-inner">
         <a class="brand" href="/" aria-label="JLOA 메인">
           <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
           <span>JLOA</span>
         </a>
-
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
-          <span class="sr-only">메뉴 열기</span>
-          <span></span><span></span>
-        </button>
-
-        <nav id="site-nav" class="site-nav" aria-label="주요 메뉴" data-nav>
-          <a href="#search">캐릭터 검색</a>
-          <a href="#services">분석 기능</a>
+        <nav class="search-header-nav" aria-label="주요 기능">
+          <a href="#tools">분석 도구</a>
           <a href="/desktop-app.html">데스크톱 앱</a>
-          <a class="nav-download web-nav-cta" href="#search">검색 시작 <span aria-hidden="true">↘</span></a>
+          <a class="search-header-link" href="#character-search">
+            캐릭터 검색
+            <span aria-hidden="true">↘</span>
+          </a>
         </nav>
       </div>
     </header>
 
-    <main id="main">
-      <section id="search" class="web-hero">
-        <div class="container web-hero-layout">
-          <div class="web-hero-copy reveal">
+    <main id="main" class="search-main">
+      <section class="search-stage">
+        <div class="search-orbit search-orbit--one" aria-hidden="true"></div>
+        <div class="search-orbit search-orbit--two" aria-hidden="true"></div>
+
+        <div class="container search-stage-inner">
+          <div id="character-search" class="search-focus">
+            <div class="search-brand-mark" aria-hidden="true">
+              <img src="/jloa-icon.png" alt="" />
+            </div>
             <p class="eyebrow"><span class="pulse-dot"></span> JLOA CHARACTER LAB</p>
-            <h1>내 캐릭터의<br /><em>다음 성장</em>을<br />더 선명하게.</h1>
-            <p class="web-hero-description">
-              캐릭터 정보를 빠르게 확인하고, 시뮬레이터와 스펙업 가이드,
-              효율 분석까지 하나의 흐름으로 이어갑니다.
+            <h1>검색부터 성장까지<br /><em>한 흐름으로.</em></h1>
+            <p class="search-description">
+              자주 찾는 캐릭터 검색은 가장 빠르게.<br />
+              장비와 보석부터 성장 효율까지 필요한 기능을 한곳에서 확인하세요.
             </p>
 
             <form class="web-search-form" data-character-form>
@@ -99,6 +101,7 @@
                 maxlength="20"
                 autocomplete="off"
                 spellcheck="false"
+                autofocus
                 required
                 data-character-input
               />
@@ -109,7 +112,7 @@
             </form>
 
             <div class="web-search-status" role="status" aria-live="polite" data-character-status>
-              캐릭터 닉네임을 입력해 주세요.
+              닉네임을 검색하면 캐릭터 상세 화면으로 이동합니다.
             </div>
 
             <div class="recent-searches" hidden data-recent-searches>
@@ -117,172 +120,81 @@
               <div data-recent-search-list></div>
             </div>
 
-            <ul class="web-trust-list" aria-label="검색 서비스 특징">
-              <li><i></i> 3분 스마트 캐시</li>
-              <li><i></i> Open API 최신 갱신</li>
-              <li><i></i> 설치 없이 바로 사용</li>
+            <ul class="search-trust-list" aria-label="검색 서비스 특징">
+              <li><i></i> 최근 3분 데이터 캐시</li>
+              <li><i></i> Lost Ark Open API</li>
+              <li><i></i> 상세 스펙 탭 제공</li>
             </ul>
           </div>
 
-          <div class="web-hero-visual reveal reveal--late" aria-label="JLOA 분석 화면 미리보기">
-            <div class="web-orbit web-orbit--one" aria-hidden="true"></div>
-            <div class="web-orbit web-orbit--two" aria-hidden="true"></div>
-            <div class="analysis-preview">
-              <div class="analysis-preview-top">
-                <div>
-                  <span class="analysis-status"><i></i> LIVE PROFILE</span>
-                  <strong>캐릭터 분석</strong>
-                </div>
-                <span class="analysis-mark">J</span>
+          <div id="tools" class="home-tool-panel">
+            <div class="home-tool-heading">
+              <div>
+                <p class="eyebrow">JLOA TOOLS</p>
+                <h2>필요한 기능을<br />한눈에 확인하세요.</h2>
               </div>
-              <div class="analysis-profile">
-                <div class="analysis-avatar">J</div>
-                <div>
-                  <span>루페온 · 슬레이어</span>
-                  <strong>캐릭터 이름</strong>
-                  <small>아이템 레벨 1,770.00</small>
-                </div>
-              </div>
-              <div class="analysis-score-grid">
-                <div><span>전투력</span><strong>2,648.10</strong><small>현재 세팅</small></div>
-                <div><span>스펙 효율</span><strong class="analysis-gold">A+</strong><small>상위 12%</small></div>
-              </div>
-              <div class="analysis-route">
-                <div class="analysis-route-head">
-                  <span>다음 성장 추천</span><small>효율 기준</small>
-                </div>
-                <div class="analysis-route-item">
-                  <span>01</span><div><strong>보석 레벨 업</strong><small>예상 효율 +2.31%</small></div><b>추천</b>
-                </div>
-                <div class="analysis-route-item">
-                  <span>02</span><div><strong>무기 강화</strong><small>예상 효율 +1.84%</small></div><b>비교</b>
-                </div>
-              </div>
-              <div class="analysis-tabs" aria-hidden="true">
-                <span class="active">정보</span><span>시뮬레이터</span><span>효율표</span>
-              </div>
+              <span>WEB + DESKTOP</span>
             </div>
-            <div class="web-floating-card web-floating-card--one"><span>+</span> 실시간 데이터 갱신</div>
-            <div class="web-floating-card web-floating-card--two"><i></i> 분석 준비 완료</div>
-          </div>
-        </div>
-      </section>
 
-      <section id="services" class="section web-services">
-        <div class="container">
-          <div class="web-section-heading reveal">
-            <div>
-              <p class="eyebrow">ONE PROFILE, FOUR DIRECTIONS</p>
-              <h2>검색에서 끝나지 않는<br />캐릭터 분석 도구.</h2>
+            <div class="home-tool-grid">
+              <article class="home-tool-card home-tool-card--active">
+                <div class="home-tool-card-top"><span>01</span><b>사용 가능</b></div>
+                <h3>캐릭터 상세 분석</h3>
+                <p>장비, 보석, 각인, 아크 패시브와 스킬을 유형별 탭으로 확인합니다.</p>
+                <a href="#character-search">캐릭터 검색 <span>↗</span></a>
+              </article>
+
+              <article class="home-tool-card">
+                <div class="home-tool-card-top"><span>02</span><b>개발 중</b></div>
+                <h3>스펙 시뮬레이터</h3>
+                <p>장비와 보석을 가상 변경해 적용 전후의 차이를 비교합니다.</p>
+                <button type="button" data-coming-soon="스펙 시뮬레이터">기능 안내 <span>↗</span></button>
+              </article>
+
+              <article class="home-tool-card">
+                <div class="home-tool-card-top"><span>03</span><b>개발 중</b></div>
+                <h3>스펙업 가이드</h3>
+                <p>현재 세팅에서 효율이 높은 성장 후보와 우선순위를 정리합니다.</p>
+                <button type="button" data-coming-soon="스펙업 가이드">기능 안내 <span>↗</span></button>
+              </article>
+
+              <article class="home-tool-card">
+                <div class="home-tool-card-top"><span>04</span><b>개발 중</b></div>
+                <h3>효율표</h3>
+                <p>성장 요소별 비용과 예상 상승량을 표 형태로 비교합니다.</p>
+                <button type="button" data-coming-soon="효율표">기능 안내 <span>↗</span></button>
+              </article>
             </div>
-            <p>
-              한 번 불러온 캐릭터 데이터를 기준으로 현재 상태를 파악하고,
-              변경 결과와 비용 대비 효율까지 이어서 비교할 수 있도록 준비하고 있습니다.
-            </p>
-          </div>
 
-          <div class="service-card-grid">
-            <article class="service-card service-card--active reveal">
-              <div class="service-card-top"><span>01</span><b>사용 가능</b></div>
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
-              </div>
-              <h3>캐릭터 검색</h3>
-              <p>로스트아크 Open API 기반의 최신 캐릭터 정보와 원정대 기본 데이터를 확인합니다.</p>
-              <a href="#search">지금 검색하기 <span>↗</span></a>
-            </article>
-
-            <article class="service-card reveal reveal--late">
-              <div class="service-card-top"><span>02</span><b>개발 중</b></div>
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 9 6l3 8 3-5 5 9"/><path d="M4 18h16"/></svg>
-              </div>
-              <h3>시뮬레이터</h3>
-              <p>보석, 장비, 품질과 성장 요소를 가상 변경해 전후 결과를 한눈에 비교합니다.</p>
-              <button type="button" data-coming-soon="시뮬레이터">기능 미리보기 <span>↗</span></button>
-            </article>
-
-            <article class="service-card reveal reveal--later">
-              <div class="service-card-top"><span>03</span><b>개발 중</b></div>
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9m7 10V5m7 14v-7"/><path d="M3 19h18"/></svg>
-              </div>
-              <h3>스펙업 가이드</h3>
-              <p>목표와 예산을 기준으로 효율적인 성장 후보와 우선순위를 추천합니다.</p>
-              <button type="button" data-coming-soon="스펙업 가이드">기능 미리보기 <span>↗</span></button>
-            </article>
-
-            <article class="service-card reveal">
-              <div class="service-card-top"><span>04</span><b>개발 중</b></div>
-              <div class="service-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z"/><path d="M5 10h14M10 5v14"/></svg>
-              </div>
-              <h3>효율표</h3>
-              <p>치명타, 피해량, 각인과 세부 옵션이 현재 세팅에서 만드는 실제 변화를 계산합니다.</p>
-              <button type="button" data-coming-soon="효율표">기능 미리보기 <span>↗</span></button>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section desktop-promo-section">
-        <div class="container">
-          <div class="desktop-promo reveal">
-            <div class="desktop-promo-copy">
-              <p class="eyebrow">JLOA FOR WINDOWS</p>
-              <h2>게임 안에서는<br />데스크톱 앱으로.</h2>
-              <p>
-                재련 계산, 가격 알림과 게임 오버레이가 필요하다면
-                Windows용 JLOA 데스크톱 앱을 이용해 보세요.
-              </p>
-              <a class="button button--primary" href="/desktop-app.html">
-                데스크톱 앱 보기
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-            <div class="desktop-promo-window" aria-hidden="true">
-              <div class="desktop-promo-bar"><span></span><i></i><i></i><i></i></div>
-              <div class="desktop-promo-body">
-                <aside><b>대시보드</b><span>숙제</span><span>가격 알림</span><span>재련 도우미</span></aside>
-                <div>
-                  <small>DESKTOP COMPANION</small>
-                  <strong>플레이에 필요한 정보만</strong>
-                  <p>계산과 확인은 JLOA가 정리합니다.</p>
-                  <em>게임 실행 중</em>
-                </div>
-              </div>
-            </div>
+            <a class="home-desktop-strip" href="/desktop-app.html">
+              <span class="home-desktop-mark">J</span>
+              <span>
+                <small>JLOA FOR WINDOWS</small>
+                <strong>재련 계산과 오버레이는 데스크톱 앱에서</strong>
+              </span>
+              <b>자세히 보기 ↗</b>
+            </a>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div>
-          <a class="brand" href="/">
-            <img class="brand-logo" src="/jloa-icon.png" alt="" width="32" height="32" />
-            <span>JLOA</span>
-          </a>
-          <p>로스트아크 캐릭터 분석과 플레이 도우미</p>
-        </div>
-        <div class="footer-links">
-          <a href="/desktop-app.html">데스크톱 앱</a>
+    <footer class="search-footer">
+      <div class="container search-footer-inner">
+        <span>© <span data-year></span> JLOA</span>
+        <span class="search-footer-disclaimer">비공식 팬 제작 도구이며 게임사와 제휴 또는 승인 관계가 없습니다.</span>
+        <nav aria-label="정책 메뉴">
           <a href="#" data-release-link>릴리스 노트</a>
           <a href="#" data-privacy-link>개인정보 처리방침</a>
           <a href="#" data-ad-policy-link>광고 정책</a>
           <a href="#" data-support-link>문의하기</a>
-        </div>
-      </div>
-      <div class="container footer-bottom">
-        <span>© <span data-year></span> JLOA. All rights reserved.</span>
-        <span>JLOA는 비공식 팬 제작 도구이며 게임사와 제휴 또는 승인 관계가 없습니다.</span>
+        </nav>
       </div>
     </footer>
 
     <div class="web-toast" role="status" aria-live="polite" hidden data-web-toast></div>
     <noscript><p class="noscript">캐릭터 검색을 사용하려면 JavaScript를 켜 주세요.</p></noscript>
     <script src="/app.js"></script>
-    <script src="/web-app.js"></script>
+    <script src="/web-app.js?v=20260716-search"></script>
   </body>
 </html>

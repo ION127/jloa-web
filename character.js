@@ -9,13 +9,23 @@ const characterMessage = document.querySelector("[data-character-message]");
 const characterView = document.querySelector("[data-character-view]");
 const refreshButton = document.querySelector("[data-character-refresh]");
 const itemDialog = document.querySelector("[data-item-dialog]");
+const characterTabButtons = [...document.querySelectorAll("[data-character-tab]")];
+const characterTabPanels = [...document.querySelectorAll("[data-character-panel]")];
+const characterTabOpeners = [...document.querySelectorAll("[data-open-character-tab]")];
+const initialParams = new URLSearchParams(window.location.search);
 const requestedSection = window.location.hash
   ? decodeURIComponent(window.location.hash.slice(1))
   : "";
+const requestedTab = initialParams.get("tab") || requestedSection || "stats";
 
 const detailRegistry = new Map();
 let detailSequence = 0;
 let currentCharacterName = "";
+let activeCharacterTab = characterTabPanels.some(
+  (panel) => panel.dataset.characterPanel === requestedTab,
+)
+  ? requestedTab
+  : "stats";
 
 function valueOr(value, fallback = "-") {
   return value === null || value === undefined || value === "" ? fallback : value;
@@ -69,6 +79,51 @@ function splitCleanLines(value) {
     .split(/\n+/)
     .map((line) => line.replace(/\s+/g, " ").trim())
     .filter(Boolean);
+}
+
+function updateCharacterHistory() {
+  if (!currentCharacterName) return;
+  const params = new URLSearchParams();
+  params.set("name", currentCharacterName);
+  if (activeCharacterTab !== "stats") params.set("tab", activeCharacterTab);
+  history.replaceState(null, "", `/character.html?${params.toString()}`);
+}
+
+function activateCharacterTab(
+  tabName,
+  { updateHistory = true, scroll = false, focus = false } = {},
+) {
+  const validTab = characterTabPanels.some(
+    (panel) => panel.dataset.characterPanel === tabName,
+  )
+    ? tabName
+    : "stats";
+
+  activeCharacterTab = validTab;
+
+  characterTabButtons.forEach((button) => {
+    const isActive = button.dataset.characterTab === validTab;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-selected", String(isActive));
+    button.tabIndex = isActive ? 0 : -1;
+    if (isActive && focus) button.focus({ preventScroll: true });
+  });
+
+  characterTabPanels.forEach((panel) => {
+    const isActive = panel.dataset.characterPanel === validTab;
+    panel.hidden = !isActive;
+    panel.classList.toggle("is-active", isActive);
+  });
+
+  if (updateHistory) updateCharacterHistory();
+  if (scroll) {
+    document.getElementById("character-tabs")?.scrollIntoView({
+      block: "start",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }
 }
 
 function parseJson(value) {
@@ -1115,21 +1170,10 @@ function renderCharacter(response) {
     description.content =
       `${currentCharacterName}의 장비, 보석, 각인, 아크 패시브, 아크 그리드, 카드와 스킬 상세 정보`;
   }
-  history.replaceState(
-    null,
-    "",
-    `/character.html?name=${encodeURIComponent(currentCharacterName)}`,
-  );
+  activateCharacterTab(activeCharacterTab, { updateHistory: false });
+  updateCharacterHistory();
   saveRecentCharacter(currentCharacterName);
   showView();
-
-  if (requestedSection) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        document.getElementById(requestedSection)?.scrollIntoView({ block: "start" });
-      });
-    });
-  }
 }
 
 async function loadCharacter(name, fresh = false) {
@@ -1208,6 +1252,43 @@ if (refreshButton) {
   });
 }
 
+characterTabButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    activateCharacterTab(button.dataset.characterTab, { updateHistory: true });
+  });
+
+  button.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+
+    let nextIndex = index;
+    if (event.key === "ArrowLeft") {
+      nextIndex = (index - 1 + characterTabButtons.length) % characterTabButtons.length;
+    } else if (event.key === "ArrowRight") {
+      nextIndex = (index + 1) % characterTabButtons.length;
+    } else if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = characterTabButtons.length - 1;
+    }
+
+    activateCharacterTab(characterTabButtons[nextIndex].dataset.characterTab, {
+      updateHistory: true,
+      focus: true,
+    });
+  });
+});
+
+characterTabOpeners.forEach((opener) => {
+  opener.addEventListener("click", (event) => {
+    event.preventDefault();
+    activateCharacterTab(opener.dataset.openCharacterTab, {
+      updateHistory: true,
+      scroll: true,
+    });
+  });
+});
+
 document.addEventListener("click", (event) => {
   const trigger = event.target.closest("[data-detail-id]");
   if (trigger) openDetail(trigger.dataset.detailId);
@@ -1219,8 +1300,8 @@ if (itemDialog) {
   });
 }
 
-const initialParams = new URLSearchParams(window.location.search);
 const initialName = initialParams.get("name") || initialParams.get("character");
+activateCharacterTab(activeCharacterTab, { updateHistory: false });
 if (initialName) {
   loadCharacter(initialName);
 } else {

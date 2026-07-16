@@ -1978,3 +1978,711 @@
     animation: none;
   }
 }
+
+/* Compact tabbed character workspace */
+
+.character-main {
+  padding-bottom: 72px;
+}
+
+.character-search-band {
+  padding: 14px 0;
+}
+
+.character-page-search {
+  min-height: 44px;
+}
+
+.character-page-search input,
+.character-page-search button {
+  height: 34px;
+}
+
+.character-content-shell {
+  padding-top: 20px;
+}
+
+.profile-hero {
+  grid-template-columns: 236px minmax(0, 1fr);
+  min-height: 300px;
+  border-radius: 16px;
+}
+
+.profile-art,
+.profile-art img {
+  min-height: 300px;
+}
+
+.profile-art img.is-placeholder {
+  margin-top: 106px;
+}
+
+.profile-overview {
+  padding: 22px 25px 18px;
+}
+
+.profile-overview-top {
+  gap: 18px;
+}
+
+.profile-overview h1 {
+  margin-top: 8px;
+  font-size: clamp(30px, 3.2vw, 39px);
+}
+
+.profile-actions {
+  gap: 7px;
+}
+
+.profile-actions button {
+  min-height: 32px;
+  padding: 6px 9px;
+}
+
+.profile-metrics {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.profile-metrics > div {
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.profile-metrics dd {
+  font-size: 14px;
+}
+
+.profile-cache-meta {
+  margin-top: 9px;
+}
+
+.character-section-nav {
+  top: 72px;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.character-section-nav button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 7px 11px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #89929f;
+  background: transparent;
+  font-family: inherit;
+  font-size: 9px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.character-section-nav button:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.character-section-nav button.active {
+  border-color: rgba(232, 177, 63, 0.22);
+  color: var(--gold-bright);
+  background: rgba(232, 177, 63, 0.075);
+}
+
+.character-section-nav button:focus-visible {
+  outline: 2px solid rgba(232, 177, 63, 0.55);
+  outline-offset: 1px;
+}
+
+.character-detail-panel {
+  margin-top: 13px;
+  padding: 21px;
+  border-radius: 13px;
+}
+
+.character-detail-panel.is-active {
+  animation: character-panel-in 0.22s ease both;
+}
+
+.detail-heading {
+  align-items: center;
+}
+
+.detail-heading .eyebrow {
+  margin-bottom: 5px;
+  font-size: 8px;
+}
+
+.detail-heading h2 {
+  font-size: clamp(21px, 2.2vw, 27px);
+}
+
+.overview-detail-grid {
+  grid-template-columns: minmax(0, 1.5fr) minmax(250px, 0.7fr);
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.detail-subpanel {
+  padding: 16px;
+}
+
+.stat-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.stat-card,
+.tendency-card {
+  padding: 10px;
+}
+
+.stat-card strong {
+  font-size: 15px;
+}
+
+.stat-card small {
+  margin-top: 3px;
+  -webkit-line-clamp: 1;
+}
+
+.profile-fact-list > div {
+  padding: 7px 0;
+}
+
+.tendency-panel {
+  margin-top: 10px;
+}
+
+.tendency-grid {
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.tendency-card strong {
+  font-size: 14px;
+}
+
+.equipment-groups {
+  gap: 18px;
+  margin-top: 17px;
+}
+
+.equipment-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.equipment-card-main {
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: 9px;
+  padding: 11px 11px 8px;
+}
+
+.item-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.item-highlights {
+  margin-top: 7px;
+}
+
+.equipment-card .detail-trigger,
+.gem-card .detail-trigger,
+.skill-card .detail-trigger,
+.avatar-card .detail-trigger {
+  width: calc(100% - 18px);
+  min-height: 27px;
+  margin: 0 9px 9px;
+}
+
+.quality-track {
+  margin: 0 11px 9px;
+}
+
+.gem-summary,
+.engraving-grid,
+.ark-point-grid,
+.grid-effect-summary,
+.card-set-effects,
+.skill-grid {
+  margin-top: 16px;
+}
+
+.gem-summary-card,
+.ark-point-card,
+.grid-effect-card {
+  padding: 11px;
+}
+
+.gem-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.gem-card {
+  padding-top: 11px;
+}
+
+.gem-card-body {
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 9px;
+  padding: 0 11px;
+}
+
+.gem-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.gem-effect-name {
+  margin: 8px 11px 0;
+}
+
+.gem-effect-list {
+  margin: 5px 11px 9px;
+}
+
+.engraving-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.engraving-card {
+  gap: 10px;
+  padding: 13px;
+}
+
+.engraving-card p {
+  line-height: 1.6;
+}
+
+.ark-point-card strong {
+  font-size: 23px;
+}
+
+.ark-effect-groups {
+  gap: 14px;
+  margin-top: 15px;
+}
+
+.ark-effect-group {
+  padding-top: 13px;
+}
+
+.ark-effect-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.ark-effect-card {
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 9px;
+  padding: 10px;
+}
+
+.ark-effect-card img {
+  width: 38px;
+  height: 38px;
+}
+
+.ark-grid-slots {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 11px;
+}
+
+.grid-slot-card {
+  padding: 12px;
+}
+
+.grid-slot-head {
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  gap: 9px;
+}
+
+.grid-core-icon {
+  width: 46px;
+  height: 46px;
+}
+
+.grid-gem-list {
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.card-set-effects {
+  gap: 6px;
+}
+
+.card-effect-row {
+  padding: 9px 11px;
+}
+
+.card-grid {
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.card-item-copy {
+  padding: 8px;
+}
+
+.skill-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.skill-card {
+  grid-template-columns: 50px minmax(0, 1fr);
+  gap: 10px;
+  padding: 11px;
+}
+
+.skill-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.avatar-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.avatar-card {
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 9px;
+  padding: 10px;
+}
+
+.avatar-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.collectible-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.collectible-card {
+  padding: 10px;
+}
+
+@keyframes character-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .profile-hero {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .profile-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .equipment-card-grid,
+  .gem-card-grid,
+  .ark-effect-grid,
+  .avatar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .engraving-grid,
+  .ark-grid-slots,
+  .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .character-main {
+    padding-bottom: 58px;
+  }
+
+  .character-search-band {
+    padding: 11px 0;
+  }
+
+  .character-search-layout {
+    gap: 9px;
+  }
+
+  .character-content-shell {
+    padding-top: 14px;
+  }
+
+  .profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-art,
+  .profile-art img {
+    min-height: 230px;
+    max-height: 230px;
+  }
+
+  .profile-art img.is-placeholder {
+    margin-top: 72px;
+  }
+
+  .profile-overview {
+    margin-top: -18px;
+    padding: 22px 18px 18px;
+  }
+
+  .profile-overview-top {
+    display: flex;
+  }
+
+  .profile-actions {
+    align-items: flex-end;
+    flex-direction: column;
+  }
+
+  .profile-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 16px;
+  }
+
+  .character-section-nav {
+    top: 64px;
+  }
+
+  .character-detail-panel {
+    padding: 17px;
+  }
+
+  .detail-heading {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .overview-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .equipment-card-grid,
+  .gem-card-grid,
+  .engraving-grid,
+  .ark-effect-grid,
+  .skill-grid,
+  .avatar-grid,
+  .collectible-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ark-grid-slots {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .character-page-search {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    padding: 4px;
+  }
+
+  .character-page-search button {
+    grid-column: auto;
+    width: auto;
+    min-width: 58px;
+    padding: 0 11px;
+  }
+
+  .profile-art,
+  .profile-art img {
+    min-height: 210px;
+    max-height: 210px;
+  }
+
+  .profile-overview {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .profile-overview-top {
+    display: grid;
+    gap: 13px;
+  }
+
+  .profile-actions {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .profile-actions button {
+    width: auto;
+  }
+
+  .profile-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .character-section-nav {
+    margin-right: -5px;
+    margin-left: -5px;
+  }
+
+  .character-section-nav button {
+    padding: 7px 9px;
+  }
+
+  .character-detail-panel {
+    padding: 15px 13px;
+  }
+
+  .detail-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .detail-subpanel {
+    padding: 13px;
+  }
+
+  .stat-card-grid,
+  .tendency-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .equipment-card-grid,
+  .gem-card-grid,
+  .engraving-grid,
+  .ark-effect-grid,
+  .skill-grid,
+  .avatar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .equipment-card-main {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 7px;
+    padding: 8px 8px 7px;
+  }
+
+  .item-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .gem-card-body {
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 7px;
+    padding: 0 8px;
+  }
+
+  .gem-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .gem-effect-name {
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
+  .gem-effect-list {
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
+  .engraving-card {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 7px;
+    padding: 9px;
+  }
+
+  .engraving-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 9px;
+  }
+
+  .ark-effect-card {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .ark-effect-card img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .skill-card {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .skill-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .collectible-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ark-point-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ark-point-card {
+    padding: 10px 8px;
+  }
+
+  .ark-point-card strong {
+    font-size: 19px;
+  }
+
+  .grid-effect-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 350px) {
+  .profile-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .equipment-card-grid,
+  .gem-card-grid,
+  .engraving-grid,
+  .ark-effect-grid,
+  .skill-grid,
+  .avatar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-detail-panel.is-active {
+    animation: none;
+  }
+}
