@@ -31,7 +31,7 @@
       "url": "https://jloa.cloud/",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://jloa.cloud/?character={character_name}",
+        "target": "https://jloa.cloud/character.html?name={character_name}",
         "query-input": "required name=character_name"
       }
     }
@@ -165,54 +165,6 @@
             <div class="web-floating-card web-floating-card--one"><span>+</span> 실시간 데이터 갱신</div>
             <div class="web-floating-card web-floating-card--two"><i></i> 분석 준비 완료</div>
           </div>
-        </div>
-      </section>
-
-      <section class="character-detail-section" hidden data-character-result>
-        <div class="container">
-          <article class="character-detail-card">
-            <div class="character-detail-cover">
-              <div class="character-image-wrap">
-                <img src="/jloa-icon.png" alt="" data-character-image />
-              </div>
-              <div class="character-identity">
-                <div class="character-badges">
-                  <span data-character-server>서버</span>
-                  <span data-character-class>클래스</span>
-                </div>
-                <h2 data-character-name>캐릭터 이름</h2>
-                <p>
-                  <span data-character-title>칭호 없음</span>
-                  <i></i>
-                  <span data-character-guild>길드 미가입</span>
-                </p>
-              </div>
-              <div class="character-detail-actions">
-                <span class="source-chip" data-character-source>데이터 확인 중</span>
-                <button type="button" data-character-refresh>
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 9A7 7 0 0 1 18.7 7M17.9 15A7 7 0 0 1 5.3 17"/></svg>
-                  최신 정보 갱신
-                </button>
-              </div>
-            </div>
-
-            <dl class="character-metric-grid">
-              <div><dt>아이템 레벨</dt><dd data-character-item-level>-</dd><small>Item Level</small></div>
-              <div><dt>전투 레벨</dt><dd data-character-level>-</dd><small>Combat Level</small></div>
-              <div><dt>원정대 레벨</dt><dd data-character-expedition>-</dd><small>Expedition</small></div>
-              <div><dt>PVP 등급</dt><dd data-character-pvp>-</dd><small>PVP Grade</small></div>
-            </dl>
-
-            <div class="character-tool-tabs" aria-label="캐릭터 분석 메뉴">
-              <button class="active" type="button">캐릭터 정보</button>
-              <button type="button" data-coming-soon="원정대">원정대 <small>준비 중</small></button>
-              <button type="button" data-coming-soon="시뮬레이터">시뮬레이터 <small>준비 중</small></button>
-              <button type="button" data-coming-soon="스펙업 가이드">스펙업 가이드 <small>준비 중</small></button>
-              <button type="button" data-coming-soon="효율표">효율표 <small>준비 중</small></button>
-            </div>
-
-            <p class="character-cache-meta" data-character-cache-meta></p>
-          </article>
         </div>
       </section>
 
