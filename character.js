@@ -17,22 +17,30 @@ const requestedSection = window.location.hash
   ? decodeURIComponent(window.location.hash.slice(1))
   : "";
 const CHARACTER_TAB_ALIASES = Object.freeze({
-  stats: "overview",
-  gems: "build",
-  engravings: "build",
-  "ark-passive": "ark",
-  "ark-grid": "ark",
-  cards: "combat",
-  skills: "combat",
-  appearance: "collection",
-  "panel-overview": "overview",
-  "panel-equipment": "equipment",
-  "panel-build": "build",
-  "panel-ark": "ark",
-  "panel-combat": "combat",
-  "panel-collection": "collection",
+  overview: "character",
+  equipment: "character",
+  build: "character",
+  ark: "character",
+  combat: "character",
+  stats: "character",
+  gems: "character",
+  engravings: "character",
+  "ark-passive": "character",
+  "ark-grid": "character",
+  cards: "character",
+  skills: "character",
+  collection: "extras",
+  appearance: "extras",
+  "panel-overview": "character",
+  "panel-equipment": "character",
+  "panel-build": "character",
+  "panel-ark": "character",
+  "panel-combat": "character",
+  "panel-collection": "extras",
+  "panel-character": "character",
+  "panel-extras": "extras",
 });
-const requestedTabValue = initialParams.get("tab") || requestedSection || "overview";
+const requestedTabValue = initialParams.get("tab") || requestedSection || "character";
 const requestedTab = CHARACTER_TAB_ALIASES[requestedTabValue] || requestedTabValue;
 
 const detailRegistry = new Map();
@@ -42,7 +50,7 @@ let activeCharacterTab = characterTabPanels.some(
   (panel) => panel.dataset.characterPanel === requestedTab,
 )
   ? requestedTab
-  : "overview";
+  : "character";
 
 function valueOr(value, fallback = "-") {
   return value === null || value === undefined || value === "" ? fallback : value;
@@ -102,7 +110,7 @@ function updateCharacterHistory() {
   if (!currentCharacterName) return;
   const params = new URLSearchParams();
   params.set("name", currentCharacterName);
-  if (activeCharacterTab !== "overview") params.set("tab", activeCharacterTab);
+  if (activeCharacterTab !== "character") params.set("tab", activeCharacterTab);
   history.replaceState(null, "", `/character.html?${params.toString()}`);
 }
 
@@ -114,7 +122,7 @@ function activateCharacterTab(
     (panel) => panel.dataset.characterPanel === tabName,
   )
     ? tabName
-    : "overview";
+    : "character";
 
   activeCharacterTab = validTab;
 
@@ -974,16 +982,36 @@ function renderCards(cardSection) {
   setSectionCount("cards", cards.length, "장");
 
   effectsContainer.replaceChildren();
-  const effectItems = effects.flatMap((effect) => toArray(effect.Items));
-  if (effectItems.length === 0) {
+  const activeEffects = effects
+    .map((effect) => {
+      const items = toArray(effect.Items);
+      return {
+        active: items.at(-1),
+        items,
+      };
+    })
+    .filter((effect) => effect.active);
+
+  if (activeEffects.length === 0) {
     renderEmpty(effectsContainer, "활성화된 카드 세트 효과가 없습니다.");
   } else {
-    effectItems.forEach((item) => {
-      const row = element("div", "card-effect-row");
+    activeEffects.forEach(({ active, items }) => {
+      const row = element("button", "card-effect-row");
+      row.type = "button";
       row.append(
-        element("strong", "", cleanInline(item.Name) || "카드 세트 효과"),
-        element("span", "", cleanInline(item.Description) || "-"),
+        element("strong", "", cleanInline(active.Name) || "카드 세트 효과"),
+        element("span", "", cleanInline(active.Description) || "-"),
       );
+      const detailId = registerDetail({
+        title: active.Name || "카드 세트 효과",
+        subtitle: "활성 카드 세트 단계",
+        lines: items.flatMap((item) => [
+          cleanInline(item.Name),
+          cleanInline(item.Description),
+        ]),
+      });
+      row.dataset.detailId = detailId;
+      row.setAttribute("aria-label", `${cleanInline(active.Name) || "카드 세트"} 전체 효과 보기`);
       effectsContainer.append(row);
     });
   }
@@ -1158,38 +1186,6 @@ function renderCollectibles(collectibles) {
   });
 }
 
-function setDashboardCount(name, value) {
-  const target = document.querySelector(`[data-dashboard-count="${name}"]`);
-  if (target) target.textContent = value;
-}
-
-function renderDashboardSummary(data) {
-  const equipment = toArray(data?.ArmoryEquipment);
-  const gemSection = data?.ArmoryGem || data?.ArmoryGems || {};
-  const gems = toArray(gemSection?.Gems);
-  const engravingSection = data?.ArmoryEngraving || {};
-  const engravings =
-    toArray(engravingSection.ArkPassiveEffects).length > 0
-      ? toArray(engravingSection.ArkPassiveEffects)
-      : toArray(engravingSection.Effects).length > 0
-        ? toArray(engravingSection.Effects)
-        : toArray(engravingSection.Engravings);
-  const arkEffects = toArray(data?.ArkPassive?.Effects);
-  const arkGridSlots = toArray(data?.ArkGrid?.Slots);
-  const cards = toArray(data?.ArmoryCard?.Cards);
-  const allSkills = toArray(data?.ArmorySkills);
-  const configuredSkills = allSkills.filter((skill) => Number(skill.Level) > 1);
-  const visibleSkills = configuredSkills.length > 0 ? configuredSkills : allSkills;
-  const avatars = toArray(data?.ArmoryAvatars);
-  const collectibles = toArray(data?.Collectibles);
-
-  setDashboardCount("equipment", `${equipment.length}개 슬롯`);
-  setDashboardCount("build", `${gems.length} 보석 · ${engravings.length} 각인`);
-  setDashboardCount("ark", `${arkEffects.length} 효과 · ${arkGridSlots.length} 코어`);
-  setDashboardCount("combat", `${cards.length} 카드 · ${visibleSkills.length} 스킬`);
-  setDashboardCount("collection", `${avatars.length} 아바타 · ${collectibles.length} 수집`);
-}
-
 function renderCharacter(response) {
   const data = response?.data;
   const profile = data?.ArmoryProfile;
@@ -1212,7 +1208,6 @@ function renderCharacter(response) {
   renderSkills(data.ArmorySkills);
   renderAvatars(data.ArmoryAvatars);
   renderCollectibles(data.Collectibles);
-  renderDashboardSummary(data);
 
   document.title = `${currentCharacterName} 캐릭터 상세 정보 — JLOA`;
   const description = document.querySelector('meta[name="description"]');

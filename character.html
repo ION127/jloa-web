@@ -30,7 +30,7 @@
     />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/responsive.css?v=20260716-character" />
-    <link rel="stylesheet" href="/character.css?v=20260716-cockpit" />
+    <link rel="stylesheet" href="/character.css?v=20260716-sheet" />
   </head>
   <body class="character-page">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -53,10 +53,8 @@
 
         <nav id="site-nav" class="site-nav" aria-label="주요 메뉴" data-nav>
           <a href="/">메인</a>
-          <a href="#character-tabs" data-open-character-tab="overview">종합</a>
-          <a href="#character-tabs" data-open-character-tab="equipment">장비</a>
-          <a href="#character-tabs" data-open-character-tab="build">보석 · 각인</a>
-          <a href="#character-tabs" data-open-character-tab="ark">아크 시스템</a>
+          <a href="#character-tabs" data-open-character-tab="character">캐릭터 정보</a>
+          <a href="#character-tabs" data-open-character-tab="extras">기타 정보</a>
           <a class="nav-download" href="/desktop-app.html">데스크톱 앱 <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
@@ -190,232 +188,136 @@
             </div>
           </section>
 
-          <div class="character-workbench">
-            <aside class="character-index">
-              <div class="character-index-heading">
-                <p>CHARACTER INDEX</p>
-                <span>원하는 정보만 빠르게 확인하세요.</span>
-              </div>
+          <nav id="character-tabs" class="character-sheet-tabs" aria-label="캐릭터 상세 정보" role="tablist">
+            <button id="tab-character" class="active" type="button" role="tab" aria-selected="true" aria-controls="panel-character" data-character-tab="character">
+              캐릭터 정보
+            </button>
+            <button id="tab-extras" type="button" role="tab" aria-selected="false" aria-controls="panel-extras" tabindex="-1" data-character-tab="extras">
+              기타 정보
+            </button>
+          </nav>
 
-              <nav id="character-tabs" class="character-section-nav" aria-label="캐릭터 상세 정보" role="tablist">
-                <button id="tab-overview" class="active" type="button" role="tab" aria-selected="true" aria-controls="panel-overview" data-character-tab="overview">
-                  <span>01</span><strong>종합</strong><small>핵심 스펙과 프로필</small>
-                </button>
-                <button id="tab-equipment" type="button" role="tab" aria-selected="false" aria-controls="panel-equipment" tabindex="-1" data-character-tab="equipment">
-                  <span>02</span><strong>장비</strong><small>방어구와 악세서리</small>
-                </button>
-                <button id="tab-build" type="button" role="tab" aria-selected="false" aria-controls="panel-build" tabindex="-1" data-character-tab="build">
-                  <span>03</span><strong>보석 · 각인</strong><small>전투 세팅 구성</small>
-                </button>
-                <button id="tab-ark" type="button" role="tab" aria-selected="false" aria-controls="panel-ark" tabindex="-1" data-character-tab="ark">
-                  <span>04</span><strong>아크 시스템</strong><small>패시브와 그리드</small>
-                </button>
-                <button id="tab-combat" type="button" role="tab" aria-selected="false" aria-controls="panel-combat" tabindex="-1" data-character-tab="combat">
-                  <span>05</span><strong>카드 · 스킬</strong><small>전투 운용 정보</small>
-                </button>
-                <button id="tab-collection" type="button" role="tab" aria-selected="false" aria-controls="panel-collection" tabindex="-1" data-character-tab="collection">
-                  <span>06</span><strong>수집 · 아바타</strong><small>부가 캐릭터 정보</small>
-                </button>
-              </nav>
-
-              <div class="character-index-note">
-                <span>DATA POLICY</span>
-                <p>최근 조회 정보는 JLOA 캐시를 사용하며, 직접 갱신 시 Open API에서 다시 확인합니다.</p>
-              </div>
-            </aside>
-
-            <div class="character-panel-stack">
-              <section id="panel-overview" class="character-detail-panel is-active" role="tabpanel" aria-labelledby="tab-overview" data-character-panel="overview">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">CHARACTER OVERVIEW</p>
-                    <h2>캐릭터 종합 현황</h2>
-                    <p>핵심 전투 수치와 현재 세팅 구성을 한 화면에 압축했습니다.</p>
-                  </div>
-                  <span>Open API 원본 데이터</span>
-                </div>
-
-                <div class="overview-detail-grid">
-                  <article class="detail-subpanel">
-                    <div class="subpanel-title">
-                      <h3>전투 특성</h3>
+          <div class="character-sheet-stack">
+            <section id="panel-character" class="character-sheet-panel is-active" role="tabpanel" aria-labelledby="tab-character" data-character-panel="character">
+              <div class="character-sheet-layout">
+                <aside class="character-sheet-side">
+                  <article id="stats" class="sheet-module sheet-module--stats">
+                    <div class="sheet-module-heading">
+                      <h2>전투 특성</h2>
                       <small data-section-count="stats">0개</small>
                     </div>
                     <div class="stat-card-grid" data-combat-stats></div>
                   </article>
-                  <article class="detail-subpanel">
-                    <div class="subpanel-title">
-                      <h3>캐릭터 프로필</h3>
-                      <small>PROFILE</small>
-                    </div>
-                    <dl class="profile-fact-list" data-profile-facts></dl>
-                  </article>
-                </div>
 
-                <div class="overview-lower-grid">
-                  <article class="detail-subpanel">
-                    <div class="subpanel-title">
-                      <h3>성향</h3>
-                      <small data-section-count="tendencies">0개</small>
+                  <article id="cards" class="sheet-module sheet-module--cards">
+                    <div class="sheet-module-heading">
+                      <h2>카드</h2>
+                      <small data-section-count="cards">0장</small>
                     </div>
-                    <div class="tendency-grid" data-tendencies></div>
+                    <div class="card-set-effects" data-card-effects></div>
+                    <div class="card-grid" data-cards></div>
                   </article>
 
-                  <article class="detail-subpanel overview-route-panel">
-                    <div class="subpanel-title">
-                      <h3>세팅 바로보기</h3>
-                      <small>QUICK VIEW</small>
+                  <article id="ark-grid" class="sheet-module sheet-module--grid">
+                    <div class="sheet-module-heading">
+                      <h2>아크 그리드</h2>
+                      <small data-section-count="ark-grid">0개</small>
                     </div>
-                    <div class="overview-route-grid">
-                      <button type="button" data-open-character-tab="equipment">
-                        <span>장비 구성</span>
-                        <strong data-dashboard-count="equipment">-</strong>
-                      </button>
-                      <button type="button" data-open-character-tab="build">
-                        <span>보석 · 각인</span>
-                        <strong data-dashboard-count="build">-</strong>
-                      </button>
-                      <button type="button" data-open-character-tab="ark">
-                        <span>아크 시스템</span>
-                        <strong data-dashboard-count="ark">-</strong>
-                      </button>
-                      <button type="button" data-open-character-tab="combat">
-                        <span>카드 · 스킬</span>
-                        <strong data-dashboard-count="combat">-</strong>
-                      </button>
-                      <button type="button" data-open-character-tab="collection">
-                        <span>수집 · 아바타</span>
-                        <strong data-dashboard-count="collection">-</strong>
-                      </button>
+                    <div class="grid-effect-summary" data-grid-effects></div>
+                    <div class="ark-grid-slots" data-grid-slots></div>
+                  </article>
+
+                  <article id="engravings" class="sheet-module sheet-module--engravings">
+                    <div class="sheet-module-heading">
+                      <h2>각인</h2>
+                      <small data-section-count="engravings">0개</small>
                     </div>
+                    <div class="engraving-grid" data-engravings></div>
+                  </article>
+                </aside>
+
+                <div class="character-sheet-main">
+                  <article id="gems" class="sheet-module sheet-module--gems">
+                    <div class="sheet-module-heading">
+                      <h2>보석</h2>
+                      <small data-section-count="gems">0개</small>
+                    </div>
+                    <div class="gem-summary" data-gem-summary></div>
+                    <div class="gem-card-grid" data-gems></div>
+                  </article>
+
+                  <article id="equipment" class="sheet-module sheet-module--equipment">
+                    <div class="sheet-module-heading">
+                      <h2>장비 · 악세서리</h2>
+                      <small data-section-count="equipment">0개</small>
+                    </div>
+                    <div class="equipment-groups" data-equipment></div>
+                  </article>
+
+                  <article id="ark-passive" class="sheet-module sheet-module--passive">
+                    <div class="sheet-module-heading">
+                      <h2>아크 패시브</h2>
+                      <small data-section-count="ark-passive">0개</small>
+                    </div>
+                    <div class="ark-point-grid" data-ark-points></div>
+                    <div class="ark-effect-groups" data-ark-effects></div>
+                  </article>
+
+                  <article id="skills" class="sheet-module sheet-module--skills">
+                    <div class="sheet-module-heading">
+                      <h2>전투 스킬</h2>
+                      <small data-section-count="skills">0개</small>
+                    </div>
+                    <div class="skill-grid" data-skills></div>
                   </article>
                 </div>
-              </section>
+              </div>
+            </section>
 
-              <section id="panel-equipment" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-equipment" hidden data-character-panel="equipment">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">EQUIPMENT LOADOUT</p>
-                    <h2>장비와 악세서리</h2>
-                    <p>슬롯별 품질과 주요 옵션을 카드형 장비판으로 정리했습니다.</p>
-                  </div>
-                  <span data-section-count="equipment">0개</span>
+            <section id="panel-extras" class="character-sheet-panel" role="tabpanel" aria-labelledby="tab-extras" hidden data-character-panel="extras">
+              <div class="extras-heading">
+                <div>
+                  <p class="eyebrow">MORE CHARACTER DATA</p>
+                  <h2>기타 정보</h2>
+                  <p>핵심 전투 세팅을 제외한 프로필, 성향, 아바타와 수집 현황입니다.</p>
                 </div>
-                <div class="equipment-groups" data-equipment></div>
-              </section>
+                <span>Open API 원본 데이터</span>
+              </div>
 
-              <section id="panel-build" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-build" hidden data-character-panel="build">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">COMBAT BUILD</p>
-                    <h2>보석과 각인 구성</h2>
-                    <p>보석 적용 스킬과 활성 각인을 함께 비교할 수 있습니다.</p>
+              <div class="character-extras-grid">
+                <article class="sheet-module">
+                  <div class="sheet-module-heading">
+                    <h2>캐릭터 프로필</h2>
+                    <small>PROFILE</small>
                   </div>
-                  <span>BUILD SETUP</span>
-                </div>
-
-                <article id="gems" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>01</span><h3>보석 · 적용 스킬</h3></div>
-                    <small data-section-count="gems">0개</small>
-                  </div>
-                  <div class="gem-summary" data-gem-summary></div>
-                  <div class="gem-card-grid" data-gems></div>
+                  <dl class="profile-fact-list" data-profile-facts></dl>
                 </article>
 
-                <article id="engravings" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>02</span><h3>활성 각인</h3></div>
-                    <small data-section-count="engravings">0개</small>
+                <article class="sheet-module">
+                  <div class="sheet-module-heading">
+                    <h2>성향</h2>
+                    <small data-section-count="tendencies">0개</small>
                   </div>
-                  <div class="engraving-grid" data-engravings></div>
-                </article>
-              </section>
-
-              <section id="panel-ark" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-ark" hidden data-character-panel="ark">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">ARK SYSTEM</p>
-                    <h2>아크 패시브와 그리드</h2>
-                    <p>포인트 분배, 활성 효과, 코어와 젬 구성을 한 화면에서 확인합니다.</p>
-                  </div>
-                  <span>ARK LOADOUT</span>
-                </div>
-
-                <article id="ark-passive" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>01</span><h3>아크 패시브</h3></div>
-                    <small data-section-count="ark-passive">0개</small>
-                  </div>
-                  <div class="ark-point-grid" data-ark-points></div>
-                  <div class="ark-effect-groups" data-ark-effects></div>
+                  <div class="tendency-grid" data-tendencies></div>
                 </article>
 
-                <article id="ark-grid" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>02</span><h3>아크 그리드</h3></div>
-                    <small data-section-count="ark-grid">0개</small>
-                  </div>
-                  <div class="grid-effect-summary" data-grid-effects></div>
-                  <div class="ark-grid-slots" data-grid-slots></div>
-                </article>
-              </section>
-
-              <section id="panel-combat" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-combat" hidden data-character-panel="combat">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">COMBAT CONFIGURATION</p>
-                    <h2>카드와 전투 스킬</h2>
-                    <p>장착 카드 세트와 실제 투자된 스킬·트라이포드를 나눠 보여줍니다.</p>
-                  </div>
-                  <span>COMBAT DATA</span>
-                </div>
-
-                <article id="cards" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>01</span><h3>장착 카드 · 세트 효과</h3></div>
-                    <small data-section-count="cards">0장</small>
-                  </div>
-                  <div class="card-set-effects" data-card-effects></div>
-                  <div class="card-grid" data-cards></div>
-                </article>
-
-                <article id="skills" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>02</span><h3>전투 스킬 · 트라이포드</h3></div>
-                    <small data-section-count="skills">0개</small>
-                  </div>
-                  <div class="skill-grid" data-skills></div>
-                </article>
-              </section>
-
-              <section id="panel-collection" class="character-detail-panel" role="tabpanel" aria-labelledby="tab-collection" hidden data-character-panel="collection">
-                <div class="detail-heading">
-                  <div>
-                    <p class="eyebrow">COLLECTION & STYLE</p>
-                    <h2>아바타와 수집 현황</h2>
-                    <p>현재 장착 외형과 원정대 수집 진행도를 간결하게 확인합니다.</p>
-                  </div>
-                  <span>ACCOUNT DATA</span>
-                </div>
-
-                <article id="appearance" class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>01</span><h3>장착 아바타</h3></div>
+                <article id="appearance" class="sheet-module character-extras-wide">
+                  <div class="sheet-module-heading">
+                    <h2>장착 아바타</h2>
                     <small data-section-count="avatars">0개</small>
                   </div>
                   <div class="avatar-grid" data-avatars></div>
                 </article>
 
-                <article class="dashboard-module">
-                  <div class="module-heading">
-                    <div><span>02</span><h3>수집품</h3></div>
+                <article class="sheet-module character-extras-wide">
+                  <div class="sheet-module-heading">
+                    <h2>수집품</h2>
                     <small data-section-count="collectibles">0개</small>
                   </div>
                   <div class="collectible-grid" data-collectibles></div>
                 </article>
-              </section>
-            </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>
@@ -462,6 +364,6 @@
 
     <noscript><p class="noscript">캐릭터 상세 정보를 보려면 JavaScript를 켜 주세요.</p></noscript>
     <script src="/app.js"></script>
-    <script src="/character.js?v=20260716-cockpit"></script>
+    <script src="/character.js?v=20260716-sheet"></script>
   </body>
 </html>

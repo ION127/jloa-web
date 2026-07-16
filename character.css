@@ -3573,3 +3573,1448 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Dense character information sheet */
+.profile-dossier {
+  grid-template-columns: 186px minmax(0, 1fr);
+  min-height: 210px;
+  border-radius: 13px;
+}
+
+.profile-dossier .profile-art,
+.profile-dossier .profile-art img {
+  min-height: 210px;
+  max-height: 210px;
+}
+
+.profile-dossier .profile-art img {
+  object-position: 50% 16%;
+}
+
+.profile-dossier .profile-art img.is-placeholder {
+  width: 64px;
+  height: 64px;
+  min-height: 0;
+  margin-top: 72px;
+}
+
+.profile-dossier .profile-overview {
+  padding: 15px 18px 11px;
+}
+
+.profile-dossier .profile-overview h1 {
+  margin-top: 6px;
+  font-size: clamp(26px, 3vw, 34px);
+}
+
+.profile-dossier .profile-badges span,
+.profile-dossier .profile-source {
+  padding: 4px 7px;
+  font-size: 8px;
+}
+
+.profile-dossier .profile-actions button {
+  min-height: 28px;
+  padding: 5px 8px;
+}
+
+.profile-scoreboard {
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.profile-score {
+  padding: 8px 10px 7px;
+  border-radius: 8px;
+}
+
+.profile-score > strong {
+  font-size: clamp(17px, 2vw, 23px);
+}
+
+.profile-minor-metrics {
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.profile-minor-metrics > div {
+  padding: 6px 8px;
+  border-radius: 7px;
+}
+
+.profile-minor-metrics dd {
+  font-size: 11px;
+}
+
+.profile-dossier .profile-cache-meta {
+  margin-top: 5px;
+  font-size: 7px;
+}
+
+.character-sheet-tabs {
+  position: sticky;
+  z-index: 9;
+  top: 72px;
+  display: flex;
+  gap: 4px;
+  margin: 10px 0 8px;
+  padding: 5px;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 10px;
+  background: rgba(14, 16, 21, 0.9);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  scrollbar-width: none;
+}
+
+.character-sheet-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.character-sheet-tabs button {
+  min-height: 31px;
+  padding: 6px 15px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #89929f;
+  background: transparent;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.character-sheet-tabs button:hover {
+  color: #e5e8ec;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.character-sheet-tabs button.active {
+  border-color: rgba(232, 177, 63, 0.23);
+  color: var(--gold-bright);
+  background: rgba(232, 177, 63, 0.075);
+}
+
+.character-sheet-panel {
+  min-width: 0;
+}
+
+.character-sheet-panel.is-active {
+  animation: character-panel-in 0.2s ease both;
+}
+
+.character-sheet-layout {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+}
+
+.character-sheet-side,
+.character-sheet-main {
+  display: grid;
+  min-width: 0;
+  gap: 9px;
+}
+
+.sheet-module {
+  min-width: 0;
+  padding: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 177, 63, 0.035), transparent 30%),
+    rgba(17, 19, 25, 0.92);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.13);
+}
+
+.sheet-module-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 25px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sheet-module-heading h2 {
+  margin: 0;
+  color: #e8ebef;
+  font-size: 12px;
+  letter-spacing: -0.025em;
+}
+
+.sheet-module-heading small {
+  flex: 0 0 auto;
+  color: #737d89;
+  font-family: "DM Mono", monospace;
+  font-size: 7px;
+}
+
+.sheet-module .empty-state {
+  min-height: 62px;
+  padding: 14px 8px;
+  font-size: 8px;
+}
+
+.sheet-module--stats .stat-card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.sheet-module--stats .stat-card {
+  padding: 7px;
+  border-radius: 6px;
+}
+
+.sheet-module--stats .stat-card span {
+  font-size: 7px;
+}
+
+.sheet-module--stats .stat-card strong {
+  margin-top: 1px;
+  font-size: 13px;
+}
+
+.sheet-module--stats .stat-card small {
+  margin-top: 2px;
+  font-size: 6px;
+  line-height: 1.4;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--cards .card-set-effects {
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.sheet-module--cards .card-effect-row {
+  display: block;
+  padding: 7px;
+  border-radius: 6px;
+}
+
+.sheet-module--cards .card-effect-row strong,
+.sheet-module--cards .card-effect-row span {
+  display: block;
+  font-size: 7px;
+  line-height: 1.5;
+}
+
+.sheet-module--cards .card-effect-row span {
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-module--cards .card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.sheet-module--cards .card-item {
+  position: relative;
+  border-radius: 6px;
+}
+
+.sheet-module--cards .card-item-copy {
+  padding: 5px;
+}
+
+.sheet-module--cards .card-item-copy strong {
+  font-size: 7px;
+}
+
+.sheet-module--cards .card-item-copy span {
+  display: none;
+}
+
+.sheet-module--cards .card-awake {
+  right: 3px;
+  bottom: 3px;
+  padding: 2px 3px;
+  font-size: 6px;
+}
+
+.sheet-module--cards .card-item .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.sheet-module--grid .grid-effect-summary {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.sheet-module--grid .grid-effect-card {
+  padding: 7px;
+  border-radius: 6px;
+}
+
+.sheet-module--grid .grid-effect-card span,
+.sheet-module--grid .grid-effect-card small {
+  font-size: 6px;
+}
+
+.sheet-module--grid .grid-effect-card strong {
+  font-size: 11px;
+}
+
+.sheet-module--grid .grid-effect-card small {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--grid .ark-grid-slots {
+  grid-template-columns: 1fr;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.sheet-module--grid .grid-slot-card {
+  padding: 7px;
+  border-radius: 7px;
+}
+
+.sheet-module--grid .grid-slot-head {
+  grid-template-columns: 34px minmax(0, 1fr) 29px;
+  gap: 6px;
+}
+
+.sheet-module--grid .grid-core-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+}
+
+.sheet-module--grid .grid-slot-copy > span {
+  font-size: 6px;
+}
+
+.sheet-module--grid .grid-slot-copy strong {
+  font-size: 8px;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--grid .grid-point {
+  min-width: 29px;
+  height: 29px;
+  border-radius: 6px;
+  font-size: 9px;
+}
+
+.sheet-module--grid .grid-gem-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  margin-top: 6px;
+}
+
+.sheet-module--grid .grid-gem-button {
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.sheet-module--grid .grid-gem-button span {
+  display: none;
+}
+
+.sheet-module--grid .grid-slot-card > .detail-trigger {
+  min-height: 21px;
+  margin-top: 5px;
+  font-size: 7px;
+}
+
+.sheet-module--engravings .engraving-grid {
+  grid-template-columns: 1fr;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.sheet-module--engravings .engraving-card {
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 7px;
+  padding: 7px;
+  border-radius: 7px;
+}
+
+.sheet-module--engravings .engraving-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  font-size: 9px;
+}
+
+.sheet-module--engravings .engraving-card h3 {
+  font-size: 9px;
+}
+
+.sheet-module--engravings .engraving-meta {
+  gap: 3px;
+  margin-top: 2px;
+}
+
+.sheet-module--engravings .engraving-meta span {
+  padding: 1px 4px;
+  font-size: 6px;
+}
+
+.sheet-module--engravings .engraving-card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: 7px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sheet-module--engravings .detail-trigger {
+  min-height: 21px;
+  font-size: 7px;
+}
+
+.sheet-module--gems .gem-summary {
+  grid-template-columns: 0.7fr 0.7fr 0.7fr 1.9fr;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.sheet-module--gems .gem-summary-card,
+.sheet-module--gems .gem-summary-card--wide {
+  grid-column: auto;
+  min-width: 0;
+  padding: 7px 8px;
+  border-radius: 6px;
+}
+
+.sheet-module--gems .gem-summary-card span {
+  font-size: 6px;
+}
+
+.sheet-module--gems .gem-summary-card strong {
+  margin-top: 1px;
+  overflow: hidden;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-module--gems .gem-card-grid {
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 7px;
+}
+
+.sheet-module--gems .gem-card {
+  position: relative;
+  min-height: 83px;
+  padding: 6px 3px 4px;
+  border-radius: 6px;
+}
+
+.sheet-module--gems .gem-card-body {
+  display: block;
+  padding: 0;
+  text-align: center;
+}
+
+.sheet-module--gems .gem-icon {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+.sheet-module--gems .gem-level {
+  right: 2px;
+  bottom: 2px;
+  min-width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  font-size: 6px;
+}
+
+.sheet-module--gems .gem-copy > span,
+.sheet-module--gems .gem-effect-list {
+  display: none;
+}
+
+.sheet-module--gems .gem-copy strong {
+  margin-top: 4px;
+  font-size: 6px;
+  line-height: 1.35;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--gems .gem-effect-name {
+  margin: 2px 2px 0;
+  overflow: hidden;
+  color: #9fa7b2;
+  font-size: 6px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-module--gems .gem-card .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.sheet-module--equipment .equipment-groups {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.sheet-module--equipment .equipment-group {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.sheet-module--equipment .equipment-group-head {
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.sheet-module--equipment .equipment-group-head h3 {
+  font-size: 10px;
+}
+
+.sheet-module--equipment .equipment-group-head span {
+  max-width: 52%;
+  font-size: 6px;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.sheet-module--equipment .equipment-card-grid {
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+
+.sheet-module--equipment .equipment-card {
+  min-height: 76px;
+  border-radius: 7px;
+}
+
+.sheet-module--equipment .equipment-card-main {
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 7px;
+  padding: 7px 50px 7px 7px;
+}
+
+.sheet-module--equipment .item-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+}
+
+.sheet-module--equipment .item-quality {
+  min-width: 15px;
+  height: 15px;
+  font-size: 6px;
+}
+
+.sheet-module--equipment .item-copy > span {
+  font-size: 6px;
+}
+
+.sheet-module--equipment .item-copy strong {
+  margin-top: 1px;
+  font-size: 8px;
+  line-height: 1.35;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--equipment .item-highlights {
+  gap: 1px;
+  margin-top: 3px;
+}
+
+.sheet-module--equipment .item-highlights li {
+  font-size: 6px;
+}
+
+.sheet-module--equipment .item-highlights li:nth-child(n + 3) {
+  display: none;
+}
+
+.sheet-module--equipment .quality-track {
+  position: absolute;
+  right: 50px;
+  bottom: 7px;
+  left: 56px;
+  height: 2px;
+  margin: 0;
+}
+
+.sheet-module--equipment .equipment-card .detail-trigger {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: auto;
+  min-height: 21px;
+  margin: 0;
+  padding: 3px 6px;
+  font-size: 6px;
+}
+
+.sheet-module--passive .ark-point-grid {
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.sheet-module--passive .ark-point-card {
+  padding: 8px;
+  border-radius: 7px;
+}
+
+.sheet-module--passive .ark-point-card span,
+.sheet-module--passive .ark-point-card small {
+  font-size: 6px;
+}
+
+.sheet-module--passive .ark-point-card strong {
+  margin-top: 2px;
+  font-size: 17px;
+}
+
+.sheet-module--passive .ark-point-card small {
+  margin-top: 3px;
+}
+
+.sheet-module--passive .ark-effect-groups {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.sheet-module--passive .ark-effect-group {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.014);
+}
+
+.sheet-module--passive .ark-effect-group-head {
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.sheet-module--passive .ark-effect-group-head h3 {
+  font-size: 9px;
+}
+
+.sheet-module--passive .ark-effect-group-head span {
+  font-size: 6px;
+}
+
+.sheet-module--passive .ark-effect-grid {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+.sheet-module--passive .ark-effect-card {
+  position: relative;
+  grid-template-columns: 29px minmax(0, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.sheet-module--passive .ark-effect-card img {
+  width: 29px;
+  height: 29px;
+  border-radius: 5px;
+}
+
+.sheet-module--passive .ark-effect-card strong {
+  display: -webkit-box;
+  font-size: 7px;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sheet-module--passive .ark-effect-card span {
+  display: none;
+}
+
+.sheet-module--passive .ark-effect-card .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.sheet-module--skills .skill-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.sheet-module--skills .skill-card {
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 7px;
+  padding: 7px;
+  border-radius: 7px;
+}
+
+.sheet-module--skills .skill-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+}
+
+.sheet-module--skills .skill-level {
+  width: 15px;
+  height: 15px;
+  font-size: 6px;
+}
+
+.sheet-module--skills .skill-copy > span {
+  font-size: 6px;
+}
+
+.sheet-module--skills .skill-copy strong {
+  margin-top: 1px;
+  font-size: 8px;
+  -webkit-line-clamp: 1;
+}
+
+.sheet-module--skills .skill-rune {
+  gap: 3px;
+  margin-top: 3px;
+  font-size: 6px;
+}
+
+.sheet-module--skills .skill-rune img {
+  width: 12px;
+  height: 12px;
+}
+
+.sheet-module--skills .tripod-list {
+  gap: 3px;
+}
+
+.sheet-module--skills .tripod-list li {
+  max-width: 100%;
+  padding: 2px 4px;
+  overflow: hidden;
+  font-size: 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-module--skills .skill-card .detail-trigger {
+  min-height: 21px;
+  font-size: 6px;
+}
+
+.extras-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 9px;
+  padding: 15px 17px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
+  background: rgba(17, 19, 25, 0.9);
+}
+
+.extras-heading .eyebrow {
+  margin-bottom: 4px;
+  font-size: 8px;
+}
+
+.extras-heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.extras-heading p:not(.eyebrow) {
+  margin: 4px 0 0;
+  color: #757f8c;
+  font-size: 8px;
+}
+
+.extras-heading > span {
+  color: #737d89;
+  font-family: "DM Mono", monospace;
+  font-size: 7px;
+}
+
+.character-extras-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.character-extras-wide {
+  grid-column: 1 / -1;
+}
+
+.character-extras-grid .profile-fact-list {
+  margin-top: 7px;
+}
+
+.character-extras-grid .profile-fact-list > div {
+  padding: 7px 0;
+}
+
+.character-extras-grid .tendency-grid {
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.character-extras-grid .tendency-card {
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.character-extras-grid .avatar-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.character-extras-grid .avatar-card {
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 6px;
+  padding: 7px;
+  border-radius: 7px;
+}
+
+.character-extras-grid .avatar-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.character-extras-grid .avatar-card .detail-trigger {
+  min-height: 21px;
+  font-size: 6px;
+}
+
+.character-extras-grid .collectible-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.character-extras-grid .collectible-card {
+  padding: 7px;
+  border-radius: 7px;
+}
+
+.character-main {
+  padding-bottom: 24px;
+}
+
+@media (max-width: 1080px) {
+  .character-sheet-layout {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .sheet-module--gems .gem-card-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-columns: 70px;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    padding-bottom: 3px;
+    scrollbar-width: thin;
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .character-sheet-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .character-sheet-side {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sheet-module--stats,
+  .sheet-module--cards,
+  .sheet-module--grid,
+  .sheet-module--engravings {
+    align-self: start;
+  }
+
+  .sheet-module--equipment .equipment-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-extras-grid .avatar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .profile-dossier {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-dossier .profile-art,
+  .profile-dossier .profile-art img {
+    min-height: 205px;
+    max-height: 205px;
+  }
+
+  .profile-dossier .profile-overview {
+    margin-top: 0;
+    padding: 14px;
+  }
+
+  .profile-dossier .profile-overview-top {
+    display: flex;
+  }
+
+  .character-sheet-tabs {
+    top: 64px;
+  }
+}
+
+@media (max-width: 620px) {
+  .profile-dossier .profile-overview-top {
+    display: grid;
+  }
+
+  .profile-dossier .profile-actions {
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .profile-scoreboard,
+  .profile-minor-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-sheet-side,
+  .character-extras-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-extras-wide {
+    grid-column: auto;
+  }
+
+  .sheet-module--equipment .equipment-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .sheet-module--passive .ark-effect-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .extras-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .character-extras-grid .avatar-grid,
+  .character-extras-grid .collectible-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 390px) {
+  .profile-scoreboard,
+  .profile-minor-metrics,
+  .sheet-module--skills .skill-grid,
+  .character-extras-grid .avatar-grid,
+  .character-extras-grid .collectible-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Final density pass for the all-in-one sheet */
+@media (min-width: 761px) {
+  .profile-dossier {
+    grid-template-columns: 142px minmax(0, 1fr);
+    min-height: 164px;
+  }
+
+  .profile-dossier .profile-art,
+  .profile-dossier .profile-art img {
+    min-height: 164px;
+    max-height: 164px;
+  }
+
+  .profile-dossier .profile-art img.is-placeholder {
+    width: 52px;
+    height: 52px;
+    min-height: 0;
+    margin-top: 55px;
+  }
+
+  .profile-art-caption {
+    bottom: 10px;
+    left: 11px;
+    font-size: 6px;
+  }
+
+  .profile-dossier .profile-overview {
+    padding: 10px 14px 7px;
+  }
+
+  .profile-dossier .profile-overview h1 {
+    margin-top: 4px;
+    font-size: clamp(22px, 2.5vw, 29px);
+  }
+
+  .profile-dossier .profile-subline {
+    font-size: 8px;
+  }
+
+  .profile-dossier .profile-badges span,
+  .profile-dossier .profile-source {
+    padding: 3px 6px;
+    font-size: 7px;
+  }
+
+  .profile-dossier .profile-actions button {
+    min-height: 24px;
+    padding: 3px 7px;
+    font-size: 7px;
+  }
+
+  .profile-scoreboard {
+    margin-top: 7px;
+  }
+
+  .profile-score {
+    padding: 5px 8px 4px;
+  }
+
+  .profile-score > strong {
+    font-size: clamp(15px, 1.7vw, 20px);
+  }
+
+  .profile-minor-metrics > div {
+    padding: 4px 6px;
+  }
+
+  .profile-minor-metrics dd {
+    font-size: 9px;
+  }
+
+  .profile-dossier .profile-cache-meta {
+    margin-top: 3px;
+    font-size: 6px;
+  }
+}
+
+.sheet-module--stats .stat-card {
+  min-height: 43px;
+  padding: 5px 6px;
+}
+
+.sheet-module--stats .stat-card strong {
+  font-size: 11px;
+}
+
+.sheet-module--stats .stat-card small {
+  display: none;
+}
+
+.sheet-module--cards .card-effect-row {
+  width: 100%;
+  min-height: 27px;
+  padding: 5px 6px;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sheet-module--cards .card-effect-row:hover {
+  border-color: rgba(232, 177, 63, 0.24);
+  background: rgba(232, 177, 63, 0.045);
+}
+
+.sheet-module--cards .card-effect-row span {
+  margin-top: 0;
+  font-size: 6px;
+}
+
+.sheet-module--cards .card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sheet-module--cards .card-item {
+  display: grid;
+  grid-template-columns: 23px minmax(0, 1fr);
+  align-items: center;
+  min-height: 31px;
+}
+
+.sheet-module--cards .card-item-image {
+  width: 23px;
+  height: 31px;
+  aspect-ratio: auto;
+}
+
+.sheet-module--cards .card-item-copy {
+  min-width: 0;
+  padding: 4px;
+}
+
+.sheet-module--cards .card-awake {
+  right: 1px;
+  bottom: 1px;
+  padding: 1px 2px;
+  font-size: 5px;
+}
+
+.sheet-module--grid .grid-effect-card {
+  min-height: 24px;
+  padding: 3px 5px;
+}
+
+.sheet-module--grid .grid-effect-card strong {
+  display: inline;
+  margin-left: 3px;
+  font-size: 7px;
+}
+
+.sheet-module--grid .grid-effect-card small {
+  display: none;
+}
+
+.sheet-module--grid .grid-slot-card {
+  position: relative;
+  min-height: 55px;
+  padding: 4px;
+}
+
+.sheet-module--grid .ark-grid-slots {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sheet-module--grid .grid-slot-head {
+  grid-template-columns: 23px minmax(0, 1fr);
+  gap: 4px;
+}
+
+.sheet-module--grid .grid-core-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.sheet-module--grid .grid-point {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 19px;
+  height: 19px;
+  font-size: 6px;
+}
+
+.sheet-module--grid .grid-gem-list {
+  display: flex;
+  gap: 2px;
+  margin: 4px 0 0 27px;
+  overflow: hidden;
+}
+
+.sheet-module--grid .grid-gem-button {
+  flex: 0 0 13px;
+  width: 13px;
+  padding: 1px;
+  border-radius: 3px;
+}
+
+.sheet-module--grid .grid-slot-card > .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.sheet-module--engravings .engraving-card {
+  position: relative;
+  grid-template-columns: 25px minmax(0, 1fr);
+  min-height: 38px;
+  max-height: 38px;
+  padding: 5px 6px;
+}
+
+.sheet-module--engravings .engraving-mark {
+  width: 25px;
+  height: 25px;
+  font-size: 7px;
+}
+
+.sheet-module--engravings .engraving-card p {
+  display: none;
+}
+
+.sheet-module--engravings .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.sheet-module--equipment .equipment-card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sheet-module--equipment .equipment-groups {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(160px, 0.68fr);
+}
+
+.sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+  grid-column: auto;
+}
+
+.sheet-module--equipment .equipment-group:last-child .equipment-card-grid {
+  grid-template-columns: 1fr;
+}
+
+.sheet-module--equipment .equipment-card {
+  min-height: 58px;
+}
+
+.sheet-module--equipment .equipment-card-main {
+  grid-template-columns: 33px minmax(0, 1fr);
+  gap: 5px;
+  padding: 5px 35px 5px 5px;
+}
+
+.sheet-module--equipment .item-icon {
+  width: 33px;
+  height: 33px;
+}
+
+.sheet-module--equipment .item-quality {
+  min-width: 12px;
+  height: 12px;
+  padding: 0 2px;
+  font-size: 5px;
+}
+
+.sheet-module--equipment .item-copy strong {
+  font-size: 7px;
+}
+
+.sheet-module--equipment .item-highlights {
+  margin-top: 2px;
+}
+
+.sheet-module--equipment .item-highlights li:nth-child(n + 2) {
+  display: none;
+}
+
+.sheet-module--equipment .quality-track {
+  right: 35px;
+  bottom: 5px;
+  left: 43px;
+}
+
+.sheet-module--equipment .equipment-card .detail-trigger {
+  right: 4px;
+  bottom: 4px;
+  min-height: 18px;
+  padding: 2px 4px;
+  font-size: 5px;
+}
+
+.sheet-module--passive .ark-point-card {
+  padding: 6px;
+}
+
+.sheet-module--passive .ark-point-card strong {
+  font-size: 14px;
+}
+
+.sheet-module--passive .ark-point-card small {
+  display: none;
+}
+
+.sheet-module--passive .ark-effect-group {
+  padding: 6px;
+}
+
+.sheet-module--passive .ark-effect-card {
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 4px;
+  min-height: 34px;
+  padding: 4px;
+}
+
+.sheet-module--passive .ark-effect-card img {
+  width: 24px;
+  height: 24px;
+}
+
+.sheet-module--passive .ark-effect-card strong {
+  font-size: 6px;
+  -webkit-line-clamp: 2;
+}
+
+.sheet-module--passive .ark-effect-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sheet-module--gems .gem-summary-card,
+.sheet-module--gems .gem-summary-card--wide {
+  padding: 4px 6px;
+}
+
+.sheet-module--gems .gem-summary-card strong {
+  font-size: 8px;
+}
+
+.sheet-module--gems .gem-card {
+  min-height: 65px;
+  padding-top: 4px;
+}
+
+.sheet-module--gems .gem-icon {
+  width: 31px;
+  height: 31px;
+}
+
+.sheet-module--gems .gem-copy strong {
+  margin-top: 2px;
+}
+
+.sheet-module--skills .skill-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.sheet-module--skills .skill-card {
+  position: relative;
+  grid-template-columns: 31px minmax(0, 1fr);
+  gap: 5px;
+  min-height: 53px;
+  padding: 5px;
+}
+
+.sheet-module--skills .skill-icon {
+  width: 31px;
+  height: 31px;
+}
+
+.sheet-module--skills .skill-level {
+  width: 13px;
+  height: 13px;
+  font-size: 5px;
+}
+
+.sheet-module--skills .tripod-list {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.sheet-module--skills .tripod-list li {
+  flex: 0 1 auto;
+}
+
+.sheet-module--skills .skill-card .detail-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  opacity: 0;
+}
+
+@media (max-width: 620px) {
+  .sheet-module--equipment .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:last-child .equipment-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .sheet-module--equipment .equipment-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .sheet-module--equipment .equipment-group:last-child .equipment-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .sheet-module--equipment .equipment-groups,
+  .sheet-module--passive .ark-effect-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .sheet-module--equipment .equipment-group:last-child .equipment-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
