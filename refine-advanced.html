@@ -252,12 +252,13 @@
         guarded(this, async () => {
           setVisionStatus("인식 엔진 준비 중… (최초 1회는 수십 MB)");
           await JloaPy.bootVision();
-          await JloaCapture.start(visionFrame, { intervalMs: 1200, onStop: () => {
+          const shareInfo = await JloaCapture.start(visionFrame, { intervalMs: 1200, onStop: () => {
             visionStartBtn.hidden = false; visionStopBtn.hidden = true;
             setVisionStatus("인식이 중지되었습니다.");
           } });
           visionStartBtn.hidden = true; visionStopBtn.hidden = false;
-          setVisionStatus("공유 시작 — 게임에서 해당 창을 열어주세요.");
+          const shareRes = shareInfo && shareInfo.width ? ` (공유 해상도 ${shareInfo.width}×${shareInfo.height})` : "";
+          setVisionStatus("공유 시작 — 게임에서 해당 창을 열어주세요." + shareRes);
         });
       });
       visionStopBtn.addEventListener("click", () => JloaCapture.stop());

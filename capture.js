@@ -19,8 +19,10 @@ const JloaCapture = (() => {
     const intervalMs = (opts && opts.intervalMs) || 1200;
     stopCallback = (opts && opts.onStop) || null;
 
+    // width/height ideal 을 크게 요청 — 브라우저가 트랙을 저해상도로 캡하면
+    // 글리프가 뭉개져 판독이 실패한다 (원본 해상도 유지가 목적)
     stream = await navigator.mediaDevices.getDisplayMedia({
-      video: { frameRate: 5 },
+      video: { frameRate: 5, width: { ideal: 3840 }, height: { ideal: 2160 } },
       audio: false,
     });
     video = document.createElement("video");
@@ -28,6 +30,8 @@ const JloaCapture = (() => {
     video.muted = true;
     await video.play();
     stream.getVideoTracks()[0].addEventListener("ended", () => stop());
+
+    const settings = stream.getVideoTracks()[0].getSettings();
 
     timer = setInterval(async () => {
       if (busy || !video || video.readyState < 2 || !video.videoWidth) return;
@@ -44,6 +48,7 @@ const JloaCapture = (() => {
         busy = false;
       }
     }, intervalMs);
+    return settings;   // { width, height, … } — 실제 공유 해상도 (진단용)
   }
 
   function stop() {
