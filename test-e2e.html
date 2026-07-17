@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>E2E</title></head>
+<body>
+<pre id="out">RUNNING</pre>
+<script src="/py-runtime.js"></script>
+<script src="/prices.js"></script>
+<script>
+(async () => {
+  const out = document.getElementById("out");
+  try {
+    await JloaPy.boot();
+    const opt = await JloaPy.call("web_glue:options", {});
+    const gem = await JloaPy.call("web_glue:gem_calc", {
+      grade: "영웅", willpower: 1, points: 1, effect1: 1, effect2: 1,
+      attempts: 9, rerolls: 2, resets_left: 0, target_index: 1,
+      shown_ids: ["willpower_p1", "points_p2", "effect1_p1", "cost_up"],
+    });
+    const normal = await JloaPy.call("web_glue:normal_calc", {
+      kind: "armor", grade: "t4_1590", target: 19, jangin_percent: 0,
+      current_prob_percent: null,
+      raw_prices: {"운명의 수호석": 0.13, "운명의 돌파석": 4, "아비도스 융화 재료": 124,
+                   "__fragment__": 0.059, "빙하의 숨결": 274,
+                   "재봉술 : 업화 [19-20]": 2299, "강화 재봉술 : 업화 [19-20]": 4747},
+    });
+    const adv = await JloaPy.call("web_glue:advanced_calc", {
+      equip: "weapon", band: "t4_1", growth_support: false,
+      exp: 250, stack: 4, free_next: false, enh_next: false,
+      raw_prices: {"운명의 파괴석": 1.2, "아비도스 융화 재료": 124, "__fragment__": 0.059,
+                   "용암의 숨결": 250, "야금술 : 특화 [10-20]": 3000,
+                   "운명의 파편": 0.06},
+    });
+    // 라이브 백엔드 풀체인 (api.jloa.cloud CORS + 202/pending 재시도 + 실시세 계산)
+    let live = "";
+    try {
+      const priceData = await JloaPrices.fetch();
+      const liveNormal = await JloaPy.call("web_glue:normal_calc", {
+        kind: "armor", grade: "t4_1590", target: 19, jangin_percent: 0,
+        current_prob_percent: null, raw_prices: priceData.prices,
+      });
+      live = " live=" + (liveNormal.error ? "ERR:" + liveNormal.error
+        : liveNormal.combo + "/" + Math.round(liveNormal.fill_gold));
+    } catch (err) {
+      live = " live=FAIL:" + (err && err.message ? err.message : err);
+    }
+    out.textContent = "E2E_OK"
+      + " gem=" + gem.recommend.action + "/" + gem.targets.length
+      + " normal=" + normal.combo + "/" + Math.round(normal.fill_gold)
+      + " adv=" + adv.action_label + "/" + Math.round(adv.band_expected_gold)
+      + " opts=" + opt.gem.entries.length + live;
+  } catch (err) {
+    out.textContent = "E2E_FAIL " + (err && err.message ? err.message : err);
+  }
+})();
+</script>
+</body>
+</html>

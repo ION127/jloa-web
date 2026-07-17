@@ -1,0 +1,17 @@
+{
+  "files": [
+    "app/__init__.py",
+    "app/data/advanced_refine.json",
+    "app/data/crit_job_table.json",
+    "app/data/gem_craft.json",
+    "app/data/gem_dp.bin",
+    "app/data/gem_dp.json",
+    "app/data/normal_refine.json",
+    "app/features/__init__.py",
+    "app/features/advanced_refine.py",
+    "app/features/crit_rate.py",
+    "app/features/gem_craft.py",
+    "app/features/normal_refine.py",
+    "web_glue.py"
+  ]
+}

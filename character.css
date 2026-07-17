@@ -6493,3 +6493,902 @@
     font-size: 13px;
   }
 }
+
+/* 100% browser zoom readability and typography polish */
+.character-page {
+  --character-copy: #edf1f6;
+  --character-muted: #a2acb9;
+  --character-subtle: #8893a2;
+  font-family:
+    "Pretendard Variable",
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+  font-size: 16px;
+  font-synthesis: none;
+  letter-spacing: -0.012em;
+  text-rendering: optimizeLegibility;
+}
+
+.character-page :is(button, input, select, textarea) {
+  font-family: inherit;
+}
+
+.character-page .container {
+  width: min(1460px, calc(100% - 40px));
+}
+
+.character-back-link {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.character-page-search input {
+  font-size: 14px;
+}
+
+.character-page-search button {
+  font-size: 13px;
+}
+
+.character-sheet-tabs button {
+  min-height: 38px;
+  padding: 8px 18px;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+}
+
+.sheet-module,
+.profile-dossier,
+.extras-heading,
+.roster-panel-heading,
+.roster-module {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.sheet-module {
+  padding: 13px;
+  border-radius: 9px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 177, 63, 0.042), transparent 32%),
+    rgba(17, 20, 26, 0.95);
+}
+
+.sheet-module-heading {
+  min-height: 33px;
+  padding-bottom: 9px;
+}
+
+.sheet-module-heading h2 {
+  color: var(--character-copy);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.sheet-module-heading small {
+  color: var(--character-subtle);
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.sheet-module .empty-state {
+  font-size: 11px;
+}
+
+.sheet-module--stats .stat-card {
+  min-height: 58px;
+  padding: 9px;
+}
+
+.sheet-module--stats .stat-card span,
+.sheet-module--passive .ark-point-card span {
+  color: var(--character-muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sheet-module--stats .stat-card strong {
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet-module--cards .card-effect-row {
+  min-height: 42px;
+  padding: 8px 9px;
+}
+
+.sheet-module--cards .card-effect-row strong {
+  color: var(--character-copy);
+  font-size: 11.5px;
+}
+
+.sheet-module--cards .card-effect-row span {
+  color: var(--character-muted);
+  font-size: 10.5px;
+}
+
+.sheet-module--cards .card-item {
+  grid-template-columns: 32px minmax(0, 1fr);
+  min-height: 44px;
+}
+
+.sheet-module--cards .card-item-image {
+  width: 32px;
+  height: 44px;
+}
+
+.sheet-module--cards .card-item-copy strong {
+  font-size: 11.5px;
+}
+
+.sheet-module--cards .card-awake {
+  font-size: 9px;
+}
+
+.sheet-module--grid .grid-effect-card {
+  min-height: 34px;
+  padding: 6px 7px;
+}
+
+.sheet-module--grid .grid-effect-card span {
+  color: var(--character-muted);
+  font-size: 10.5px;
+}
+
+.sheet-module--grid .grid-effect-card strong {
+  font-size: 11.5px;
+}
+
+.sheet-module--grid .grid-slot-card {
+  min-height: 72px;
+  padding: 7px;
+}
+
+.sheet-module--grid .grid-slot-head {
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 7px;
+}
+
+.sheet-module--grid .grid-core-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.sheet-module--grid .grid-slot-copy > span {
+  color: var(--character-muted);
+  font-size: 10.5px;
+}
+
+.sheet-module--grid .grid-slot-copy strong {
+  font-size: 12px;
+}
+
+.sheet-module--grid .grid-point {
+  min-width: 25px;
+  height: 25px;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet-module--engravings .engraving-card {
+  grid-template-columns: 34px minmax(0, 1fr);
+  min-height: 54px;
+  max-height: none;
+  gap: 8px;
+  padding: 8px;
+}
+
+.sheet-module--engravings .engraving-mark {
+  width: 34px;
+  height: 34px;
+  font-size: 11px;
+}
+
+.sheet-module--engravings .engraving-card h3 {
+  font-size: 12.5px;
+}
+
+.sheet-module--engravings .engraving-meta span {
+  padding: 2px 5px;
+  font-size: 10px;
+}
+
+.sheet-module--gems .gem-summary-card,
+.sheet-module--gems .gem-summary-card--wide {
+  min-height: 48px;
+  padding: 8px 10px;
+}
+
+.sheet-module--gems .gem-summary-card span {
+  color: var(--character-muted);
+  font-size: 10.5px;
+}
+
+.sheet-module--gems .gem-summary-card strong {
+  margin-top: 3px;
+  font-size: 12.5px;
+}
+
+.sheet-module--gems .gem-card {
+  min-height: 88px;
+  padding: 7px 4px 6px;
+}
+
+.sheet-module--gems .gem-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.sheet-module--gems .gem-level {
+  min-width: 17px;
+  height: 17px;
+  font-size: 10px;
+}
+
+.sheet-module--gems .gem-copy strong,
+.sheet-module--gems .gem-effect-name {
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.sheet-module--equipment .equipment-group {
+  padding: 9px;
+}
+
+.sheet-module--equipment .equipment-group-head {
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.sheet-module--equipment .equipment-group-head h3 {
+  font-size: 13px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.sheet-module--equipment .equipment-group-head span {
+  color: var(--character-subtle);
+  font-size: 10.5px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.sheet-module--equipment .equipment-card {
+  min-height: 76px;
+}
+
+.sheet-module--equipment .equipment-card-main {
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px;
+}
+
+.sheet-module--equipment .item-icon {
+  width: 42px;
+  height: 42px;
+}
+
+.sheet-module--equipment .item-quality {
+  min-width: 17px;
+  height: 17px;
+  padding: 0 3px;
+  font-size: 9.5px;
+}
+
+.sheet-module--equipment .item-copy > span {
+  color: var(--character-muted);
+  font-size: 10.5px;
+}
+
+.sheet-module--equipment .item-copy strong {
+  margin-top: 2px;
+  color: var(--character-copy);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.sheet-module--equipment .item-highlights {
+  margin-top: 4px;
+}
+
+.sheet-module--equipment .item-highlights li {
+  color: #b3bbc6;
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.sheet-module--equipment .quality-track {
+  right: 8px;
+  bottom: 7px;
+  left: 58px;
+}
+
+.sheet-module--passive .ark-point-card {
+  min-height: 68px;
+  padding: 10px;
+}
+
+.sheet-module--passive .ark-point-card strong {
+  margin-top: 3px;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet-module--passive .ark-effect-group {
+  padding: 9px;
+}
+
+.sheet-module--passive .ark-effect-group-head h3 {
+  font-size: 12px;
+}
+
+.sheet-module--passive .ark-effect-group-head span {
+  color: var(--character-subtle);
+  font-size: 10px;
+}
+
+.sheet-module--passive .ark-effect-card {
+  grid-template-columns: 32px minmax(0, 1fr);
+  min-height: 47px;
+  gap: 7px;
+  padding: 7px;
+}
+
+.sheet-module--passive .ark-effect-card img {
+  width: 32px;
+  height: 32px;
+}
+
+.sheet-module--passive .ark-effect-card strong {
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.sheet-module--skills .skill-card {
+  grid-template-columns: 41px minmax(0, 1fr);
+  min-height: 74px;
+  gap: 8px;
+  padding: 8px;
+}
+
+.sheet-module--skills .skill-icon {
+  width: 41px;
+  height: 41px;
+}
+
+.sheet-module--skills .skill-level {
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+}
+
+.sheet-module--skills .skill-copy > span,
+.sheet-module--skills .skill-rune,
+.sheet-module--skills .tripod-list li {
+  font-size: 10.5px;
+}
+
+.sheet-module--skills .skill-copy > span {
+  color: var(--character-muted);
+}
+
+.sheet-module--skills .skill-copy strong {
+  margin-top: 2px;
+  font-size: 12.5px;
+}
+
+.sheet-module--skills .skill-rune {
+  margin-top: 4px;
+}
+
+.sheet-module--skills .tripod-list li {
+  padding: 3px 5px;
+}
+
+.sheet-module--cards .card-effect-row span,
+.sheet-module--cards .card-item-copy strong,
+.sheet-module--grid .grid-slot-copy strong,
+.sheet-module--engravings .engraving-card h3,
+.sheet-module--gems .gem-summary-card strong,
+.sheet-module--gems .gem-copy strong,
+.sheet-module--gems .gem-effect-name,
+.sheet-module--equipment .item-copy > span,
+.sheet-module--equipment .item-copy strong,
+.sheet-module--equipment .item-highlights li,
+.sheet-module--passive .ark-effect-card strong,
+.sheet-module--skills .skill-copy > span,
+.sheet-module--skills .skill-copy strong,
+.sheet-module--skills .skill-rune,
+.sheet-module--skills .tripod-list li {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-module--gems .gem-summary-card strong {
+  max-width: 100%;
+}
+
+.sheet-module--equipment .item-copy,
+.sheet-module--gems .gem-copy,
+.sheet-module--skills .skill-copy,
+.sheet-module--passive .ark-effect-card > div {
+  min-width: 0;
+}
+
+.profile-score > strong,
+.profile-minor-metrics dd,
+.roster-character-power strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.extras-heading .eyebrow,
+.roster-panel-heading .eyebrow {
+  font-size: 10.5px;
+}
+
+.extras-heading p:not(.eyebrow),
+.roster-panel-heading p:not(.eyebrow) {
+  color: var(--character-muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.extras-heading > span,
+.roster-panel-heading > span {
+  font-size: 10.5px;
+}
+
+.character-extras-grid .profile-fact-list dt,
+.character-extras-grid .profile-fact-list dd,
+.character-extras-grid .collectible-copy strong,
+.character-extras-grid .collectible-card > span {
+  font-size: 12px;
+}
+
+.character-extras-grid .tendency-card span {
+  font-size: 11px;
+}
+
+.character-extras-grid .avatar-copy > span,
+.character-extras-grid .avatar-flags span {
+  font-size: 10.5px;
+}
+
+.character-extras-grid .avatar-copy strong {
+  font-size: 12px;
+}
+
+.roster-list-heading p,
+.roster-character-identity > small,
+.roster-loading small,
+.roster-error p {
+  font-size: 11px;
+}
+
+.roster-character-name strong {
+  font-size: 13.5px;
+}
+
+.roster-character-power small {
+  font-size: 10px;
+}
+
+.roster-character-power strong {
+  font-family: inherit;
+  font-size: 15px;
+}
+
+@media (min-width: 960px) {
+  .character-content-shell {
+    padding-top: 18px;
+  }
+
+  .character-dashboard {
+    grid-template-columns: 252px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 10px 14px;
+  }
+
+  .profile-dossier {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: block;
+    min-height: 0;
+    border-radius: 9px;
+  }
+
+  .profile-dossier .profile-art,
+  .profile-dossier .profile-art img {
+    width: 100%;
+    min-height: 286px;
+    max-height: 286px;
+  }
+
+  .profile-dossier .profile-art {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+  }
+
+  .profile-dossier .profile-overview {
+    padding: 15px;
+  }
+
+  .profile-dossier .profile-overview h1 {
+    margin-top: 7px;
+    font-size: clamp(24px, 2vw, 28px);
+    line-height: 1.22;
+  }
+
+  .profile-dossier .profile-subline {
+    color: var(--character-muted);
+    font-size: 12px;
+  }
+
+  .profile-dossier .profile-badges span,
+  .profile-dossier .profile-source {
+    padding: 4px 7px;
+    font-size: 10.5px;
+  }
+
+  .profile-dossier .profile-actions button {
+    min-height: 34px;
+    padding: 6px 9px;
+    font-size: 11.5px;
+  }
+
+  .profile-scoreboard {
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .profile-score {
+    padding: 8px 9px 7px;
+  }
+
+  .profile-score > span {
+    font-family: inherit;
+    font-size: 10.5px;
+    letter-spacing: 0;
+  }
+
+  .profile-score > strong {
+    margin-top: 3px;
+    font-family: inherit;
+    font-size: 19px;
+  }
+
+  .profile-minor-metrics {
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .profile-minor-metrics > div {
+    padding: 7px 8px;
+  }
+
+  .profile-minor-metrics dt {
+    font-size: 10.5px;
+  }
+
+  .profile-minor-metrics dd {
+    margin-top: 3px;
+    font-size: 14px;
+  }
+
+  .character-sheet-tabs {
+    grid-column: 2;
+    grid-row: 1;
+    top: 72px;
+    margin: 0;
+    padding: 5px;
+  }
+
+  .character-sheet-stack {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .character-sheet-layout {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+      "equipment equipment equipment equipment equipment equipment"
+      "gems gems gems gems gems gems"
+      "stats stats stats cards cards cards"
+      "engravings engravings engravings grid grid grid"
+      "passive passive passive passive passive passive"
+      "skills skills skills skills skills skills";
+    gap: 10px;
+  }
+
+  .character-sheet-side,
+  .character-sheet-main {
+    display: contents;
+  }
+
+  .sheet-module--equipment {
+    grid-area: equipment;
+  }
+
+  .sheet-module--gems {
+    grid-area: gems;
+    display: block;
+  }
+
+  .sheet-module--stats {
+    grid-area: stats;
+  }
+
+  .sheet-module--cards {
+    grid-area: cards;
+  }
+
+  .sheet-module--grid {
+    grid-area: grid;
+  }
+
+  .sheet-module--engravings {
+    grid-area: engravings;
+  }
+
+  .sheet-module--passive {
+    grid-area: passive;
+  }
+
+  .sheet-module--skills {
+    grid-area: skills;
+  }
+
+  .sheet-module--equipment .equipment-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 9px;
+  }
+
+  .sheet-module--equipment .equipment-group:only-child,
+  .sheet-module--equipment .equipment-group:last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .sheet-module--equipment .equipment-group:nth-child(1) .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:nth-child(2) .equipment-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sheet-module--equipment .equipment-group:only-child .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:nth-child(3) .equipment-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sheet-module--equipment .equipment-card-grid {
+    gap: 6px;
+  }
+
+  .sheet-module--gems .gem-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 9px;
+  }
+
+  .sheet-module--gems .gem-summary-card,
+  .sheet-module--gems .gem-summary-card--wide {
+    grid-column: 1;
+  }
+
+  .sheet-module--gems .gem-card-grid {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    grid-auto-flow: row;
+    gap: 5px;
+    margin-top: 8px;
+    overflow: visible;
+  }
+
+  .sheet-module--passive .ark-effect-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+  }
+}
+
+@media (min-width: 1380px) {
+  .character-dashboard {
+    grid-template-columns: 258px minmax(0, 1fr);
+  }
+
+  .character-sheet-layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-areas:
+      "equipment equipment equipment equipment equipment equipment equipment equipment equipment equipment equipment equipment"
+      "gems gems gems gems gems gems gems gems gems gems gems gems"
+      "stats stats stats cards cards cards engravings engravings engravings grid grid grid"
+      "passive passive passive passive passive passive skills skills skills skills skills skills";
+  }
+
+  .sheet-module--gems {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 215px;
+    column-gap: 10px;
+  }
+
+  .sheet-module--gems .sheet-module-heading {
+    grid-column: 1 / -1;
+  }
+
+  .sheet-module--gems .gem-card-grid {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .sheet-module--gems .gem-summary {
+    grid-column: 2;
+    grid-row: 2;
+    display: block;
+  }
+
+  .sheet-module--gems .gem-summary-card,
+  .sheet-module--gems .gem-summary-card--wide {
+    min-height: 88px;
+    padding: 11px;
+  }
+
+  .sheet-module--gems .gem-summary-card strong {
+    margin-top: 8px;
+    white-space: normal;
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) and (max-width: 1179px) {
+  .character-dashboard {
+    grid-template-columns: 230px minmax(0, 1fr);
+  }
+
+  .sheet-module--equipment .equipment-group:nth-child(1) .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:nth-child(2) .equipment-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-module--equipment .equipment-group:only-child .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:nth-child(3) .equipment-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) and (min-height: 900px) {
+  .profile-dossier {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+@media (max-width: 959px) {
+  .character-page .container {
+    width: min(1460px, calc(100% - 28px));
+  }
+
+  .character-sheet-layout {
+    gap: 10px;
+  }
+
+  .sheet-module--gems .gem-card-grid {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-columns: 92px;
+    grid-auto-flow: column;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    scrollbar-width: thin;
+  }
+
+  .sheet-module--equipment .equipment-groups {
+    gap: 9px;
+  }
+
+  .sheet-module--skills .skill-grid {
+    gap: 7px;
+  }
+}
+
+@media (max-width: 620px) {
+  .character-page .container {
+    width: min(1460px, calc(100% - 24px));
+  }
+
+  .character-search-band {
+    padding: 16px 0;
+  }
+
+  .character-search-layout {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .character-page-search {
+    grid-template-columns: 30px minmax(0, 1fr) 64px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .character-page-search input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .character-page-search button {
+    grid-column: auto;
+    width: 64px;
+    min-width: 0;
+    padding: 0 8px;
+  }
+
+  .character-sheet-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+    padding: 4px;
+    overflow: visible;
+  }
+
+  .character-sheet-tabs button {
+    width: 100%;
+    min-width: 0;
+    min-height: 37px;
+    padding: 7px 5px;
+    font-size: 12px;
+  }
+
+  .sheet-module {
+    padding: 12px;
+  }
+
+  .sheet-module--equipment .equipment-groups,
+  .sheet-module--equipment .equipment-card-grid,
+  .sheet-module--equipment .equipment-group:last-child .equipment-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-module--skills .skill-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-module--passive .ark-effect-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .roster-character-name strong {
+    font-size: 13px;
+  }
+
+  .roster-character-power strong {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_source": "로스트아크 공식 확률 공시 (m-lostark.game.onstove.com/Probability/젬 가공, 젬 융합), 2026-07-08 수집",
+  "_rules": [
+    "매 가공 차수에 4개의 가능성이 등장 (중복 없음), 가공 시 4개 중 하나가 25% 균등 추첨으로 적용",
+    "실제 등장 확률 = 표기확률 / (100% - 미등장 가능성의 표기확률 합)",
+    "다른 항목 보기: 가공 1회 이상 진행 후 사용 가능, 4개 가능성 재추첨 (가공 횟수 소모 없음)"
+  ],
+  "grades": {
+    "고급": {"attempts": 5, "rerolls": 0, "cost_per_attempt": 900},
+    "희귀": {"attempts": 7, "rerolls": 1, "cost_per_attempt": 900},
+    "영웅": {"attempts": 9, "rerolls": 2, "cost_per_attempt": 900}
+  },
+  "stat_min": 1,
+  "stat_max": 5,
+  "initial_level": 1,
+  "stats": ["willpower", "points", "effect1", "effect2"],
+  "stat_names": {"willpower": "의지력 효율", "points": "질서/혼돈 포인트", "effect1": "첫번째 효과", "effect2": "두번째 효과"},
+  "pool": [
+    {"id": "willpower_p1", "kind": "stat", "stat": "willpower", "delta": 1, "prob": 11.65},
+    {"id": "willpower_p2", "kind": "stat", "stat": "willpower", "delta": 2, "prob": 4.40},
+    {"id": "willpower_p3", "kind": "stat", "stat": "willpower", "delta": 3, "prob": 1.75},
+    {"id": "willpower_p4", "kind": "stat", "stat": "willpower", "delta": 4, "prob": 0.45},
+    {"id": "willpower_m1", "kind": "stat", "stat": "willpower", "delta": -1, "prob": 3.00},
+    {"id": "points_p1", "kind": "stat", "stat": "points", "delta": 1, "prob": 11.65},
+    {"id": "points_p2", "kind": "stat", "stat": "points", "delta": 2, "prob": 4.40},
+    {"id": "points_p3", "kind": "stat", "stat": "points", "delta": 3, "prob": 1.75},
+    {"id": "points_p4", "kind": "stat", "stat": "points", "delta": 4, "prob": 0.45},
+    {"id": "points_m1", "kind": "stat", "stat": "points", "delta": -1, "prob": 3.00},
+    {"id": "effect1_p1", "kind": "stat", "stat": "effect1", "delta": 1, "prob": 11.65},
+    {"id": "effect1_p2", "kind": "stat", "stat": "effect1", "delta": 2, "prob": 4.40},
+    {"id": "effect1_p3", "kind": "stat", "stat": "effect1", "delta": 3, "prob": 1.75},
+    {"id": "effect1_p4", "kind": "stat", "stat": "effect1", "delta": 4, "prob": 0.45},
+    {"id": "effect1_m1", "kind": "stat", "stat": "effect1", "delta": -1, "prob": 3.00},
+    {"id": "effect2_p1", "kind": "stat", "stat": "effect2", "delta": 1, "prob": 11.65},
+    {"id": "effect2_p2", "kind": "stat", "stat": "effect2", "delta": 2, "prob": 4.40},
+    {"id": "effect2_p3", "kind": "stat", "stat": "effect2", "delta": 3, "prob": 1.75},
+    {"id": "effect2_p4", "kind": "stat", "stat": "effect2", "delta": 4, "prob": 0.45},
+    {"id": "effect2_m1", "kind": "stat", "stat": "effect2", "delta": -1, "prob": 3.00},
+    {"id": "change1", "kind": "change", "stat": "effect1", "prob": 3.25},
+    {"id": "change2", "kind": "change", "stat": "effect2", "prob": 3.25},
+    {"id": "cost_up", "kind": "cost", "delta": 100, "prob": 1.75},
+    {"id": "cost_down", "kind": "cost", "delta": -100, "prob": 1.75},
+    {"id": "keep", "kind": "keep", "prob": 1.75},
+    {"id": "reroll_p1", "kind": "reroll", "delta": 1, "prob": 2.50},
+    {"id": "reroll_p2", "kind": "reroll", "delta": 2, "prob": 0.75}
+  ]
+}

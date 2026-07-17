@@ -1,0 +1,58 @@
+/* JLOA 도구 페이지 공통 — styles.css 토큰(--bg --surface --gold …) 위에 얹는 컴포넌트 */
+
+.tools-main { padding: 120px 0 96px; min-height: 62vh; }
+
+.tool-head { max-width: 760px; margin-bottom: 34px; }
+.tool-head h1 { margin: 10px 0 12px; font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -0.02em; line-height: 1.15; }
+.tool-desc { margin: 0 0 18px; color: var(--muted-strong); }
+
+.tool-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.tool-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 999px; font-size: 13px;
+  color: var(--muted); background: var(--surface); border: 1px solid var(--border);
+}
+.tool-badge[data-state="loading"] { color: var(--gold); border-color: rgba(232, 177, 63, 0.35); }
+.tool-badge[data-state="ready"] { color: var(--green); border-color: rgba(74, 222, 128, 0.35); }
+.tool-badge[data-state="error"] { color: #f87171; border-color: rgba(248, 113, 113, 0.35); }
+
+.tool-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 18px; padding: 28px; box-shadow: var(--shadow);
+}
+.tool-panel + .tool-panel { margin-top: 20px; }
+.tool-panel h2 { margin: 0 0 10px; font-size: 20px; }
+.tool-panel > p { margin: 0 0 18px; color: var(--muted-strong); }
+
+/* 입력 폼 (W2 계산기 공용) */
+.tool-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.tool-field { display: flex; flex-direction: column; gap: 6px; }
+.tool-field label { font-size: 13px; color: var(--muted); }
+.tool-field input,
+.tool-field select {
+  padding: 11px 14px; border-radius: 12px; font-size: 15px;
+  color: var(--ink); background: var(--surface-raised); border: 1px solid var(--border);
+  outline: none; appearance: none;
+}
+.tool-field input:focus,
+.tool-field select:focus { border-color: var(--gold); }
+
+.tool-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+/* 결과 표시 */
+.tool-result { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 20px; }
+.tool-result-highlight {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+  padding: 16px 18px; border-radius: 14px;
+  background: rgba(232, 177, 63, 0.08); border: 1px solid rgba(232, 177, 63, 0.3);
+}
+.tool-result-highlight strong { font-size: 22px; color: var(--gold-bright); }
+.tool-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tool-table th, .tool-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+.tool-table th { color: var(--muted); font-weight: 500; }
+.tool-table td.num, .tool-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 720px) {
+  .tools-main { padding: 96px 0 72px; }
+  .tool-panel { padding: 20px; }
+}

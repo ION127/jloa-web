@@ -1,0 +1,1247 @@
+{
+ "디스트로이어|분노의 망치": {
+  "job": "디스트로이어",
+  "awakening": "분노의 망치",
+  "conditional_crit": [
+   {
+    "condition": "날카로운 해머 (코어당)",
+    "rate": 6,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "날카로운 해머 해방 스킬 사용 중 소모한 코어 당 치명타 적중률이 6.0% 증가한다.||"
+   },
+   {
+    "condition": "영역 강화",
+    "rate": 2,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "을 초기화하며, 중력 가중영역 및 중력 해방 모드에서 치명타 적중률이 2.0% 증가한다.||"
+   }
+  ]
+ },
+ "디스트로이어|중력 수련": {
+  "job": "디스트로이어",
+  "awakening": "중력 수련",
+  "conditional_crit": [
+   {
+    "condition": "중력 수련",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "수련 중력 가중 모드 기본 공격과 볼텍스 그래비티의 치명타 적중률이 30.0% 증가하며 적에게 주는 피해"
+   },
+   {
+    "condition": "영역 강화",
+    "rate": 4,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "을 초기화하며, 중력 가중영역 및 중력 해방 모드에서 치명타 적중률이 4.0% 증가한다.||"
+   }
+  ]
+ },
+ "발키리|빛의 기사": {
+  "job": "발키리",
+  "awakening": "빛의 기사",
+  "conditional_crit": []
+ },
+ "발키리|해방자": {
+  "job": "발키리",
+  "awakening": "해방자",
+  "conditional_crit": []
+ },
+ "버서커|광기": {
+  "job": "버서커",
+  "awakening": "광기",
+  "conditional_crit": [
+   {
+    "condition": "광기",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "광기 상태에서는 공격속도 및 이동속도가 15.0%, 치명타 적중률이 30.0% 증가하며 분노 게이지가 자"
+   },
+   {
+    "condition": "마운틴 크래쉬",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "버서커|광전사의 비기": {
+  "job": "버서커",
+  "awakening": "광전사의 비기",
+  "conditional_crit": [
+   {
+    "condition": "분노",
+    "rate": 50.67,
+    "source": "identity",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "각성/전직 고유 치명(분노 게이지)"
+   },
+   {
+    "condition": "마운틴 크래쉬",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "오버드라이브",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "슬레이어|포식자": {
+  "job": "슬레이어",
+  "awakening": "포식자",
+  "conditional_crit": [
+   {
+    "condition": "포식자",
+    "rate": 30,
+    "source": "identity",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "각성/전직 고유 치명(포식자 모드)"
+   }
+  ]
+ },
+ "슬레이어|처단자": {
+  "job": "슬레이어",
+  "awakening": "처단자",
+  "conditional_crit": [
+   {
+    "condition": "처단자",
+    "rate": 30,
+    "source": "identity",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "각성/전직 고유 치명(처단자 모드)"
+   },
+   {
+    "condition": "와일드 스톰프",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "워로드|고독한 기사": {
+  "job": "워로드",
+  "awakening": "고독한 기사",
+  "conditional_crit": [
+   {
+    "condition": "정교함",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "정교함 치명타 적중률이 15.0% 증가한다.||"
+   }
+  ]
+ },
+ "워로드|전투 태세": {
+  "job": "워로드",
+  "awakening": "전투 태세",
+  "conditional_crit": [
+   {
+    "condition": "전술 훈련",
+    "rate": 0.8,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "전술 훈련 일반 스킬의 치명타 적중률이 0.8% 증가하며, 방어 태세 중에"
+   },
+   {
+    "condition": "자신",
+    "rate": 6,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "홀리나이트|축복의 오라": {
+  "job": "홀리나이트",
+  "awakening": "축복의 오라",
+  "conditional_crit": []
+ },
+ "홀리나이트|심판자": {
+  "job": "홀리나이트",
+  "awakening": "심판자",
+  "conditional_crit": []
+ },
+ "기공사|무상신공": {
+  "job": "기공사",
+  "awakening": "무상신공",
+  "conditional_crit": [
+   {
+    "condition": "무상진결",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "무공 스킬의 재사용 대기시간이 즉시 3.0초 감소한다.치명타 적중률이 15.0% 증가한다.||"
+   }
+  ]
+ },
+ "기공사|역천지체": {
+  "job": "기공사",
+  "awakening": "역천지체",
+  "conditional_crit": [
+   {
+    "condition": "운기행공",
+    "rate": 10,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "킬을 사용할 경우 운기조식 시간이 3.5%씩 감소한다.치명타 적중률이 10.0% 증가한다.||"
+   }
+  ]
+ },
+ "배틀마스터|오의 강화": {
+  "job": "배틀마스터",
+  "awakening": "오의 강화",
+  "conditional_crit": [
+   {
+    "condition": "용맹의 포효",
+    "rate": 30,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "창룡패황권",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "붕천퇴",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "배틀마스터|초심": {
+  "job": "배틀마스터",
+  "awakening": "초심",
+  "conditional_crit": [
+   {
+    "condition": "용맹의 포효",
+    "rate": 30,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "뇌명각",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "브레이커|수라의 길": {
+  "job": "브레이커",
+  "awakening": "수라의 길",
+  "conditional_crit": []
+ },
+ "브레이커|권왕파천무": {
+  "job": "브레이커",
+  "awakening": "권왕파천무",
+  "conditional_crit": [
+   {
+    "condition": "권왕파천무",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "화' 스킬이 활성화된다.'권왕십이식 : 낙화' 스킬의 치명타 적중률이 15.0% 증가하고 보유한 충격 에너"
+   },
+   {
+    "condition": "권왕십이식 : 풍랑",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "스킬을 사용할 수 있다.'권왕십이식 : 풍랑' 스킬의 치명타 적중률이 15.0% 증가하고 보유한 충격 에너"
+   },
+   {
+    "condition": "연의붕권",
+    "rate": 15,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "파천섬광",
+    "rate": 15,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "천기심권",
+    "rate": 15,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "충격 폭발",
+    "rate": 20.0,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "calloa 목록엔 없음: 충격 폭발 성운멸쇄권 스킬 시전 시 치명타 적중률이 20.0% 증가하고 보유한 충격에너지"
+   }
+  ]
+ },
+ "스트라이커|오의난무": {
+  "job": "스트라이커",
+  "awakening": "오의난무",
+  "conditional_crit": [
+   {
+    "condition": "체술 강화",
+    "rate": 6,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "체술 강화 치명타 적중률이 6.0% 증가하고, 오의 스킬 사용"
+   },
+   {
+    "condition": "번개의 속삭임",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "붕천퇴",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "스트라이커|일격필살": {
+  "job": "스트라이커",
+  "awakening": "일격필살",
+  "conditional_crit": [
+   {
+    "condition": "번개의 속삭임",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "붕천퇴",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "인파이터|극의: 체술": {
+  "job": "인파이터",
+  "awakening": "극의: 체술",
+  "conditional_crit": []
+ },
+ "인파이터|충격 단련": {
+  "job": "인파이터",
+  "awakening": "충격 단련",
+  "conditional_crit": []
+ },
+ "창술사|절정": {
+  "job": "창술사",
+  "awakening": "절정",
+  "conditional_crit": [
+   {
+    "condition": "굉열파",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "청룡진",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "사두룡격",
+    "rate": 60,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "창술사|절제": {
+  "job": "창술사",
+  "awakening": "절제",
+  "conditional_crit": [
+   {
+    "condition": "연가비기",
+    "rate": 20,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "연가비기 사용 시 연가공법을 발동시켜 16.0초 동안 치명타 적중률이 20.0% 증가하며, 적중 시 최대"
+   }
+  ]
+ },
+ "건슬링어|사냥의 시간": {
+  "job": "건슬링어",
+  "awakening": "사냥의 시간",
+  "conditional_crit": [
+   {
+    "condition": "라이플 숙련",
+    "rate": 45,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "라이플 숙련 치명타 적중률이 45.0% 증가하고, 퀵 스코프 효과"
+   },
+   {
+    "condition": "나선의 추적자",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "민첩한 사격",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "AT02 유탄",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "건슬링어|피스메이커": {
+  "job": "건슬링어",
+  "awakening": "피스메이커",
+  "conditional_crit": [
+   {
+    "condition": "피스메이커 - 샷건",
+    "rate": 10,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "피스메이커 - 샷건 샷건 스탠스로 변경 시 치명타 적중률이 10.0%, 적에게 주는 피해가 28"
+   },
+   {
+    "condition": "평화주의자",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "평화주의자 : 스탠스 변경 시 공격 속도 16.0%, 치명타 적중률 15.0%, 적에게 주는 피해가 50"
+   },
+   {
+    "condition": "AT02 유탄",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "데빌헌터|전술 탄환": {
+  "job": "데빌헌터",
+  "awakening": "전술 탄환",
+  "conditional_crit": [
+   {
+    "condition": "정밀 사격 훈련",
+    "rate": 24,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "정밀 사격 훈련 치명타 적중률이 24.0%, 치명타 피해량이 14.0"
+   }
+  ]
+ },
+ "데빌헌터|핸드거너": {
+  "job": "데빌헌터",
+  "awakening": "핸드거너",
+  "conditional_crit": [
+   {
+    "condition": "퀵 드로우",
+    "rate": 1,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "'퀵 드로우' 버프가 9초간 지속된다.퀵 드로우 : 치명타 적중률이 1.0% 증가한다.||"
+   },
+   {
+    "condition": "AT02 유탄",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "블래스터|포격 강화": {
+  "job": "블래스터",
+  "awakening": "포격 강화",
+  "conditional_crit": [
+   {
+    "condition": "포격 출력 강화",
+    "rate": 40,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "격 스킬의 피해량이 14.0% 증가하고, 포격 스킬의 치명타 적중률이 40.0% 증가한다.||"
+   },
+   {
+    "condition": "네이팜탄",
+    "rate": 100,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "중력 폭발",
+    "rate": 45,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "미사일 폭격",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "블래스터|화력 강화": {
+  "job": "블래스터",
+  "awakening": "화력 강화",
+  "conditional_crit": []
+ },
+ "스카우터|진화의 유산": {
+  "job": "스카우터",
+  "awakening": "진화의 유산",
+  "conditional_crit": [
+   {
+    "condition": "운명: 아스트라 슈트 효과",
+    "rate": 6,
+    "source": "arkgrid",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "아크그리드 효과"
+   }
+  ]
+ },
+ "스카우터|아르데타인의 기술": {
+  "job": "스카우터",
+  "awakening": "아르데타인의 기술",
+  "conditional_crit": [
+   {
+    "condition": "코어 인챈트",
+    "rate": 9,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "코어 인챈트 치명타 적중률이 9.0% 증가하고 적에게 주는 피해"
+   }
+  ]
+ },
+ "호크아이|두 번째 동료": {
+  "job": "호크아이",
+  "awakening": "두 번째 동료",
+  "conditional_crit": [
+   {
+    "condition": "두 번째 동료",
+    "rate": 40,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "및 유지 시간이 100.0% 증가한다.실버호크 스킬의 치명타 적중률이 40.0% 증가한다. ||"
+   },
+   {
+    "condition": "차징 샷",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "애로우 해일",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "샤프 슈터",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "호크 샷",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "스나이프",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "호크아이|죽음의 습격": {
+  "job": "호크아이",
+  "awakening": "죽음의 습격",
+  "conditional_crit": []
+ },
+ "바드|절실한 구원": {
+  "job": "바드",
+  "awakening": "절실한 구원",
+  "conditional_crit": [
+   {
+    "condition": "리듬 벅샷",
+    "rate": 80,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "바드|진실된 용맹": {
+  "job": "바드",
+  "awakening": "진실된 용맹",
+  "conditional_crit": [
+   {
+    "condition": "리듬 벅샷",
+    "rate": 80,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "서머너|상급 소환사": {
+  "job": "서머너",
+  "awakening": "상급 소환사",
+  "conditional_crit": [
+   {
+    "condition": "고대의 힘",
+    "rate": 16,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "고대의 힘 일반 및 고대의 정령 스킬의 치명타 적중률이 16.0% 증가한다.||"
+   },
+   {
+    "condition": "마력의 질주",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "슈르디",
+    "rate": 11.8,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "서머너|넘치는 교감": {
+  "job": "서머너",
+  "awakening": "넘치는 교감",
+  "conditional_crit": [
+   {
+    "condition": "슈르디",
+    "rate": 11.8,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "마리린",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "소서리스|점화": {
+  "job": "소서리스",
+  "awakening": "점화",
+  "conditional_crit": [
+   {
+    "condition": "점화의 불씨",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "점화의 불씨 마력 해방 중 치명타 적중률이 30.0% 증가한다.||"
+   }
+  ]
+ },
+ "소서리스|환류": {
+  "job": "소서리스",
+  "awakening": "환류",
+  "conditional_crit": []
+ },
+ "아르카나|황제의 칙령": {
+  "job": "아르카나",
+  "awakening": "황제의 칙령",
+  "conditional_crit": [
+   {
+    "condition": "스트림 오브 엣지",
+    "rate": 27.6,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "리턴",
+    "rate": 50,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "아르카나|황후의 은총": {
+  "job": "아르카나",
+  "awakening": "황후의 은총",
+  "conditional_crit": [
+   {
+    "condition": "포 카드",
+    "rate": 44,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "시크릿 가든",
+    "rate": 40,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "스크래치 딜러",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "셀레스티얼 레인",
+    "rate": 45,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "스트림 오브 엣지",
+    "rate": 27.6,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "데모닉|멈출 수 없는 충동": {
+  "job": "데모닉",
+  "awakening": "멈출 수 없는 충동",
+  "conditional_crit": [
+   {
+    "condition": "혼돈 강화",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "혼돈 강화 악마화 중 치명타 적중률이 30.0% 증가한다.||"
+   }
+  ]
+ },
+ "데모닉|완벽한 억제": {
+  "job": "데모닉",
+  "awakening": "완벽한 억제",
+  "conditional_crit": [
+   {
+    "condition": "잠식 제어",
+    "rate": 10,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "모든 스킬의 잠식 게이지 획득량이 50.0% 증가한다.치명타 적중률이 10.0% 증가한다.||"
+   },
+   {
+    "condition": "그라인드 체인",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "스피닝 웨폰",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "리퍼|갈증": {
+  "job": "리퍼",
+  "awakening": "갈증",
+  "conditional_crit": [
+   {
+    "condition": "피냄새",
+    "rate": 23,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "피냄새 혼돈 게이지가 가득차면 혼돈 효과가 강화되어 치명타 적중률이 23.0%로 변경된다.||"
+   },
+   {
+    "condition": "라스트 그래피티",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "사일런트 스매셔",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "리퍼|달의 소리": {
+  "job": "리퍼",
+  "awakening": "달의 소리",
+  "conditional_crit": [
+   {
+    "condition": "유령 무희",
+    "rate": 10,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "45.0% 증가하고, 페르소나 상태로 전환하면 추가로 치명타 적중률이 10.0% 증가한다.||"
+   },
+   {
+    "condition": "라스트 그래피티",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "사일런트 스매셔",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "그림자 맹수",
+    "rate": 30.0,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "calloa 목록엔 없음: 그림자 맹수 피니쉬 스텝의 치명타 적중률이 30.0% 증가한다. 페르소나 상태에"
+   }
+  ]
+ },
+ "블레이드|잔재된 기운": {
+  "job": "블레이드",
+  "awakening": "잔재된 기운",
+  "conditional_crit": []
+ },
+ "블레이드|버스트": {
+  "job": "블레이드",
+  "awakening": "버스트",
+  "conditional_crit": []
+ },
+ "소울이터|그믐의 경계": {
+  "job": "소울이터",
+  "awakening": "그믐의 경계",
+  "conditional_crit": []
+ },
+ "소울이터|만월의 집행자": {
+  "job": "소울이터",
+  "awakening": "만월의 집행자",
+  "conditional_crit": [
+   {
+    "condition": "영혼친화력",
+    "rate": 14,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "영혼친화력 치명타 적중률이 14.0% 증가하고 영혼석 사용 시"
+   },
+   {
+    "condition": "사신화",
+    "rate": 20,
+    "source": "identity",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "각성/전직 고유 치명(사신화)"
+   },
+   {
+    "condition": "아스타로스",
+    "rate": 20,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "기상술사|질풍노도": {
+  "job": "기상술사",
+  "awakening": "질풍노도",
+  "conditional_crit": [
+   {
+    "condition": "기민함",
+    "rate": 12,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "깨달음 노드(대표캐릭 미착용, 값은 calloa 확정)"
+   },
+   {
+    "condition": "돌개바람",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "기상술사|이슬비": {
+  "job": "기상술사",
+  "awakening": "이슬비",
+  "conditional_crit": [
+   {
+    "condition": "단련",
+    "rate": 2,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "깨달음 노드(대표캐릭 미착용, 값은 calloa 확정)"
+   },
+   {
+    "condition": "펼치기",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   },
+   {
+    "condition": "돌개바람",
+    "rate": 10,
+    "source": "skill",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": false,
+    "note": "armory 미확인"
+   }
+  ]
+ },
+ "도화가|만개": {
+  "job": "도화가",
+  "awakening": "만개",
+  "conditional_crit": []
+ },
+ "도화가|회귀": {
+  "job": "도화가",
+  "awakening": "회귀",
+  "conditional_crit": [
+   {
+    "condition": "회귀",
+    "rate": 25,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "자신에게만 적용되며 지속시간이 100.0% 증가한다. 치명타 적중률이 25.0% 증가한다.||"
+   }
+  ]
+ },
+ "차원술사|공간 검사": {
+  "job": "차원술사",
+  "awakening": "공간 검사",
+  "conditional_crit": [
+   {
+    "condition": "분침 강화",
+    "rate": 20,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "분침 강화 치명타 적중률이 20.0% 증가한다. 차원 균열이 활"
+   }
+  ]
+ },
+ "차원술사|시간 관리자": {
+  "job": "차원술사",
+  "awakening": "시간 관리자",
+  "conditional_crit": [
+   {
+    "condition": "가속 강화",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "강화 차원술사 스킬의 피해량이 10.0% 증가한다. 치명타 적중률이 30.0% 증가하고, 가속 상태의 지"
+   },
+   {
+    "condition": "운명: 타임 키퍼 효과",
+    "rate": 6,
+    "source": "arkgrid",
+    "always_on": false,
+    "in_armory": false,
+    "hardcoded": true,
+    "note": "아크그리드 효과"
+   }
+  ]
+ },
+ "환수사|환수 각성": {
+  "job": "환수사",
+  "awakening": "환수 각성",
+  "conditional_crit": []
+ },
+ "환수사|야성": {
+  "job": "환수사",
+  "awakening": "야성",
+  "conditional_crit": [
+   {
+    "condition": "깨어난 잠재력",
+    "rate": 30,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "깨어난 잠재력 둔갑 스킬 치명타 적중률이 30.0% 증가한다.곰 둔갑 : 받는"
+   }
+  ]
+ },
+ "가디언나이트|업화의 계승자": {
+  "job": "가디언나이트",
+  "awakening": "업화의 계승자",
+  "conditional_crit": [
+   {
+    "condition": "깨어나는 힘",
+    "rate": 20,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "스킬 적중 시 엠버레스의 기운 회복량이 1개 증가한다.치명타 적중률이 20.0% 증가한다.||"
+   }
+  ]
+ },
+ "가디언나이트|드레드 로어": {
+  "job": "가디언나이트",
+  "awakening": "드레드 로어",
+  "conditional_crit": [
+   {
+    "condition": "완전 연소",
+    "rate": 15,
+    "source": "awakening",
+    "always_on": false,
+    "in_armory": true,
+    "hardcoded": false,
+    "note": "력의 2.0%에 해당하는 보호막을 9.0초간 획득한다.치명타 적중률이 15.0% 증가한다.||"
+   }
+  ]
+ }
+}

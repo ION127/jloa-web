@@ -1,0 +1,37 @@
+{
+  "_comment": "loa-calc advanced-refining 이식. 확률·보상은 인게임 툴팁(2026-07-09)과 일치. 현재 게임 완충=3클릭(fill_increment 2, threshold 6). loacalc_*는 검증 전용(1,6).",
+  "max_exp": 1000,
+  "exp_gain": [10, 20, 40],
+  "fill_increment": 2,
+  "fill_threshold": 6,
+  "loacalc_fill_increment": 1,
+  "loacalc_fill_threshold": 6,
+  "success_table": {
+    "0": [0.8, 0.15, 0.05],
+    "1": [0.5, 0.3, 0.2],
+    "2": [0.3, 0.45, 0.25],
+    "3": [0.0, 0.6, 0.4]
+  },
+  "bonus_tables": {
+    "01": {"갈라투르": 0.15, "겔라르": 0.35, "쿠훔바르": 0.15, "테메르": 0.35, "나베르": 0.0, "에베르": 0.0},
+    "23": {"갈라투르": 0.125, "겔라르": 0.25, "쿠훔바르": 0.125, "테메르": 0.25, "나베르": 0.125, "에베르": 0.125}
+  },
+  "enhanced_bonus_table": {"갈라투르": 0.2, "겔라르": 0.2, "쿠훔바르": 0.2, "테메르": 0.2, "에베르": 0.2},
+  "reduction": {"cost": 0.7, "fragment": 0.9, "gold": 0.5},
+  "fragment_item": "운명의 파편",
+  "fragment_bags": {"운명의 파편 주머니(소)": 1000, "운명의 파편 주머니(중)": 2000, "운명의 파편 주머니(대)": 3000},
+  "bands": {
+    "armor": {
+      "t4_0": {"amount": {"운명의 수호석": 500, "운명의 돌파석": 12, "아비도스 융화 재료": 15, "운명의 파편": 3000, "골드": 950}, "breath": {"name": "빙하의 숨결", "per_use": 12}, "book": "장인의 재봉술 : 1단계", "has_enhanced_bonus": false, "bonus_table": "01", "reducible": true},
+      "t4_1": {"amount": {"운명의 수호석": 900, "운명의 돌파석": 16, "아비도스 융화 재료": 16, "운명의 파편": 6000, "골드": 1800}, "breath": {"name": "빙하의 숨결", "per_use": 18}, "book": "장인의 재봉술 : 2단계", "has_enhanced_bonus": false, "bonus_table": "01", "reducible": true},
+      "t4_2": {"amount": {"운명의 수호석": 1000, "운명의 돌파석": 18, "아비도스 융화 재료": 17, "운명의 파편": 7000, "골드": 2000}, "breath": {"name": "빙하의 숨결", "per_use": 20}, "book": "장인의 재봉술 : 3단계", "has_enhanced_bonus": true, "bonus_table": "23", "reducible": false},
+      "t4_3": {"amount": {"운명의 수호석": 1200, "운명의 돌파석": 23, "아비도스 융화 재료": 19, "운명의 파편": 8000, "골드": 2400}, "breath": {"name": "빙하의 숨결", "per_use": 24}, "book": "장인의 재봉술 : 4단계", "has_enhanced_bonus": true, "bonus_table": "23", "reducible": false}
+    },
+    "weapon": {
+      "t4_0": {"amount": {"운명의 파괴석": 600, "운명의 돌파석": 16, "아비도스 융화 재료": 25, "운명의 파편": 5000, "골드": 1125}, "breath": {"name": "용암의 숨결", "per_use": 12}, "book": "장인의 야금술 : 1단계", "has_enhanced_bonus": false, "bonus_table": "01", "reducible": true},
+      "t4_1": {"amount": {"운명의 파괴석": 1100, "운명의 돌파석": 22, "아비도스 융화 재료": 27, "운명의 파편": 10000, "골드": 2500}, "breath": {"name": "용암의 숨결", "per_use": 18}, "book": "장인의 야금술 : 2단계", "has_enhanced_bonus": false, "bonus_table": "01", "reducible": true},
+      "t4_2": {"amount": {"운명의 파괴석": 1200, "운명의 돌파석": 25, "아비도스 융화 재료": 28, "운명의 파편": 11500, "골드": 3000}, "breath": {"name": "용암의 숨결", "per_use": 20}, "book": "장인의 야금술 : 3단계", "has_enhanced_bonus": true, "bonus_table": "23", "reducible": false},
+      "t4_3": {"amount": {"운명의 파괴석": 1400, "운명의 돌파석": 32, "아비도스 융화 재료": 30, "운명의 파편": 13000, "골드": 4000}, "breath": {"name": "용암의 숨결", "per_use": 24}, "book": "장인의 야금술 : 4단계", "has_enhanced_bonus": true, "bonus_table": "23", "reducible": false}
+    }
+  }
+}
