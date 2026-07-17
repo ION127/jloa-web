@@ -1362,6 +1362,60 @@ function renderCharacter(response) {
   showView();
 }
 
+function waitForCharacterRefresh(milliseconds, signal) {
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) {
+      reject(new DOMException("Request aborted", "AbortError"));
+      return;
+    }
+
+    const onAbort = () => {
+      window.clearTimeout(timer);
+      reject(new DOMException("Request aborted", "AbortError"));
+    };
+    const timer = window.setTimeout(() => {
+      signal.removeEventListener("abort", onAbort);
+      resolve();
+    }, milliseconds);
+    signal.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
+async function requestCharacter(normalized, fresh, signal) {
+  const endpoint = `${CHARACTER_API_BASE_URL}/api/character/${encodeURIComponent(normalized)}`;
+  let response = await fetch(`${endpoint}${fresh ? "?fresh=true" : ""}`, {
+    headers: { Accept: "application/json" },
+    signal,
+  });
+  let payload = await response.json().catch(() => ({}));
+
+  for (let attempt = 0; response.status === 202 && payload?.pending && attempt < 10; attempt += 1) {
+    const requestedDelay = Number(payload.retry_after || response.headers.get("Retry-After") || 2);
+    const retryDelay = Math.min(5, Math.max(0.5, Number.isFinite(requestedDelay) ? requestedDelay : 2));
+    await waitForCharacterRefresh(retryDelay * 1000, signal);
+
+    if (payload.job_id) {
+      const jobResponse = await fetch(
+        `${CHARACTER_API_BASE_URL}/api/jobs/${encodeURIComponent(payload.job_id)}`,
+        { headers: { Accept: "application/json" }, signal },
+      );
+      const job = await jobResponse.json().catch(() => ({}));
+      if (jobResponse.ok && job.state === "failed") {
+        throw new Error(job.error || "캐릭터 정보 갱신에 실패했습니다.");
+      }
+      if (jobResponse.ok && job.state !== "succeeded") continue;
+    }
+
+    response = await fetch(endpoint, {
+      headers: { Accept: "application/json" },
+      signal,
+    });
+    payload = await response.json().catch(() => ({}));
+  }
+
+  return { response, payload };
+}
+
 async function loadCharacter(name, fresh = false) {
   const normalized = normalizeCharacterName(name);
   if (normalized.length < 2 || normalized.length > 20) {
@@ -1382,15 +1436,14 @@ async function loadCharacter(name, fresh = false) {
   const timeout = window.setTimeout(() => controller.abort(), 20000);
 
   try {
-    const query = fresh ? "?fresh=true" : "";
-    const response = await fetch(
-      `${CHARACTER_API_BASE_URL}/api/character/${encodeURIComponent(normalized)}${query}`,
-      {
-        headers: { Accept: "application/json" },
-        signal: controller.signal,
-      },
+    const { response, payload } = await requestCharacter(
+      normalized,
+      fresh,
+      controller.signal,
     );
-    const payload = await response.json().catch(() => ({}));
+    if (response.status === 202 && payload?.pending) {
+      throw new Error("캐릭터 정보를 갱신하고 있습니다. 잠시 후 다시 시도해 주세요.");
+    }
     if (!response.ok) {
       if (response.status === 404) {
         throw new Error("입력한 닉네임의 캐릭터를 찾을 수 없습니다.");
