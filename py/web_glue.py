@@ -247,7 +247,14 @@ def vision_gem(frame, width, height, resets_left=None, target_index=None):
         "shown_ids": list(reading.shown_ids),
         "shown_labels": list(reading.shown_labels),
         "warnings": list(reading.warnings),
+        "anchor": list(reading.anchor) if reading.anchor else None,
     }
+    # 미리보기 오버레이용 창 영역 — 앵커(상단)와 버튼(하단)들의 합집합
+    boxes = list(reading.buttons.values())
+    if boxes and reading.anchor:
+        xs = [reading.anchor[0]] + [b[0] for b in boxes] + [b[2] for b in boxes]
+        ys = [reading.anchor[1]] + [b[1] for b in boxes] + [b[3] for b in boxes]
+        info["box"] = [min(xs) - 16, min(ys) - 16, max(xs) + 16, max(ys) + 16]
     if info["complete"] and info["grade"]:
         info["result"] = gem_calc(
             info["grade"], reading.willpower, reading.points,
@@ -275,6 +282,7 @@ def vision_advanced(frame, width, height, raw_prices, growth_support=False,
         "stack": reading.stack, "enh_next": bool(reading.enh_next),
         "equip": reading.equip_type,
         "warnings": list(reading.warnings),
+        "anchor": list(reading.anchor) if reading.anchor else None,
     }
     if info["complete"]:
         info["result"] = advanced_calc(
@@ -300,6 +308,7 @@ def vision_normal(frame, width, height, raw_prices, default_grade=None):
         "jangin": reading.jangin, "prob_current": reading.prob_current,
         "gear_grade": reading.gear_grade,
         "warnings": list(reading.warnings),
+        "anchor": list(reading.anchor) if reading.anchor else None,
     }
     if info["complete"]:
         try:

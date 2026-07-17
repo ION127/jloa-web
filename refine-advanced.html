@@ -61,7 +61,31 @@
           </div>
         </header>
 
-        <section class="tool-panel" data-tool-root>
+        <div class="tool-mode-toggle" role="tablist" aria-label="입력 방식">
+          <button type="button" class="is-active" data-mode-btn="vision">화면 인식</button>
+          <button type="button" data-mode-btn="manual">직접 입력</button>
+        </div>
+
+        <section class="tool-panel" data-mode-panel="vision">
+          <h2>화면 인식</h2>
+          <p>
+            로스트아크 창을 공유하면 화면을 자동으로 읽어 즉시 계산합니다.
+            공유 대신 스크린샷 파일로도 인식할 수 있습니다. 화면은 서버로 전송되지 않고
+            브라우저 안에서만 처리되며, 인식된 값은 직접 입력 모드에도 채워집니다.
+          </p>
+          <div class="tool-actions">
+            <button class="button button--primary" type="button" data-vision-start>화면 인식 시작</button>
+            <button class="button" type="button" data-vision-stop hidden>인식 중지</button>
+            <label class="button" style="cursor:pointer">스크린샷으로 인식<input type="file" accept="image/*" data-vision-file style="display:none" /></label>
+          </div>
+          <p data-vision-status style="margin:14px 0 0;color:var(--muted)">대기 중 — 시작을 누르면 공유할 창을 선택합니다 (로스트아크 창 선택). 최초 1회는 인식 엔진(수십 MB)을 내려받습니다.</p>
+          <div class="vision-preview" data-vision-preview hidden>
+            <canvas data-vision-canvas></canvas>
+            <span class="vision-state" data-vision-state>대기</span>
+          </div>
+        </section>
+
+        <section class="tool-panel" data-mode-panel="manual" hidden>
           <h2>상급재련 상태 입력</h2>
           <p>이번 클릭에 숨결·책을 쓰는 것이 이득인지 기대 골드로 판단합니다. 계산 결과는 데스크탑 앱 오버레이와 동일합니다.</p>
           <div class="tool-grid">
@@ -78,23 +102,9 @@
           <div class="tool-actions">
             <button class="button button--primary" type="button" data-calc>추천 계산</button>
           </div>
-          <div class="tool-result" data-result hidden></div>
         </section>
 
-        <section class="tool-panel">
-          <h2>화면 인식</h2>
-          <p>
-            로스트아크 창을 공유하면 화면을 자동으로 읽어 위 계산기에 값을 채우고 즉시 계산합니다.
-            공유 대신 스크린샷 파일로도 인식할 수 있습니다. 화면은 서버로 전송되지 않고
-            브라우저 안에서만 처리됩니다.
-          </p>
-          <div class="tool-actions">
-            <button class="button button--primary" type="button" data-vision-start>화면 인식 시작</button>
-            <button class="button" type="button" data-vision-stop hidden>인식 중지</button>
-            <label class="button" style="cursor:pointer">스크린샷으로 인식<input type="file" accept="image/*" data-vision-file style="display:none" /></label>
-          </div>
-          <p data-vision-status style="margin:14px 0 0;color:var(--muted)">대기 중 — 시작을 누르면 공유할 창을 선택합니다 (로스트아크 창 선택). 최초 1회는 인식 엔진(수십 MB)을 내려받습니다.</p>
-        </section>
+        <section class="tool-panel" data-result hidden></section>
       </div>
     </main>
 
@@ -195,8 +205,39 @@
       const visionStartBtn = document.querySelector("[data-vision-start]");
       const visionStopBtn = document.querySelector("[data-vision-stop]");
       const setVisionStatus = (t) => { visionStatusEl.textContent = t; };
+      // 미리보기 — 공유 화면을 그대로 보여주고 감지 상태·위치를 덧그린다 (loatto 스타일)
+      const previewWrap = document.querySelector("[data-vision-preview]");
+      const previewCanvas = document.querySelector("[data-vision-canvas]");
+      const previewStateEl = document.querySelector("[data-vision-state]");
+      async function paintPreview(img, res) {
+        previewWrap.hidden = false;
+        const scale = Math.min(1, 720 / img.width);
+        const w = Math.round(img.width * scale);
+        const h = Math.round(img.height * scale);
+        previewCanvas.width = w; previewCanvas.height = h;
+        const ctx = previewCanvas.getContext("2d");
+        const bmp = await createImageBitmap(img);
+        ctx.drawImage(bmp, 0, 0, w, h);
+        if (bmp.close) bmp.close();
+        const state = !res || !res.found ? "searching" : (res.complete ? "complete" : "reading");
+        previewWrap.dataset.state = state;
+        previewStateEl.textContent = state === "searching" ? "창 찾는 중"
+          : state === "reading" ? "값 읽는 중" : "인식 완료";
+        if (res && res.found) {
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = res.complete ? "#4ade80" : "#e8b13f";
+          if (res.box) {
+            ctx.strokeRect(res.box[0] * scale, res.box[1] * scale,
+              (res.box[2] - res.box[0]) * scale, (res.box[3] - res.box[1]) * scale);
+          } else if (res.anchor) {
+            const ax = res.anchor[0] * scale, ay = res.anchor[1] * scale;
+            ctx.strokeRect(ax - 10, ay - 10, 140 * scale + 20, 30 * scale + 20);
+          }
+        }
+      }
       async function visionFrame(img) {
         const res = await JloaPy.callFrame(VISION_TARGET, img, await visionArgs());
+        await paintPreview(img, res);
         if (!res.found) { setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
         if (!res.complete) {
           const warn = res.warnings && res.warnings.length ? " (" + res.warnings.join(", ") + ")" : "";
@@ -239,6 +280,16 @@
           e.target.value = "";
         }
       });
+      // --- 모드 토글 (화면 인식 / 직접 입력) ---
+      const modeButtons = document.querySelectorAll("[data-mode-btn]");
+      function setMode(mode) {
+        modeButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.modeBtn === mode));
+        document.querySelectorAll("[data-mode-panel]").forEach((p) => {
+          p.hidden = p.dataset.modePanel !== mode;
+        });
+        if (mode !== "vision" && JloaCapture.active()) JloaCapture.stop();
+      }
+      modeButtons.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.modeBtn)));
     </script>
   </body>
 </html>

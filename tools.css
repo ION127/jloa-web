@@ -16,6 +16,40 @@
 .tool-badge[data-state="ready"] { color: var(--green); border-color: rgba(74, 222, 128, 0.35); }
 .tool-badge[data-state="error"] { color: #f87171; border-color: rgba(248, 113, 113, 0.35); }
 
+/* 모드 토글 (화면 인식 / 직접 입력) */
+.tool-mode-toggle {
+  display: inline-flex; gap: 4px; margin-bottom: 20px;
+  padding: 4px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border);
+}
+.tool-mode-toggle button {
+  padding: 9px 22px; border: 0; border-radius: 999px; cursor: pointer;
+  font-size: 14px; font-weight: 500; color: var(--muted); background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+.tool-mode-toggle button.is-active { background: var(--gold); color: #14161c; font-weight: 700; }
+.tool-mode-toggle button:not(.is-active):hover { color: var(--ink); }
+
+/* 화면 인식 미리보기 */
+.vision-preview {
+  position: relative; margin-top: 18px; max-width: 720px;
+  border-radius: 12px; overflow: hidden;
+  border: 2px solid var(--border); background: #000;
+  transition: border-color 0.2s;
+}
+.vision-preview canvas { display: block; width: 100%; }
+.vision-preview[data-state="searching"] { border-color: #f87171; }
+.vision-preview[data-state="reading"] { border-color: var(--gold); }
+.vision-preview[data-state="complete"] { border-color: var(--green); }
+.vision-state {
+  position: absolute; top: 10px; left: 10px;
+  padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  color: #14161c; background: rgba(255, 255, 255, 0.85);
+}
+.vision-preview[data-state="searching"] .vision-state { background: #f87171; color: #fff; }
+.vision-preview[data-state="reading"] .vision-state { background: var(--gold); }
+.vision-preview[data-state="complete"] .vision-state { background: var(--green); }
+
 .tool-panel {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 18px; padding: 28px; box-shadow: var(--shadow);
