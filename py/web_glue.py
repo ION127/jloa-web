@@ -46,13 +46,15 @@ def _advanced_price_map(raw, equip, band):
 
 
 def _json_safe(value):
-    """inf/nan → None (json.dumps 의 Infinity 는 JS JSON.parse 가 못 읽는다)."""
+    """inf/nan → None, numpy 스칼라 → 파이썬 수 (JSON 직렬화 안전화)."""
     if isinstance(value, float) and not math.isfinite(value):
         return None
     if isinstance(value, dict):
         return {k: _json_safe(v) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         return [_json_safe(v) for v in value]
+    if hasattr(value, "item") and not isinstance(value, (str, bytes)):
+        return _json_safe(value.item())
     return value
 
 
@@ -188,3 +190,133 @@ def gem_calc(grade, willpower, points, effect1, effect2, attempts, rerolls,
 def crit_calc(armory, back_attack=False, crit_pet=False):
     return _json_safe(cr.calculate(armory, back_attack=back_attack,
                                    crit_pet=crit_pet))
+
+
+# ---------- 화면 인식 (Pyodide opencv — py-runtime bootVision() 후에만 호출) ----------
+#
+# 판독기는 데스크탑 앱과 동일한 app/vision/* 원본이다. 프레임은 JS 캔버스의
+# RGBA 바이트로 받아 BGR 로 변환해 넘긴다. 판독기별 앵커 힌트를 모듈 상태로
+# 유지해 연속 폴링을 빠르게 한다 (데스크탑과 같은 최적화).
+
+_VISION = {}
+
+
+def _frame_bgr(frame_bytes, width, height):
+    import cv2
+    import numpy as np
+    buf = frame_bytes.to_py() if hasattr(frame_bytes, "to_py") else frame_bytes
+    arr = np.frombuffer(bytes(buf), dtype=np.uint8).reshape(int(height), int(width), 4)
+    return cv2.cvtColor(arr, cv2.COLOR_RGBA2BGR)
+
+
+def _vision_slot(name):
+    slot = _VISION.get(name)
+    if slot is None:
+        if name == "gem":
+            from app.vision.gem_window import GemWindowReader
+            # unknown_dir 지정으로 데스크탑 전용 app.config 의존을 우회
+            slot = {"reader": GemWindowReader(unknown_dir="/tmp/vision_unknown")}
+        elif name == "advanced":
+            from app.vision.refine_window import RefineWindowReader
+            slot = {"reader": RefineWindowReader()}
+        else:
+            from app.vision.normal_refine_confirm import ConfirmWindowReader
+            slot = {"reader": ConfirmWindowReader()}
+        slot["hint"] = None
+        _VISION[name] = slot
+    return slot
+
+
+def vision_gem(frame, width, height, resets_left=None, target_index=None):
+    slot = _vision_slot("gem")
+    reading = slot["reader"].read(_frame_bgr(frame, width, height),
+                                  hint=slot["hint"])
+    if reading is None:
+        slot["hint"] = None
+        return {"found": False}
+    slot["hint"] = reading.anchor
+
+    info = {
+        "found": True,
+        "complete": bool(reading.complete()),
+        "grade": reading.grade(),
+        "willpower": reading.willpower, "points": reading.points,
+        "effect1": reading.effect1, "effect2": reading.effect2,
+        "attempts": reading.attempts, "rerolls": reading.rerolls,
+        "resets": reading.resets,
+        "shown_ids": list(reading.shown_ids),
+        "shown_labels": list(reading.shown_labels),
+        "warnings": list(reading.warnings),
+    }
+    if info["complete"] and info["grade"]:
+        info["result"] = gem_calc(
+            info["grade"], reading.willpower, reading.points,
+            reading.effect1, reading.effect2, reading.attempts, reading.rerolls,
+            reading.resets if reading.resets is not None else (resets_left or 0),
+            gc.DEFAULT_TARGET_INDEX if target_index is None else int(target_index),
+            [e for e in reading.shown_ids if e] or None)
+    return _json_safe(info)
+
+
+def vision_advanced(frame, width, height, raw_prices, growth_support=False,
+                    free_next=False):
+    slot = _vision_slot("advanced")
+    reading = slot["reader"].read(_frame_bgr(frame, width, height),
+                                  hint=slot["hint"])
+    if reading is None:
+        slot["hint"] = None
+        return {"found": False}
+    slot["hint"] = reading.anchor
+
+    info = {
+        "found": True,
+        "complete": bool(reading.complete()),
+        "level": reading.level, "exp": reading.exp, "band": reading.band,
+        "stack": reading.stack, "enh_next": bool(reading.enh_next),
+        "equip": reading.equip_type,
+        "warnings": list(reading.warnings),
+    }
+    if info["complete"]:
+        info["result"] = advanced_calc(
+            reading.equip_type, reading.band, growth_support,
+            reading.exp, reading.stack, free_next, reading.enh_next, raw_prices)
+    return _json_safe(info)
+
+
+def vision_normal(frame, width, height, raw_prices, default_grade=None):
+    from app.features import normal_refine_fusion as fusion
+    slot = _vision_slot("normal")
+    reading = slot["reader"].read(_frame_bgr(frame, width, height),
+                                  hint=slot["hint"])
+    if reading is None:
+        slot["hint"] = None
+        return {"found": False}
+    slot["hint"] = (reading.anchor, reading.scale)
+
+    info = {
+        "found": True,
+        "complete": bool(reading.complete()),
+        "kind": reading.kind, "level": reading.level, "target": reading.target,
+        "jangin": reading.jangin, "prob_current": reading.prob_current,
+        "gear_grade": reading.gear_grade,
+        "warnings": list(reading.warnings),
+    }
+    if info["complete"]:
+        try:
+            result = fusion.advise(reading, None, _normal_price_map(raw_prices),
+                                   default_grade=default_grade)
+            info["result"] = {
+                "combo": result["combo"], "combo_label": result["combo_label"],
+                "book": result.get("book"), "advice": result["advice"],
+                "breathes": result["breathes"], "total_prob": result["total_prob"],
+                "fill_gold": result["fill_gold"],
+                "expected_gold": result.get("expected_gold"),
+                "grade": result.get("grade"),
+                "grade_source": result.get("grade_source"),
+                "jangin": reading.jangin,
+            }
+        except fusion.NeedMainWindow as exc:
+            info["error"] = str(exc)
+        except ValueError as exc:
+            info["error"] = str(exc)
+    return _json_safe(info)

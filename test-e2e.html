@@ -43,13 +43,43 @@
     } catch (err) {
       live = " live=FAIL:" + (err && err.message ? err.message : err);
     }
+    // 화면 인식 (옵션 — /test-golden.png 가 서빙될 때만; 커밋 안 되는 로컬 골든)
+    let vision = "";
+    try {
+      const resp = await fetch("/test-golden.png");
+      if (resp.ok) {
+        const bmp = await createImageBitmap(await resp.blob());
+        const c = document.createElement("canvas");
+        c.width = bmp.width; c.height = bmp.height;
+        const ctx = c.getContext("2d");
+        ctx.drawImage(bmp, 0, 0);
+        const img = ctx.getImageData(0, 0, c.width, c.height);
+        await JloaPy.bootVision();
+        const v = await JloaPy.callFrame("web_glue:vision_normal", img, {
+          raw_prices: {"운명의 수호석": 0.13, "운명의 돌파석": 4, "아비도스 융화 재료": 124,
+                       "__fragment__": 0.059, "빙하의 숨결": 274,
+                       "재봉술 : 업화 [19-20]": 2299, "강화 재봉술 : 업화 [19-20]": 4747},
+          default_grade: null,
+        });
+        vision = " vision=" + (!v.found ? "NOTFOUND"
+          : !v.complete ? "INCOMPLETE"
+          : v.result ? v.result.combo + "/" + Math.round(v.result.fill_gold)
+          : "ERR:" + v.error);
+      }
+    } catch (err) {
+      vision = " vision=FAIL:" + (err && err.message ? err.message : err);
+    }
     out.textContent = "E2E_OK"
       + " gem=" + gem.recommend.action + "/" + gem.targets.length
       + " normal=" + normal.combo + "/" + Math.round(normal.fill_gold)
       + " adv=" + adv.action_label + "/" + Math.round(adv.band_expected_gold)
-      + " opts=" + opt.gem.entries.length + live;
+      + " opts=" + opt.gem.entries.length + live + vision;
   } catch (err) {
     out.textContent = "E2E_FAIL " + (err && err.message ? err.message : err);
+  }
+  // 로컬 자동 검증용 결과 보고 (개발 PC 헤드리스 실행 시에만 동작, 실서비스에선 무해한 404)
+  if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+    fetch("/e2e-result", { method: "POST", body: out.textContent }).catch(() => {});
   }
 })();
 </script>

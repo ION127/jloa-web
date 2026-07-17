@@ -8,11 +8,15 @@
  *   JloaPy.boot()                 — 엔진 준비 (lazy, 중복 호출 안전)
  *   JloaPy.call("app.features.gem_craft:success_probability", {...args})
  *     → 파이썬 함수를 키워드 인자로 호출, 결과를 JSON 으로 돌려받는다
+ *   JloaPy.bootVision()           — 화면 인식 추가 준비 (numpy+opencv, 수십 MB)
+ *   JloaPy.callFrame("web_glue:vision_gem", imageData, {...args})
+ *     → 캔버스 프레임(RGBA)을 판독기에 넘긴다
  * 상태는 [data-py-status] 요소에 반영된다 (data-state: loading|ready|error).
  */
 const JloaPy = (() => {
   const PYODIDE_BASE = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
   let bootPromise = null;
+  let visionPromise = null;
 
   function setStatus(text, state) {
     document.querySelectorAll("[data-py-status]").forEach((el) => {
@@ -33,7 +37,7 @@ const JloaPy = (() => {
   }
 
   async function fetchIntoFs(py, rel) {
-    const resp = await fetch("/py/" + rel);
+    const resp = await fetch("/py/" + encodeURI(rel));
     if (!resp.ok) throw new Error("엔진 파일 로드 실패: " + rel);
     const data = new Uint8Array(await resp.arrayBuffer());
     const full = "/jloa/" + rel;
@@ -93,5 +97,45 @@ const JloaPy = (() => {
     return JSON.parse(py.runPython(code));
   }
 
-  return { boot, call, runJson };
+  /* 화면 인식 준비 — numpy+opencv 패키지와 판독기·템플릿(vision_files) 추가 로드 */
+  function bootVision() {
+    if (!visionPromise) {
+      visionPromise = (async () => {
+        const py = await boot();
+        setStatus("인식 엔진 내려받는 중… (최초 1회)", "loading");
+        await py.loadPackage(["numpy", "opencv-python"]);
+        const manifest = await (await fetch("/py/manifest.json", { cache: "no-cache" })).json();
+        await Promise.all((manifest.vision_files || []).map((rel) => fetchIntoFs(py, rel)));
+        py.runPython("import app.vision");
+        setStatus("화면 인식 준비 완료", "ready");
+        return py;
+      })().catch((err) => {
+        visionPromise = null;
+        setStatus("인식 엔진 로드 실패 — 새로고침 후 다시 시도해 주세요", "error");
+        throw err;
+      });
+    }
+    return visionPromise;
+  }
+
+  /* 캔버스 ImageData(RGBA)를 판독 함수에 전달. target 함수 시그니처:
+     fn(frame_bytes, width, height, **args) */
+  async function callFrame(target, imageData, args) {
+    const py = await bootVision();
+    const [modName, fnName] = target.split(":");
+    py.globals.set("_jloa_target_mod", modName);
+    py.globals.set("_jloa_target_fn", fnName);
+    py.globals.set("_jloa_args_json", JSON.stringify(args || {}));
+    py.globals.set("_jloa_frame", new Uint8Array(imageData.data.buffer));
+    py.globals.set("_jloa_frame_w", imageData.width);
+    py.globals.set("_jloa_frame_h", imageData.height);
+    const out = py.runPython(
+      "import importlib, json\n" +
+      "json.dumps(getattr(importlib.import_module(_jloa_target_mod), _jloa_target_fn)" +
+      "(_jloa_frame, _jloa_frame_w, _jloa_frame_h, **json.loads(_jloa_args_json)), ensure_ascii=False)"
+    );
+    return JSON.parse(out);
+  }
+
+  return { boot, call, runJson, bootVision, callFrame };
 })();

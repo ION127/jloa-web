@@ -1,0 +1,54 @@
+{
+ "version": 1,
+ "resolution": "1920x1080",
+ "main_anchor": {
+  "sample": "2.png",
+  "x1": 672,
+  "y1": 658,
+  "x2": 748,
+  "y2": 680
+ },
+ "confirm_anchor": {
+  "sample": "10-2.png",
+  "x1": 912,
+  "y1": 212,
+  "x2": 1028,
+  "y2": 234
+ },
+ "main_regions": [
+  "jangin_band",
+  "level_band",
+  "mat1_count",
+  "mat2_count",
+  "mat3_count",
+  "material_icon",
+  "next_band"
+ ],
+ "confirm_regions": [
+  "book_bonus",
+  "breath_have",
+  "breath_icon",
+  "breath_sel_max",
+  "jangin_cur",
+  "level_band",
+  "next_band",
+  "per_unit",
+  "prob_current",
+  "prob_max"
+ ],
+ "glyph_counts": {
+  "1": 12,
+  "2": 10,
+  "3": 5,
+  "0": 27,
+  "9": 7,
+  "6": 5,
+  "7": 5,
+  "percent": 11,
+  "slash": 9,
+  "8": 1,
+  "4": 6,
+  "5": 7
+ },
+ "anchor_threshold": 0.8
+}
