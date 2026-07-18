@@ -307,14 +307,20 @@ class GemWindowReader:
 
     # ---------- 개별 판독 ----------
 
+    def _match_digit_in_mask(self, mask, mode, allowed):
+        if mode == "digit_last":
+            return self._best_last_digit(mask, allowed=allowed)
+        glyph = glyphs.extract_digit(mask, mode, self.scale)
+        return glyphs.match_digit(glyph, self._digits, allowed=allowed)
+
     def _read_digit(self, bgr, anchor, region, mask_fn, mode, reading, allowed=None):
         crop = self._crop(bgr, anchor, region)
         mask = mask_fn(crop)
-        if mode == "digit_last":
-            label, score = self._best_last_digit(mask, allowed=allowed)
-        else:
-            glyph = glyphs.extract_digit(mask, mode, self.scale)
-            label, score = glyphs.match_digit(glyph, self._digits, allowed=allowed)
+        label, score = self._match_digit_in_mask(mask, mode, allowed)
+        if label is None and mask_fn is glyphs.mask_bright_text:
+            # 파란 배경 젬은 금색 글자가 어두워 기본 마스크가 부서진다 — 완화 재시도
+            mask = glyphs.mask_bright_text(crop, dim=True)
+            label, score = self._match_digit_in_mask(mask, mode, allowed)
         if label is None:
             reading.warnings.append(f"{region} 숫자 판독 실패 (score={score:.2f})")
             self._save_unknown(mask, region, color_crop=crop)
@@ -348,25 +354,27 @@ class GemWindowReader:
         return "cost_up" if glyphs.has_plus_sign(value_mask, self.scale) else "cost_down"
 
     def _best_last_digit(self, mask, threshold=0.55, x_max=None, allowed=None):
-        """오른쪽 글리프부터 숫자로 매칭 시도해 임계를 넘는 첫 숫자를 채택.
+        """모든 글리프를 숫자로 매칭해 **최고 점수** 숫자를 채택 (임계 이상일 때).
 
         'L','v','.'·다이아 광택·한글 자모는 숫자 템플릿에 낮은 점수만 주므로
-        오른쪽에서 훑으면 진짜 숫자가 먼저 걸린다. 밴드 폭·글자 분리가 배율마다
-        달라져도 견고하다. x_max: 그보다 오른쪽(증가/감소 어절)은 무시.
+        진짜 숫자가 최고점이 된다. '오른쪽부터 첫 임계 통과' 방식은 Lv 배지가
+        밀리는 젬에서 영역을 넓히자 우측 장식 무늬(0.55~0.6)가 진짜 숫자보다
+        먼저 걸렸다 (2026-07-18 실측: Lv.1 을 '2'로 오판 → 교차검증 불일치).
+        x_max: 그보다 오른쪽(증가/감소 어절)은 무시.
         allowed: 이 필드에 나올 수 있는 숫자만 후보로.
         """
         comps = glyphs.digit_components(mask, self.scale)
         if x_max is not None:
             comps = [c for c in comps if c[0] + c[2] / 2 <= x_max]
         best = (None, 0.0)
-        for x, y, w, h in reversed(comps):
+        for x, y, w, h in comps:
             glyph = glyphs.normalize_glyph(mask[y:y + h, x:x + w])
             label, score = glyphs.match_digit(glyph, self._digits, allowed=allowed)
-            if label is not None and score >= threshold:
-                return label, score
             if score > best[1]:
                 best = (label, score)
-        return best
+        if best[0] is not None and best[1] >= threshold:
+            return best
+        return (None, best[1])
 
     def _read_level(self, bgr, anchor, region, mode, reading):
         # 스탯 레벨은 1~5뿐 (gempago allowedDigits 방식)
@@ -420,19 +428,26 @@ class GemWindowReader:
 
         entry_id, name = None, None
         if stat in ("willpower", "points"):
-            # 스탯 증감폭: 증가 +1~+4, 감소 -1 (allowedDigits)
-            value = digit("first", set("1234") if color == "green" else {"1"})
-            if value and color in ("green", "red"):
-                entry_id = f"{stat}_{'p' if color == 'green' else 'm'}{value}"
+            if color == "red":
+                # 감소는 공시 풀에서 -1뿐 — 숫자를 읽지 않는다 ('-'가 '1'에 붙어
+                # 글리프가 오염되면 매칭이 실패했다, 2026-07-18 실측)
+                entry_id = f"{stat}_m1"
+            elif color == "green":
+                # 스탯 증가폭: +1~+4 (allowedDigits)
+                value = digit("first", set("1234"))
+                if value:
+                    entry_id = f"{stat}_p{value}"
         elif stat in ("effect1", "effect2"):
             side = stat[-1]
             if color == "white":
                 entry_id = f"change{side}"    # "효과 변경" (흰 글씨)
-            elif color in ("green", "red"):
-                # 효과 레벨 증감폭: 증가 Lv+1~+4, 감소 Lv-1
-                value = digit("gap", set("1234") if color == "green" else {"1"})
+            elif color == "red":
+                entry_id = f"effect{side}_m1"     # 감소는 -1뿐 (위와 동일)
+            elif color == "green":
+                # 효과 레벨 증가폭: Lv+1~+4
+                value = digit("gap", set("1234"))
                 if value:
-                    entry_id = f"effect{side}_{'p' if color == 'green' else 'm'}{value}"
+                    entry_id = f"effect{side}_p{value}"
         else:
             name, _score = glyphs.match_text(name_mask, self._names)
             if name == _REROLL_NAME:

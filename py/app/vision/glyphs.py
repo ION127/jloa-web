@@ -69,7 +69,7 @@ def normalize_brightness(bgr, target_p99=235, sample_rect=None):
     return cv2.convertScaleAbs(bgr, alpha=target_p99 / p99, beta=0)
 
 
-def mask_bright_text(bgr):
+def mask_bright_text(bgr, dim=False):
     """다이아몬드 위 숫자 마스크 (텍스처 배경 무시).
 
     다이아 숫자는 **금색**(H 18~35)이고 글자 테두리만 흰색이다.
@@ -77,13 +77,18 @@ def mask_bright_text(bgr):
     쪼개지고, 각 조각이 높이 필터(≥8)에 걸려 통째로 사라진다 (2026-07-09 실사용 버그).
     175까지 낮추면 획이 이어지면서도 배경 무늬·광택은 여전히 걸러진다.
     색 범위를 넓히는 쪽(H 5~50)은 금색 테두리가 글자에 달라붙어 실패했다.
+
+    dim=True: 파란 배경 젬은 금색 글자 자체가 어둡다 (V 중앙값 ~112, 2026-07-18
+    실측 — 기본 임계에선 'Lv. 1'이 64px 로 부서져 판독 불능). 기본 마스크가
+    실패했을 때만 재시도용으로 쓴다 — 상시 사용하면 배경 무늬가 섞인다.
     """
     import numpy as np
     cv2 = _cv2()
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
     h, s, v = hsv[:, :, 0], hsv[:, :, 1], hsv[:, :, 2]
-    white = (v > 195) & (s < 70)
-    gold = (v > 175) & (s > 70) & (h >= 18) & (h <= 35)
+    v_white, v_gold = (160, 130) if dim else (195, 175)
+    white = (v > v_white) & (s < 70)
+    gold = (v > v_gold) & (s > 70) & (h >= 18) & (h <= 35)
     return ((white | gold) * np.uint8(255)).astype(np.uint8)
 
 
