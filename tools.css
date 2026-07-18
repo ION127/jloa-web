@@ -4,6 +4,10 @@
    페이지 하단에 큰 빈 여백으로 보였다 (2026-07-18) */
 .tools-main { padding: 96px 0 72px; }
 
+/* 배경 글로우 2번은 top:1500px 절대배치라 짧은 도구 페이지에서 푸터 아래로
+   문서 높이를 ~2200px 까지 늘린다 — 도구 페이지에선 끈다 (2026-07-18) */
+.page-glow--two { display: none; }
+
 .tool-head { max-width: 760px; margin-bottom: 34px; }
 .tool-head h1 { margin: 10px 0 12px; font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -0.02em; line-height: 1.15; }
 .tool-desc { margin: 0 0 18px; color: var(--muted-strong); }
