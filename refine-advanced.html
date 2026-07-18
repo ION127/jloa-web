@@ -252,18 +252,24 @@
           URL.revokeObjectURL(a.href);
         }, "image/png");
       });
+      let lastVisionKey = null;   // 같은 인식 결과면 재렌더하지 않는다 (펼침·스크롤 유지)
       async function visionFrame(img) {
         lastFrame = img;
         visionSaveBtn.hidden = false;
         const res = await JloaPy.callFrame(VISION_TARGET, img, await visionArgs());
         await paintPreview(img, res);
-        if (!res.found) { setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
+        if (!res.found) { lastVisionKey = null; setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
         if (!res.complete) {
+          lastVisionKey = null;
           const warn = res.warnings && res.warnings.length ? " (" + res.warnings.join(", ") + ")" : "";
           setVisionStatus("창 발견 — 값을 읽는 중입니다" + warn);
           return;
         }
-        applyVision(res);
+        const key = JSON.stringify(res);
+        if (key !== lastVisionKey) {
+          lastVisionKey = key;
+          applyVision(res);
+        }
         setVisionStatus(res.error ? "인식 완료 — 계산 불가: " + res.error
           : "인식 완료 — 화면 값이 자동 반영되었습니다.");
       }

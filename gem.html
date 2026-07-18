@@ -199,16 +199,24 @@
         }
         return body;
       }
+      function gemOpenSet() {
+        // 재렌더 직전 현재 펼침 상태 — 인식 폴링이 다시 그려도 사용자가 연 행을 유지
+        const els = resultEl.querySelectorAll(".gem-target");
+        if (!els.length) return null;
+        const open = new Set();
+        els.forEach((el) => { if (el.open) open.add(Number(el.dataset.gemI)); });
+        return open;
+      }
       function renderGem(res) {
         const rec = res.recommend;
-        const selectedIndex = Number(F("target").value);
+        const openSet = gemOpenSet() || new Set([Number(F("target").value)]);
         let html = `<div class="tool-result-highlight"><span>추천 행동</span><strong>${RESULT_ACTIONS[rec.action] || rec.action}</strong>` +
           `<span>기준 목표 ${res.target_label} · 달성 확률 ${fmtPct(rec.this_gem)}</span></div>`;
         // 목표 5종 전부 같은 방식으로 계산 — 근거는 행을 눌러 펼친다
         html += res.targets.map((t, i) => {
           const badge = t.satisfied ? "달성 ✓" : fmtPct(t.probability);
           const act = t.satisfied ? "가공 완료" : (RESULT_ACTIONS[t.action] || t.action || "—");
-          return `<details class="gem-target"${i === selectedIndex ? " open" : ""}>` +
+          return `<details class="gem-target" data-gem-i="${i}"${openSet.has(i) ? " open" : ""}>` +
             `<summary><span class="gem-target-label">${t.label}</span>` +
             `<b>${badge}</b><em>${act}</em></summary>` +
             `<div class="gem-target-body">${gemDetailBody(t)}</div></details>`;
@@ -297,18 +305,24 @@
           URL.revokeObjectURL(a.href);
         }, "image/png");
       });
+      let lastVisionKey = null;   // 같은 인식 결과면 재렌더하지 않는다 (펼침·스크롤 유지)
       async function visionFrame(img) {
         lastFrame = img;
         visionSaveBtn.hidden = false;
         const res = await JloaPy.callFrame(VISION_TARGET, img, await visionArgs());
         await paintPreview(img, res);
-        if (!res.found) { setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
+        if (!res.found) { lastVisionKey = null; setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
         if (!res.complete) {
+          lastVisionKey = null;
           const warn = res.warnings && res.warnings.length ? " (" + res.warnings.join(", ") + ")" : "";
           setVisionStatus("창 발견 — 값을 읽는 중입니다" + warn);
           return;
         }
-        applyVision(res);
+        const key = JSON.stringify(res);
+        if (key !== lastVisionKey) {
+          lastVisionKey = key;
+          applyVision(res);
+        }
         setVisionStatus(res.error ? "인식 완료 — 계산 불가: " + res.error
           : "인식 완료 — 화면 값이 자동 반영되었습니다.");
       }
