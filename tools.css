@@ -30,6 +30,24 @@
 .tool-mode-toggle button.is-active { background: var(--gold); color: #14161c; font-weight: 700; }
 .tool-mode-toggle button:not(.is-active):hover { color: var(--ink); }
 
+/* 젬파고 — 목표별 접이식 근거 */
+.gem-target {
+  margin-top: 10px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface-raised); overflow: hidden;
+}
+.gem-target summary {
+  display: flex; align-items: center; gap: 14px; padding: 13px 18px;
+  cursor: pointer; list-style: none; font-size: 14.5px;
+}
+.gem-target summary::-webkit-details-marker { display: none; }
+.gem-target summary::after { content: "▾"; margin-left: auto; color: var(--muted); transition: transform 0.15s; }
+.gem-target[open] summary::after { transform: rotate(180deg); }
+.gem-target-label { flex: 1; min-width: 0; }
+.gem-target summary b { color: var(--gold-bright); font-variant-numeric: tabular-nums; }
+.gem-target summary em { font-style: normal; color: var(--muted); font-size: 13px; }
+.gem-target[open] summary { border-bottom: 1px solid var(--border); }
+.gem-target-body { padding: 14px 18px 18px; }
+
 /* 화면 인식 미리보기 */
 .vision-preview {
   position: relative; margin-top: 18px; max-width: 720px;

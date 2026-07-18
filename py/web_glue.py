@@ -224,24 +224,33 @@ def gem_calc(grade, willpower, points, effect1, effect2, attempts, rerolls,
             return "초기화" if (reset or 0.0) > 0.0 else "가공 완료"
         return action
 
-    # 목표 5종 각각: 제시 4개 반영 확률('이 젬' 기준) + 같은 규칙의 추천
+    # 목표 5종 **각각** 행동별 확률(가공/새로고침 기대·범위/초기화)과 추천을
+    # 전부 계산한다 — 근거는 UI에서 목표를 펼치면 보인다 (2026-07-18 사용자 요청).
     targets = []
     for label, tgt in gc.STANDARD_TARGETS:
         p, rr, rs, choices = _action_probs(tgt)
-        this_gem = max(p or 0.0, rr or 0.0)
+        outlook_t = (engine.reroll_outlook(state, tgt)
+                     if state.rerolls > 0 and state.attempts > 0 else None)
         targets.append({
             "label": label,
-            "probability": 1.0 if tgt.satisfied(state) else this_gem,
+            "probability": 1.0 if tgt.satisfied(state) else max(p or 0.0, rr or 0.0),
             "action": _decide(tgt, p, rr, rs),
             "satisfied": tgt.satisfied(state),
+            "process": p,
+            "reroll": rr,
+            "reroll_best": outlook_t and outlook_t["best"],
+            "reroll_worst": outlook_t and outlook_t["worst"],
+            "reset": rs,
+            "per_choice": choices,
         })
 
-    # 기준 목표의 행동별 확률 + 새로고침 분포(최저~최고)
-    target = gc.STANDARD_TARGETS[target_index][1]
-    process, reroll, reset, per_choice = _action_probs(target)
-    outlook = (engine.reroll_outlook(state, target)
-               if state.rerolls > 0 and state.attempts > 0 else None)
-    action = _decide(target, process, reroll, reset)
+    # 기준 목표(헤드라인 표시용) — 표의 해당 행과 같은 값
+    selected = targets[target_index]
+    process, reroll, reset = selected["process"], selected["reroll"], selected["reset"]
+    outlook = ({"best": selected["reroll_best"], "worst": selected["reroll_worst"]}
+               if selected["reroll_best"] is not None else None)
+    per_choice = selected["per_choice"]
+    action = selected["action"]
 
     return _json_safe({
         "targets": targets,

@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/responsive.css?v=20260717-tools" />
-    <link rel="stylesheet" href="/tools.css?v=20260717-w3b" />
+    <link rel="stylesheet" href="/tools.css?v=20260718-gem5" />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -178,32 +178,42 @@
       applyGradeDefaults();
 
       const RESULT_ACTIONS = { "가공": "가공 하기", "보기": "다른 항목 보기", "초기화": "초기화", "가공 완료": "가공 완료" };
-      function renderGem(res) {
-        const rec = res.recommend;
-        let html = `<div class="tool-result-highlight"><span>추천 행동</span><strong>${RESULT_ACTIONS[rec.action] || rec.action}</strong>` +
-          `<span>이 젬으로 ${res.target_label} 달성 확률 ${fmtPct(rec.this_gem)}</span></div>`;
-        // 행동별 확률 — 지금 이 젬, 지금 제시된 4개 기준
-        const rerollNote = rec.reroll == null ? "불가"
-          : fmtPct(rec.reroll) + (rec.reroll_worst != null ? ` <span style="color:var(--muted);font-weight:400">(최저 ${fmtPct(rec.reroll_worst)} ~ 최고 ${fmtPct(rec.reroll_best)})</span>` : "");
-        const actionRows = [
-          { key: "가공", label: "가공 하기 (지금 제시 4개 중 랜덤 적용)", html: rec.process == null ? "불가" : fmtPct(rec.process) },
+      function gemDetailBody(t) {
+        // 목표 하나의 근거 — 행동별 확률 + 제시별 확률 (펼쳤을 때만 보임)
+        const rerollNote = t.reroll == null ? "불가"
+          : fmtPct(t.reroll) + (t.reroll_worst != null ? ` <span style="color:var(--muted);font-weight:400">(최저 ${fmtPct(t.reroll_worst)} ~ 최고 ${fmtPct(t.reroll_best)})</span>` : "");
+        const rows = [
+          { key: "가공", label: "가공 하기 (지금 제시 4개 중 랜덤 적용)", html: t.process == null ? "불가" : fmtPct(t.process) },
           { key: "다른 항목 보기", label: "다른 항목 보기 (제시 다시 뽑기, 기대값)", html: rerollNote },
-          { key: "초기화", label: "초기화 (새 젬으로 재시작)", html: rec.reset == null ? "불가" : fmtPct(rec.reset) },
+          { key: "초기화", label: "초기화 (새 젬으로 재시작)", html: t.reset == null ? "불가" : fmtPct(t.reset) },
         ];
-        html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>행동</th><th class="num">${res.target_label} 달성 확률</th></tr></thead><tbody>` +
-          actionRows.map((r) => `<tr${rec.action === r.key ? ' style="color:var(--gold-bright);font-weight:700"' : ""}>` +
+        let body = `<table class="tool-table"><thead><tr><th>행동</th><th class="num">달성 확률</th></tr></thead><tbody>` +
+          rows.map((r) => `<tr${t.action === r.key ? ' style="color:var(--gold-bright);font-weight:700"' : ""}>` +
             `<td>${r.label}</td><td class="num">${r.html}</td></tr>`).join("") +
           `</tbody></table>`;
-        if (rec.per_choice && rec.per_choice.length) {
-          const best = Math.max.apply(null, rec.per_choice.map((c) => c.probability));
-          html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>제시 항목</th><th class="num">적용 시 확률</th></tr></thead><tbody>` +
-            rec.per_choice.map((c) => `<tr${c.probability === best ? ' style="color:var(--gold-bright)"' : ""}><td>${c.label}</td><td class="num">${fmtPct(c.probability)}</td></tr>`).join("") +
+        if (t.per_choice && t.per_choice.length) {
+          const best = Math.max.apply(null, t.per_choice.map((c) => c.probability));
+          body += `<table class="tool-table" style="margin-top:10px"><thead><tr><th>제시 항목</th><th class="num">적용 시 확률</th></tr></thead><tbody>` +
+            t.per_choice.map((c) => `<tr${c.probability === best ? ' style="color:var(--gold-bright)"' : ""}><td>${c.label}</td><td class="num">${fmtPct(c.probability)}</td></tr>`).join("") +
             `</tbody></table>`;
         }
-        html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>목표</th><th class="num">달성 확률</th><th>추천</th></tr></thead><tbody>` +
-          res.targets.map((t) => `<tr><td>${t.label}${t.satisfied ? " ✓" : ""}</td><td class="num">${t.satisfied ? "달성" : fmtPct(t.probability)}</td><td>${t.satisfied ? "—" : (RESULT_ACTIONS[t.action] || t.action || "—")}</td></tr>`).join("") +
-          `</tbody></table>`;
-        html += `<p style="margin:12px 0 0;color:var(--muted)">모든 확률은 지금 이 젬과 제시된 항목 기준입니다. 제시 4개를 입력하면 젬마다·차수마다 값이 달라집니다.</p>`;
+        return body;
+      }
+      function renderGem(res) {
+        const rec = res.recommend;
+        const selectedIndex = Number(F("target").value);
+        let html = `<div class="tool-result-highlight"><span>추천 행동</span><strong>${RESULT_ACTIONS[rec.action] || rec.action}</strong>` +
+          `<span>기준 목표 ${res.target_label} · 달성 확률 ${fmtPct(rec.this_gem)}</span></div>`;
+        // 목표 5종 전부 같은 방식으로 계산 — 근거는 행을 눌러 펼친다
+        html += res.targets.map((t, i) => {
+          const badge = t.satisfied ? "달성 ✓" : fmtPct(t.probability);
+          const act = t.satisfied ? "가공 완료" : (RESULT_ACTIONS[t.action] || t.action || "—");
+          return `<details class="gem-target"${i === selectedIndex ? " open" : ""}>` +
+            `<summary><span class="gem-target-label">${t.label}</span>` +
+            `<b>${badge}</b><em>${act}</em></summary>` +
+            `<div class="gem-target-body">${gemDetailBody(t)}</div></details>`;
+        }).join("");
+        html += `<p style="margin:12px 0 0;color:var(--muted)">모든 확률은 지금 이 젬의 스탯·남은 횟수·제시된 4개 기준입니다. 목표를 누르면 왜 그 행동을 추천했는지(행동별 확률)가 보입니다.</p>`;
         showResult(html);
       }
       document.querySelector("[data-calc]").addEventListener("click", function () {
