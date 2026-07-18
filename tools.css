@@ -1,6 +1,8 @@
 /* JLOA 도구 페이지 공통 — styles.css 토큰(--bg --surface --gold …) 위에 얹는 컴포넌트 */
 
-.tools-main { padding: 120px 0 96px; min-height: 62vh; }
+/* min-height 를 두지 않는다 — 인식 기본 모드는 내용이 짧아 62vh 최소 높이가
+   페이지 하단에 큰 빈 여백으로 보였다 (2026-07-18) */
+.tools-main { padding: 96px 0 72px; }
 
 .tool-head { max-width: 760px; margin-bottom: 34px; }
 .tool-head h1 { margin: 10px 0 12px; font-size: clamp(30px, 4.4vw, 44px); letter-spacing: -0.02em; line-height: 1.15; }
@@ -105,6 +107,6 @@
 .tool-table td.num, .tool-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 @media (max-width: 720px) {
-  .tools-main { padding: 96px 0 72px; }
+  .tools-main { padding: 84px 0 56px; }
   .tool-panel { padding: 20px; }
 }
