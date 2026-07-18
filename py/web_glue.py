@@ -162,23 +162,100 @@ def _gem_engine():
 
 def gem_calc(grade, willpower, points, effect1, effect2, attempts, rerolls,
              resets_left, target_index, shown_ids=None):
+    """젬 상태 + 제시 4개 → 목표별 확률·행동별 확률·추천.
+
+    표시값은 전부 **지금 이 젬, 지금 제시된 4개** 기준이다 (초기화 배제 —
+    recommend_all/recommend_action 의 표시용 의미론). 제시 무관한 '뽑기 전'
+    값을 보여주면 같은 상태의 젬이 전부 같은 숫자로 보인다 (2026-07-18 수정).
+    추천 행동 자체는 엔진이 초기화 하한까지 포함해 판단한다.
+    """
+    from dataclasses import replace
+
     state = gc.GemState(willpower, points, effect1, effect2, attempts, rerolls)
     engine = _gem_engine()
+    shown = [e for e in (shown_ids or []) if e] or None
 
-    targets = [{
-        "label": label,
-        "probability": engine.success_probability(
-            state, target, resets_left=resets_left, grade=grade),
-        "satisfied": target.satisfied(state),
-    } for label, target in gc.STANDARD_TARGETS]
+    # 초기화는 소모성 자원 — 이 여유폭(0.1%p) 이상 이득일 때만 권한다.
+    # (새 젬 vs 지금 젬이 부동소수 수준(0.01%p)으로 갈리는 병리 케이스 차단)
+    _RESET_MARGIN = 0.001
 
+    def _per_choice(target):
+        if not shown or state.attempts <= 0:
+            return []
+        return [{
+            "id": entry_id, "label": gc.entry_label(entry_id),
+            "probability": engine.success_probability(
+                gc.apply_entry(state, entry_id), target),
+        } for entry_id in shown]
+
+    def _action_probs(target):
+        """(가공, 새로고침 기대, 초기화) — 전부 '지금 클릭' 기준 확률."""
+        choices = _per_choice(target)
+        if state.attempts <= 0:
+            process = 0.0
+        elif choices:
+            process = sum(c["probability"] for c in choices) / len(choices)
+        else:
+            process = engine.success_probability(state, target, can_reroll=False)
+        reroll = None
+        if state.rerolls > 0 and state.attempts > 0:
+            reroll = engine.success_probability(
+                replace(state, rerolls=state.rerolls - 1), target)
+        reset = None
+        if resets_left > 0 and grade in gc.GRADES:
+            reset = engine.success_probability(
+                gc.initial_state(grade), target,
+                resets_left=resets_left - 1, grade=grade)
+        return process, reroll, reset, choices
+
+    def _decide(target, process, reroll, reset):
+        """추천 규칙 (2026-07-18 사용자 정의):
+        지금 확률 vs 새로고침 기대값 → 기대값이 높으면 새로고침.
+        지금 확률 vs 초기화 확률 → 초기화가 유의미하게 높으면 초기화.
+        동률이면 자원을 안 쓰는 쪽 우선 (가공 > 새로고침 > 초기화)."""
+        if target.satisfied(state):
+            return "가공 완료"
+        action, best_value = "가공", process or 0.0
+        if reroll is not None and reroll > best_value + 1e-9:
+            action, best_value = "다른 항목 보기", reroll
+        if reset is not None and reset > best_value + _RESET_MARGIN:
+            action, best_value = "초기화", reset
+        if best_value <= 0.0:
+            return "초기화" if (reset or 0.0) > 0.0 else "가공 완료"
+        return action
+
+    # 목표 5종 각각: 제시 4개 반영 확률('이 젬' 기준) + 같은 규칙의 추천
+    targets = []
+    for label, tgt in gc.STANDARD_TARGETS:
+        p, rr, rs, choices = _action_probs(tgt)
+        this_gem = max(p or 0.0, rr or 0.0)
+        targets.append({
+            "label": label,
+            "probability": 1.0 if tgt.satisfied(state) else this_gem,
+            "action": _decide(tgt, p, rr, rs),
+            "satisfied": tgt.satisfied(state),
+        })
+
+    # 기준 목표의 행동별 확률 + 새로고침 분포(최저~최고)
     target = gc.STANDARD_TARGETS[target_index][1]
-    rec = engine.recommend_action(state, target, shown_ids=shown_ids or None,
-                                  grade=grade, resets_left=resets_left)
+    process, reroll, reset, per_choice = _action_probs(target)
+    outlook = (engine.reroll_outlook(state, target)
+               if state.rerolls > 0 and state.attempts > 0 else None)
+    action = _decide(target, process, reroll, reset)
+
     return _json_safe({
         "targets": targets,
         "target_label": gc.STANDARD_TARGETS[target_index][0],
-        "recommend": rec,
+        "recommend": {
+            "action": action,
+            "this_gem": max(process or 0.0, reroll or 0.0),
+            "per_choice": per_choice,
+            "process": process,           # 지금 가공 시 (제시 4개 반영)
+            "reroll": reroll,             # 새로고침 기대값 (최적 플레이)
+            "reroll_best": outlook and outlook["best"],
+            "reroll_worst": outlook and outlook["worst"],
+            "reset": reset,               # 초기화 시 (새 젬)
+        },
         "available_entries": [{"id": entry["id"], "label": gc.entry_label(entry["id"]),
                                "prob": prob}
                               for entry, prob in gc.available_entries(state)],

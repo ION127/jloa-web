@@ -182,18 +182,28 @@
         const rec = res.recommend;
         let html = `<div class="tool-result-highlight"><span>추천 행동</span><strong>${RESULT_ACTIONS[rec.action] || rec.action}</strong>` +
           `<span>이 젬으로 ${res.target_label} 달성 확률 ${fmtPct(rec.this_gem)}</span></div>`;
-        html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>목표</th><th class="num">달성 확률</th></tr></thead><tbody>` +
-          res.targets.map((t) => `<tr><td>${t.label}${t.satisfied ? " ✓" : ""}</td><td class="num">${t.satisfied ? "달성" : fmtPct(t.probability)}</td></tr>`).join("") +
+        // 행동별 확률 — 지금 이 젬, 지금 제시된 4개 기준
+        const rerollNote = rec.reroll == null ? "불가"
+          : fmtPct(rec.reroll) + (rec.reroll_worst != null ? ` <span style="color:var(--muted);font-weight:400">(최저 ${fmtPct(rec.reroll_worst)} ~ 최고 ${fmtPct(rec.reroll_best)})</span>` : "");
+        const actionRows = [
+          { key: "가공", label: "가공 하기 (지금 제시 4개 중 랜덤 적용)", html: rec.process == null ? "불가" : fmtPct(rec.process) },
+          { key: "다른 항목 보기", label: "다른 항목 보기 (제시 다시 뽑기, 기대값)", html: rerollNote },
+          { key: "초기화", label: "초기화 (새 젬으로 재시작)", html: rec.reset == null ? "불가" : fmtPct(rec.reset) },
+        ];
+        html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>행동</th><th class="num">${res.target_label} 달성 확률</th></tr></thead><tbody>` +
+          actionRows.map((r) => `<tr${rec.action === r.key ? ' style="color:var(--gold-bright);font-weight:700"' : ""}>` +
+            `<td>${r.label}</td><td class="num">${r.html}</td></tr>`).join("") +
           `</tbody></table>`;
         if (rec.per_choice && rec.per_choice.length) {
-          html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>제시 항목</th><th class="num">선택 시 확률</th></tr></thead><tbody>` +
-            rec.per_choice.map((c) => `<tr><td>${c.label}</td><td class="num">${fmtPct(c.probability)}</td></tr>`).join("") +
+          const best = Math.max.apply(null, rec.per_choice.map((c) => c.probability));
+          html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>제시 항목</th><th class="num">적용 시 확률</th></tr></thead><tbody>` +
+            rec.per_choice.map((c) => `<tr${c.probability === best ? ' style="color:var(--gold-bright)"' : ""}><td>${c.label}</td><td class="num">${fmtPct(c.probability)}</td></tr>`).join("") +
             `</tbody></table>`;
         }
-        const extras = [];
-        if (rec.reroll != null) extras.push(`다른 항목 보기 시 ${fmtPct(rec.reroll)}`);
-        if (rec.reset != null) extras.push(`초기화 시 ${fmtPct(rec.reset)}`);
-        if (extras.length) html += `<p style="margin:14px 0 0;color:var(--muted)">${extras.join(" · ")} (초기화 여지 포함 기준)</p>`;
+        html += `<table class="tool-table" style="margin-top:16px"><thead><tr><th>목표</th><th class="num">달성 확률</th><th>추천</th></tr></thead><tbody>` +
+          res.targets.map((t) => `<tr><td>${t.label}${t.satisfied ? " ✓" : ""}</td><td class="num">${t.satisfied ? "달성" : fmtPct(t.probability)}</td><td>${t.satisfied ? "—" : (RESULT_ACTIONS[t.action] || t.action || "—")}</td></tr>`).join("") +
+          `</tbody></table>`;
+        html += `<p style="margin:12px 0 0;color:var(--muted)">모든 확률은 지금 이 젬과 제시된 항목 기준입니다. 제시 4개를 입력하면 젬마다·차수마다 값이 달라집니다.</p>`;
         showResult(html);
       }
       document.querySelector("[data-calc]").addEventListener("click", function () {

@@ -605,6 +605,45 @@ class GemCraftEngine:
             })
         return rows
 
+    def _apply_op(self, state: GemState, op) -> GemState:
+        """컴파일된 op 하나를 상태에 적용 (가공 1회 소모) — reroll_outlook 용."""
+        if op[0] == _OP_STAT:
+            w, p, e1, e2 = state.levels()
+            idx, delta = op[1], op[2]
+            if idx == 0:
+                w += delta
+            elif idx == 1:
+                p += delta
+            elif idx == 2:
+                e1 += delta
+            else:
+                e2 += delta
+            return GemState(w, p, e1, e2, state.attempts - 1, state.rerolls)
+        if op[0] == _OP_REROLL:
+            return replace(state, attempts=state.attempts - 1,
+                           rerolls=state.rerolls + op[1])
+        return replace(state, attempts=state.attempts - 1)
+
+    def reroll_outlook(self, state: GemState, target: GemTarget) -> dict:
+        """'다른 항목 보기' 직후 뽑힐 제시 4개의 가공 가치 분포 — 최고/최저/평균.
+
+        세트 하나의 값 = 그 4개 앞에서 가공(25% 균등 적용) 시 목표 달성 확률.
+        평균은 '보기 후 무조건 가공' 기준이라, 나쁜 세트에서 또 보기를 쓸 수 있는
+        최적 플레이 기대값(success_probability)보다 약간 낮을 수 있다 — 사용자에게
+        보여줄 범위(최저~최고)용이고, 추천 판단은 최적 플레이 기대값으로 한다.
+        """
+        if state.rerolls <= 0 or state.attempts <= 0:
+            return None
+        after = replace(state, rerolls=state.rerolls - 1)
+        values = []
+        for shown in self._shown_sets(after.levels(), after.attempts <= 1):
+            acc = 0.0
+            for op in shown:
+                acc += self.success_probability(self._apply_op(after, op), target)
+            values.append(acc / len(shown))
+        return {"best": max(values), "worst": min(values),
+                "mean": sum(values) / len(values)}
+
     def evaluate_shown(self, state: GemState, shown_ids: list, target: GemTarget,
                        can_reroll: bool = True) -> dict:
         """실제로 제시된 4개 앞에서의 판단.
