@@ -77,6 +77,7 @@
             <button class="button button--primary" type="button" data-vision-start>화면 인식 시작</button>
             <button class="button" type="button" data-vision-stop hidden>인식 중지</button>
             <label class="button" style="cursor:pointer">스크린샷으로 인식<input type="file" accept="image/*" data-vision-file style="display:none" /></label>
+            <button class="button" type="button" data-vision-save hidden>현재 프레임 저장</button>
           </div>
           <p data-vision-status style="margin:14px 0 0;color:var(--muted)">대기 중 — 시작을 누르면 공유할 창을 선택합니다 (로스트아크 창 선택). 최초 1회는 인식 엔진(수십 MB)을 내려받습니다.</p>
           <div class="vision-preview" data-vision-preview hidden>
@@ -236,7 +237,25 @@
           }
         }
       }
+      // 마지막 판독 프레임 보관 — "현재 프레임 저장"으로 실패 프레임을 그대로 확보 (진단용)
+      let lastFrame = null;
+      const visionSaveBtn = document.querySelector("[data-vision-save]");
+      visionSaveBtn.addEventListener("click", () => {
+        if (!lastFrame) return;
+        const c = document.createElement("canvas");
+        c.width = lastFrame.width; c.height = lastFrame.height;
+        c.getContext("2d").putImageData(lastFrame, 0, 0);
+        c.toBlob((blob) => {
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "jloa-frame.png";
+          a.click();
+          URL.revokeObjectURL(a.href);
+        }, "image/png");
+      });
       async function visionFrame(img) {
+        lastFrame = img;
+        visionSaveBtn.hidden = false;
         const res = await JloaPy.callFrame(VISION_TARGET, img, await visionArgs());
         await paintPreview(img, res);
         if (!res.found) { setVisionStatus("화면에서 창을 찾는 중 — 게임에서 해당 창을 열어주세요."); return; }
